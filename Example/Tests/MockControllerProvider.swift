@@ -9,6 +9,8 @@ import Foundation
 
 class MockControllerProvider: ControllerProvider {
 
+    var id : String?
+    
     var invokedController = false
     var invokedControllerCount = 0
     var invokedControllerParameters: (routePattern: String, routingOption: RoutingOption, parameters: [String: Any])?
