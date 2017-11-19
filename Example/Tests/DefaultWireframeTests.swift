@@ -11,10 +11,22 @@ import XCTest
 
 class DefaultWireframeTests: XCTestCase {
     
-    func testAddRoutePattern() {
+    func createWireframe() -> Wireframe {
         
         let router = MockRouter()
         let wireframe = DefaultWireframe(router: router)
+        return wireframe
+        
+    }
+    
+    func testAddRoutePattern() throws{
+        
+        let router = MockRouter()
+        let wireframe = DefaultWireframe(router: router)
+        
+        try wireframe.addRoutePattern("/test/pattern")
+        
+        XCTAssertTrue(router.invokedAdd)
         
     }
     
@@ -22,4 +34,20 @@ class DefaultWireframeTests: XCTestCase {
         XCTFail("implement me")
     }
     
+    func testGetController() {
+        XCTFail("implement me")
+    }
+    
+    func testAddControllerProvider() throws {
+        
+        let mockProvider = MockControllerProvider()
+        
+        let wireframe = self.createWireframe()
+        
+        wireframe.add(controllerProvider: mockProvider, priority: 0)
+        
+        
+        
+        XCTFail("implement me")
+    }
 }

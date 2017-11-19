@@ -37,7 +37,7 @@ public protocol Wireframe {
     ///
     /// - Parameters:
     ///   - pattern: the route pattern to register
-    func addRoutePattern(_ pattern: String)
+    func addRoutePattern(_ pattern: String) throws
     
     /// Register a route pattern and a handler
     /// The handler will be called if a route matches your route pattern.
@@ -48,7 +48,7 @@ public protocol Wireframe {
     ///   - handler: A handler called when a route matches your route pattern
     func addRoutePattern(_ pattern: String,
                          priority: Int,
-                         handler: @escaping (_ parameters: [String : Any]) -> Void )
+                         handler: @escaping (_ parameters: [String : Any]) -> Void ) throws
     
     /// Return the view controller for a given url
     ///
@@ -80,13 +80,16 @@ public protocol Wireframe {
     /// - Parameters:
     ///   - routingObserver: An instance observing controllers before they are presented
     ///   - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
-    func add(routingObserver: RoutingObserver, priority: Int)
+    ///   - routePattern: The route pattern to call this observer, the observer is called for every route if this pattern is nil
+    func add(routingObserver: RoutingObserver, priority: Int, routePattern: String?)
     
     
     /// Add an instance responsible for presenting view controllers.
     /// It will be triggert after the wireframe resolves a route
     ///
-    /// - Parameter routingPresenter: An instance responsible for presenting view controllers
-    func add(routingPresenter: RoutingPresenter)
+    /// - Parameters:
+    ///    - routingPresenter: An instance responsible for presenting view controllers
+    ///    - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
+     func add(routingPresenter: RoutingPresenter,priority: Int)
     
 }
