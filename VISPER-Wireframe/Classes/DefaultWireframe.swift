@@ -8,10 +8,8 @@
 import Foundation
 
 internal struct RouteHandlerWrapper {
-    
     let routePattern : String
     let handler : (([String : Any]) -> Void)
-
 }
 
 internal struct ProviderWrapper {

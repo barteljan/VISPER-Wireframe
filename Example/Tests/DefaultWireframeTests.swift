@@ -30,8 +30,67 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testAddRoutePatternForHandler(){
-        XCTFail("implement me")
+    func testAddRoutePatternForHandler() throws{
+        
+        let handler1Expectation = self.expectation(description: "Handler1 called")
+        let handler1 = { ([String : Any]) -> Void in
+            handler1Expectation.fulfill()
+        }
+        let pattern1 = "/test/pattern1"
+        let priority1 = 5
+        
+        let wireframe = self.createWireframe()
+        
+        try wireframe.addRoutePattern(pattern1, priority: priority1, handler: handler1)
+        
+        if wireframe.routingProviders.count == 1 {
+            
+            let wrapper = wireframe.routingProviders[0]
+            
+            guard let handler = wrapper.handlerWrapper?.handler else {
+                XCTFail("wrapper should contain our handler")
+                return
+            }
+            
+            XCTAssertEqual(wrapper.priority, priority1)
+            
+            handler([String : Any]())
+            
+            self.wait(for: [handler1Expectation], timeout: 5)
+            
+        } else {
+            XCTFail("There should be one ControllerProvider Wrapper in there")
+        }
+    }
+    
+    func testAddRoutePatternForHandlerPriority() throws {
+        
+        let handler1 = { ([String : Any]) -> Void in}
+        let pattern1 = "/test/pattern1"
+        let priority1 = 5
+        
+        let handler2 = { ([String : Any]) -> Void in}
+        let pattern2 = "/test/pattern1"
+        let priority2 = 10
+        
+        let wireframe = self.createWireframe()
+        
+        
+        try wireframe.addRoutePattern(pattern1, priority: priority1, handler: handler1)
+        try wireframe.addRoutePattern(pattern2, priority: priority2, handler: handler2)
+        
+        if wireframe.routingProviders.count == 2 {
+            
+            let wrapper1 = wireframe.routingProviders[0]
+            let wrapper2 = wireframe.routingProviders[1]
+            
+            XCTAssertEqual(wrapper1.priority, priority2)
+            XCTAssertEqual(wrapper2.priority, priority1)
+            
+        } else {
+            XCTFail("There should be two ControllerProvider Wrapper in there")
+        }
+        
     }
     
     func testGetController() {
@@ -181,6 +240,150 @@ class DefaultWireframeTests: XCTestCase {
             
         } else {
             XCTFail("There should be two RoutingOptionWrapper in there")
+        }
+        
+    }
+    
+    func testAddRoutingObserver() throws {
+        
+        let id = "mockObserver1"
+        let mockObserver1 = MockRoutingObserver()
+        mockObserver1.id = id
+        
+        let wireframe = self.createWireframe()
+        
+        let priority = 10
+        wireframe.add(routingObserver: mockObserver1, priority: priority)
+        
+        if wireframe.routingObservers.count == 1 {
+            
+            let wrapper = wireframe.routingObservers[0]
+            
+            guard let observer = wrapper.routingObserver as? MockRoutingObserver else {
+                XCTFail("wrapper should contain our routing observer")
+                return
+            }
+            
+            XCTAssertEqual(wrapper.priority, priority)
+            XCTAssertEqual(observer.id, mockObserver1.id)
+            
+        } else {
+            XCTFail("There should be one RoutingObserverWrapper in there")
+        }
+        
+    }
+    
+    func testAddRoutingObserverPriority() throws {
+        
+        let id1 = "mockObserver1"
+        let mockObserver1 = MockRoutingObserver()
+        mockObserver1.id = id1
+        let priority1 = 5
+        
+        let id2 = "mockObserver2"
+        let mockObserver2 = MockRoutingObserver()
+        mockObserver2.id = id2
+        let priority2 = 10
+        
+        let wireframe = self.createWireframe()
+        
+        wireframe.add(routingObserver: mockObserver1, priority: priority1)
+        wireframe.add(routingObserver: mockObserver2, priority: priority2)
+        
+        if wireframe.routingObservers.count == 2 {
+            
+            let wrapper1 = wireframe.routingObservers[0]
+            guard let observer1 = wrapper1.routingObserver as? MockRoutingObserver else {
+                XCTFail("wrapper should contain our routing observer")
+                return
+            }
+            
+            let wrapper2 = wireframe.routingObservers[1]
+            guard let observer2 = wrapper2.routingObserver as? MockRoutingObserver else {
+                XCTFail("wrapper should contain our routing observer")
+                return
+            }
+            
+            XCTAssertEqual(wrapper1.priority, priority2)
+            XCTAssertEqual(observer1.id, mockObserver2.id)
+            
+            XCTAssertEqual(wrapper2.priority, priority1)
+            XCTAssertEqual(observer2.id, mockObserver1.id)
+            
+        } else {
+            XCTFail("There should be two RoutingObserverWrapper in there")
+        }
+        
+    }
+    
+    func testAddRoutingPresenter() throws {
+        
+        let id = "mockPresenter1"
+        let mockPresenter1 = MockRoutingPresenter()
+        mockPresenter1.id = id
+        
+        let wireframe = self.createWireframe()
+        
+        let priority = 10
+        wireframe.add(routingPresenter: mockPresenter1, priority: priority)
+        
+        if wireframe.routingPresenters.count == 1 {
+            
+            let wrapper = wireframe.routingPresenters[0]
+            
+            guard let presenter = wrapper.routingPresenter as? MockRoutingPresenter else {
+                XCTFail("wrapper should contain our routing observer")
+                return
+            }
+            
+            XCTAssertEqual(wrapper.priority, priority)
+            XCTAssertEqual(presenter.id, mockPresenter1.id)
+            
+        } else {
+            XCTFail("There should be one RoutingObserverWrapper in there")
+        }
+        
+    }
+    
+    func testAddRoutingPresenterPriority() throws {
+        
+        let id1 = "mockPresenter1"
+        let mockPresenter1 = MockRoutingPresenter()
+        mockPresenter1.id = id1
+        let priority1 = 5
+        
+        let id2 = "mockPresenter2"
+        let mockPresenter2 = MockRoutingPresenter()
+        mockPresenter2.id = id2
+        let priority2 = 10
+        
+        let wireframe = self.createWireframe()
+        
+        wireframe.add(routingPresenter: mockPresenter1, priority: priority1)
+        wireframe.add(routingPresenter: mockPresenter2, priority: priority2)
+        
+        if wireframe.routingPresenters.count == 2 {
+            
+            let wrapper1 = wireframe.routingPresenters[0]
+            guard let presenter1 = wrapper1.routingPresenter as? MockRoutingPresenter else {
+                XCTFail("wrapper should contain our routing observer")
+                return
+            }
+            
+            let wrapper2 = wireframe.routingPresenters[1]
+            guard let presenter2 = wrapper2.routingPresenter as? MockRoutingPresenter else {
+                XCTFail("wrapper should contain our routing observer")
+                return
+            }
+            
+            XCTAssertEqual(wrapper1.priority, priority2)
+            XCTAssertEqual(presenter1.id, mockPresenter2.id)
+            
+            XCTAssertEqual(wrapper2.priority, priority1)
+            XCTAssertEqual(presenter2.id, mockPresenter1.id)
+            
+        } else {
+            XCTFail("There should be two RoutingObserverWrapper in there")
         }
         
     }
