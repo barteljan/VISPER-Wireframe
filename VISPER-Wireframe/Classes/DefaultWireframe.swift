@@ -317,6 +317,12 @@ open class DefaultWireframe : Wireframe {
             if let viewController = controllerProvider.controller(routePattern: routePattern,
                                                                   routingOption: option,
                                                                   parameters: parameters) {
+                //notify vc if it should be aware of it
+                if let viewController = viewController as? RoutingAwareViewController {
+                    viewController.willRoute(wireframe: self, routePattern: routeResult.routePattern, option: option, parameters: params)
+                    viewController.didRoute(wireframe: self, routePattern: routeResult.routePattern, option: option, parameters: params)
+                }
+                
                 return viewController
             }
         }
@@ -347,6 +353,11 @@ open class DefaultWireframe : Wireframe {
                     }
                 }
                 
+                //notify vc if it should be aware of it
+                if let viewController = viewController as? RoutingAwareViewController {
+                    viewController.willRoute(wireframe: self, routePattern: routeResult.routePattern, option: option, parameters: params)
+                }
+                
                 routingPresenterWrapper.routingPresenter.present(controller: viewController,
                                                                  routePattern: routeResult.routePattern,
                                                                  option: option,
@@ -354,6 +365,14 @@ open class DefaultWireframe : Wireframe {
                                                                  wireframe: self,
                                                                  completion: { (viewController, routePattern, option, parameters, wireframe) in
                                                                     completion()
+                                                                    
+                                                                    //notify vc if it should be aware of it
+                                                                    if let viewController = viewController as? RoutingAwareViewController {
+                                                                        viewController.didRoute(wireframe: self,
+                                                                                             routePattern: routeResult.routePattern,
+                                                                                                   option: option, parameters: params)
+                                                                    }
+                                                                    
                 })
             }
             
