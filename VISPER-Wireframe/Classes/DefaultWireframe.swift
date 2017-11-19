@@ -7,16 +7,16 @@
 
 import Foundation
 
-open class VISPERWireframe : Wireframe {
-    
+open class DefaultWireframe : Wireframe {
+   
     public init(){}
     
     open func route(url: URL, option: RoutingOption, parameters: [String : Any], completion: @escaping () -> Void) throws {
         fatalError("not yet implemented")
     }
     
-    open func canRoute(url: URL, option: RoutingOption, parameters: [String : Any]) -> Bool {
-        fatalError("not yet implemented")
+    public func canRoute(url: URL, parameters: [String : Any]) -> Bool {
+         fatalError("not yet implemented")
     }
     
     open func addRoutePattern(pattern: String) {

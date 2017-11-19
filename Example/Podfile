@@ -2,10 +2,10 @@ use_frameworks!
 
 target 'VISPER-Wireframe_Example' do
   pod 'VISPER-Wireframe', :path => '../'
-
-  target 'VISPER-Wireframe_Tests' do
-    inherit! :search_paths
-
-    
-  end
 end
+
+target 'VISPER-Wireframe_Tests' do
+    pod 'VISPER-Wireframe', :path => '../'
+end
+
+
