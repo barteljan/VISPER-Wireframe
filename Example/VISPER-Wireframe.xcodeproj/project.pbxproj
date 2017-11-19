@@ -14,6 +14,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* DefaultRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* DefaultRouterTests.swift */; };
+		9A7CD93B1FC1C17D0087A620 /* DefaultWireframeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7CD93A1FC1C17D0087A620 /* DefaultWireframeTests.swift */; };
+		9A7CD93E1FC1C2590087A620 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7CD93C1FC1C1D40087A620 /* MockRouter.swift */; };
 		B66A629071708DDCAB0BE038 /* Pods_VISPER_Wireframe_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4493B3C91A968337913859BE /* Pods_VISPER_Wireframe_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +46,8 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* DefaultRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRouterTests.swift; sourceTree = "<group>"; };
 		8B1277BC6E936BCBEE1A81E7 /* Pods_VISPER_Wireframe_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VISPER_Wireframe_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A7CD93A1FC1C17D0087A620 /* DefaultWireframeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWireframeTests.swift; sourceTree = "<group>"; };
+		9A7CD93C1FC1C1D40087A620 /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
 		A63C495D37B8F455D809AC01 /* Pods-VISPER-Wireframe_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B3D32729FC5E07CF856339E9 /* Pods-VISPER-Wireframe_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF3AF1E66DB8A3DA3D0810A0 /* Pods-VISPER-Wireframe_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -116,7 +120,9 @@
 			isa = PBXGroup;
 			children = (
 				607FACEB1AFB9204008FA782 /* DefaultRouterTests.swift */,
+				9A7CD93A1FC1C17D0087A620 /* DefaultWireframeTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				9A7CD93C1FC1C1D40087A620 /* MockRouter.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -382,6 +388,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A7CD93E1FC1C2590087A620 /* MockRouter.swift in Sources */,
+				9A7CD93B1FC1C17D0087A620 /* DefaultWireframeTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* DefaultRouterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

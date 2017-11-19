@@ -41,7 +41,8 @@ struct RouteDefinition {
 }
 
 
-public class DefaultRouter {
+public class DefaultRouter : Router {
+    
     
     public static let parametersJLRouteURLKey = "JLRouteURL"
     public static let parametersRouteURLKey = "RouteURL"
@@ -51,11 +52,13 @@ public class DefaultRouter {
     
     var routeDefinitions: [RouteDefinition] = [RouteDefinition]()
     
+    public init(){}
+    
     /// Add a route pattern to your router
     ///
     /// - Parameter routePattern: a route pattern defining
     /// - Throws: throws errors for wrong formatted patterns
-    public func addRoute(routePattern: String) throws {
+    public func add(routePattern: String) throws {
         
         var newRoutesComponents: [RouteDefinition.Component] = [RouteDefinition.Component]()
         

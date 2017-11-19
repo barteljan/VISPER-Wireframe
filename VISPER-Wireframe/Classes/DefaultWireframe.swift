@@ -9,7 +9,11 @@ import Foundation
 
 open class DefaultWireframe : Wireframe {
    
-    public init(){}
+    let router : Router
+    
+    public init(router : Router = DefaultRouter()){
+        self.router = router
+    }
     
     open func route(url: URL, option: RoutingOption, parameters: [String : Any], completion: @escaping () -> Void) throws {
         fatalError("not yet implemented")
@@ -19,11 +23,11 @@ open class DefaultWireframe : Wireframe {
          fatalError("not yet implemented")
     }
     
-    open func addRoutePattern(pattern: String) {
+    open func addRoutePattern(_ pattern: String) {
         fatalError("not yet implemented")
     }
     
-    open func addRoutePattern(pattern: String, priority: Int, handler: @escaping ([String : Any]) -> Void) {
+    open func addRoutePattern(_ pattern: String, priority: Int, handler: @escaping ([String : Any]) -> Void) {
         fatalError("not yet implemented")
     }
     

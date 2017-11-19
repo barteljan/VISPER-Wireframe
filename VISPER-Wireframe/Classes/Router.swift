@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// An instance resolving urls to route patterns returning RouteResults
 public protocol Router {
     
     /// Add a route pattern to your router

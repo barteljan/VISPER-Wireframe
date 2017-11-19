@@ -8,7 +8,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/ein/test/"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         guard router.routeDefinitions.count == 1 else {
             XCTFail("There should be exactly one route definition")
@@ -47,7 +47,7 @@ class DefaultRouterTests: XCTestCase {
         let router = DefaultRouter()
         
         let pattern =  "/das/ist/:var1/test/"
-        try router.addRoute(routePattern:pattern)
+        try router.add(routePattern:pattern)
         
         guard router.routeDefinitions.count == 1 else {
             XCTFail("There should be exactly one route definition")
@@ -85,7 +85,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/ein/*"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         guard router.routeDefinitions.count == 1 else {
             XCTFail("There should be exactly one route definition")
@@ -124,7 +124,7 @@ class DefaultRouterTests: XCTestCase {
         let router = DefaultRouter()
         
         do {
-            try router.addRoute(routePattern: "/das/ist/*/Test")
+            try router.add(routePattern: "/das/ist/*/Test")
             XCTFail("Add Route should throw an exception in that case")
         } catch DefautRouterError.wildcardNotAtTheEndOfPattern {
             XCTAssert(true)
@@ -136,7 +136,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/ein/test/"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         let url = URL(string: pattern)!
         
@@ -157,7 +157,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/ein/test/"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         let url = URL(string: "/das/hier/ist/falsch")!
         
@@ -170,7 +170,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/ein/test/"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         let url = URL(string: "/das/ist/ein/test/aber/einer/der/zu/Lang/ist")!
         
@@ -183,7 +183,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/ein/test/"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         let url = URL(string: "/das/ist/ein")!
         
@@ -196,7 +196,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/:var1/test/"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         let url = URL(string: "/das/ist/ein/test/")!
         
@@ -218,7 +218,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/:var1/test/"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         let url = URL(string: "/das/ist/ein/test/aber/einer/der/zu/Lang/ist")!
         
@@ -231,7 +231,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/:var1/test/"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         let url = URL(string: "/das/ist/ein")!
         
@@ -243,7 +243,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/ein/*"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         let url = URL(string: "/das/ist/ein/test")!
         
@@ -278,7 +278,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/ein/*"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         let url = URL(string: "/das/ist/ein/test/der/lang/ist")!
         
@@ -318,7 +318,7 @@ class DefaultRouterTests: XCTestCase {
         
         let router = DefaultRouter()
         let pattern = "/das/ist/ein/*/"
-        try router.addRoute(routePattern: pattern)
+        try router.add(routePattern: pattern)
         
         let url = URL(string: "/das/ist/ein")!
         
@@ -332,10 +332,10 @@ class DefaultRouterTests: XCTestCase {
         let router = DefaultRouter()
         
         let pattern1 =  "/das/ist/ein/:var1"
-        try router.addRoute(routePattern:pattern1)
+        try router.add(routePattern:pattern1)
         
         let pattern2 =  "/das/ist/ein/:var2"
-        try router.addRoute(routePattern:pattern2)
+        try router.add(routePattern:pattern2)
         
         let url = URL(string: "/das/ist/ein/test/")!
         

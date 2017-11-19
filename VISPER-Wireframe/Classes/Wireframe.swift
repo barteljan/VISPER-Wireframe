@@ -37,7 +37,7 @@ public protocol Wireframe {
     ///
     /// - Parameters:
     ///   - pattern: the route pattern to register
-    func addRoutePattern(pattern: String)
+    func addRoutePattern(_ pattern: String)
     
     /// Register a route pattern and a handler
     /// The handler will be called if a route matches your route pattern.
@@ -46,7 +46,7 @@ public protocol Wireframe {
     ///   - pattern: The route pattern for calling your handler
     ///   - priority: The priority for calling your handler, higher priorities are called first. (Defaults to 0)
     ///   - handler: A handler called when a route matches your route pattern
-    func addRoutePattern(pattern: String,
+    func addRoutePattern(_ pattern: String,
                          priority: Int,
                          handler: @escaping (_ parameters: [String : Any]) -> Void )
     
