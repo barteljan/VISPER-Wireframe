@@ -98,7 +98,8 @@ open class DefaultWireframe : Wireframe {
     }
     
     open func add(routingPresenter: RoutingPresenter,priority: Int = 0) {
-        fatalError("not yet implemented")
+        let wrapper = RoutingPresenterWrapper(priority: priority, routingPresenter: routingPresenter)
+        self.addRoutingPresenterWrapper(wrapper: wrapper)
     }
     
     func addRoutingProviderWrapper(wrapper: ProviderWrapper) {
@@ -122,7 +123,7 @@ open class DefaultWireframe : Wireframe {
         }
     }
     
-    func addRoutingPresenterWrapper(wrapper: RoutingObserverWrapper) {
+    func addRoutingPresenterWrapper(wrapper: RoutingPresenterWrapper) {
         self.routingPresenters.append(wrapper)
         self.routingPresenters.sort { (wrapper1, wrapper2) -> Bool in
             return wrapper1.priority > wrapper2.priority
