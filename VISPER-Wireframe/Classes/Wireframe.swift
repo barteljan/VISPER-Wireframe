@@ -9,6 +9,17 @@ import Foundation
 
 public protocol Wireframe {
     
+    /// Check if a route pattern matching this url was added to the wireframe.
+    /// Be careful, if you don't route to a handler (but to a controller),
+    /// it's possible that no ControllerProvider or RoutingOptionProvider for this controller exists.
+    ///
+    /// - Parameters:
+    ///   - url: the url to check for resolution
+    ///   - parameters: the parameters (data) given to the controller
+    /// - Returns: Can the wireframe find a route for the given url
+    func canRoute(   url: URL,
+                     parameters: [String : Any]) throws -> Bool
+    
     /// Route to a new route presenting a view controller
     ///
     /// - Parameters:
@@ -18,18 +29,18 @@ public protocol Wireframe {
     ///   - completion: function called when the view controller was presented
     /// - Throws: throws an error when no controller and/or option provider can be found.
     func route(url: URL,
-               option: RoutingOption,
+               option: RoutingOption?,
                parameters: [String : Any],
                completion: @escaping () -> Void) throws
     
-    /// Can the wireframe resolve a given url
+    /// Return the view controller for a given url
     ///
     /// - Parameters:
-    ///   - url: the url to check for resolution
-    ///   - parameters: the parameters (data) given to the controller
-    /// - Returns: Can the wireframe find a route for the given url
-    func canRoute(   url: URL,
-              parameters: [String : Any]) -> Bool
+    ///   - url: url
+    ///   - parameters: parameters
+    /// - Returns: nil if no controller was found, the found controller otherwise
+    func controller(url: URL,
+                    parameters: [String : Any]) throws -> UIViewController?
     
     /// Register a route pattern for routing.
     /// You have to register a route pattern to allow the wireframe matching it.
@@ -50,15 +61,6 @@ public protocol Wireframe {
                          priority: Int,
                          handler: @escaping (_ parameters: [String : Any]) -> Void ) throws
     
-    /// Return the view controller for a given url
-    ///
-    /// - Parameters:
-    ///   - url: url
-    ///   - parameters: parameters
-    /// - Returns: nil if no controller was found, the found controller otherwise
-    func controller(url: URL,
-             parameters: [String : Any]) throws -> UIViewController?
-    
     /// Add an instance providing a controller for a route
     ///
     /// - Parameters:
@@ -73,8 +75,6 @@ public protocol Wireframe {
     ///   - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
     func add(optionProvider: RoutingOptionProvider, priority: Int)
     
-    
-    
     /// Add an instance observing controllers before they are presented
     ///
     /// - Parameters:
@@ -82,8 +82,7 @@ public protocol Wireframe {
     ///   - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
     ///   - routePattern: The route pattern to call this observer, the observer is called for every route if this pattern is nil
     func add(routingObserver: RoutingObserver, priority: Int, routePattern: String?)
-    
-    
+
     /// Add an instance responsible for presenting view controllers.
     /// It will be triggert after the wireframe resolves a route
     ///
@@ -91,5 +90,4 @@ public protocol Wireframe {
     ///    - routingPresenter: An instance responsible for presenting view controllers
     ///    - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
      func add(routingPresenter: RoutingPresenter,priority: Int)
-    
 }
