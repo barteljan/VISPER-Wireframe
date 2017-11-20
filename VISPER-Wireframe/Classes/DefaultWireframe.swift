@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import VISPER_Wireframe_Protocols
+import VISPER_Wireframe_UIViewController
 
 public enum DefaultWireframeError : Error {
     case noRoutingOptionFoundFor(routePattern: String, parameters: [String : Any])
@@ -353,6 +355,15 @@ open class DefaultWireframe : Wireframe {
                     }
                 }
                 
+                //notify per objective c category
+                let wireframeObjc = WireframeObjc(wireframe: self)
+                let routingOptionObjc = RoutingOptionObjc(routingOption: option)
+                
+                viewController.willRoute(wireframeObjc,
+                                         routePattern: routeResult.routePattern,
+                                         option: routingOptionObjc,
+                                         parameters: params)
+                
                 //notify vc if it should be aware of it
                 if let viewController = viewController as? RoutingAwareViewController {
                     viewController.willRoute(wireframe: self, routePattern: routeResult.routePattern, option: option, parameters: params)
@@ -365,6 +376,13 @@ open class DefaultWireframe : Wireframe {
                                                                  wireframe: self,
                                                                  completion: { (viewController, routePattern, option, parameters, wireframe) in
                                                                     completion()
+                                                                    
+                                                                     //notify per objective c category
+                                                                    viewController.didRoute(wireframeObjc,
+                                                                                            routePattern: routePattern,
+                                                                                            option: routingOptionObjc,
+                                                                                            parameters: parameters)
+                                                                   
                                                                     
                                                                     //notify vc if it should be aware of it
                                                                     if let viewController = viewController as? RoutingAwareViewController {

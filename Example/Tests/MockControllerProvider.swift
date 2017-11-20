@@ -4,6 +4,7 @@
 //
 
 import Foundation
+@testable import VISPER_Wireframe_Protocols
 @testable import VISPER_Wireframe
 
 

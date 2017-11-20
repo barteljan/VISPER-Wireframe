@@ -7,20 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		10B58E2B52A590DC470C5F71 /* Pods_VISPER_Wireframe_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B1277BC6E936BCBEE1A81E7 /* Pods_VISPER_Wireframe_Example.framework */; };
+		3D38B2199ABD076905C922C5 /* Pods_VISPER_Wireframe_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F99056FEC045D802CA8E1428 /* Pods_VISPER_Wireframe_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* DefaultRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* DefaultRouterTests.swift */; };
+		79E426A46BA9706761250A94 /* Pods_VISPER_Wireframe_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF875FE0EC82B79293CFC2D4 /* Pods_VISPER_Wireframe_Example.framework */; };
 		9A7CD93B1FC1C17D0087A620 /* DefaultWireframeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7CD93A1FC1C17D0087A620 /* DefaultWireframeTests.swift */; };
 		9A7CD93E1FC1C2590087A620 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7CD93C1FC1C1D40087A620 /* MockRouter.swift */; };
 		9A7CD9401FC1EDAA0087A620 /* MockRoutingOptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7CD93F1FC1EDAA0087A620 /* MockRoutingOptionProvider.swift */; };
 		9A7CD9421FC2198B0087A620 /* MockRoutingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7CD9411FC2198B0087A620 /* MockRoutingObserver.swift */; };
 		9A7CD9441FC21D8D0087A620 /* MockRoutingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7CD9431FC21D8D0087A620 /* MockRoutingPresenter.swift */; };
+		9AC50CCF1FC2DE0700BC3AF5 /* MockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC50CCD1FC2DD8000BC3AF5 /* MockViewController.swift */; };
 		ACC7622071B775B518201CAC /* MockControllerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC768CD5FF96F13B299680F /* MockControllerProvider.swift */; };
-		B66A629071708DDCAB0BE038 /* Pods_VISPER_Wireframe_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4493B3C91A968337913859BE /* Pods_VISPER_Wireframe_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		080960D286C38813B0854C07 /* Pods-VISPER-Wireframe_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		36232BACBF28E8F0091D93C1 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		4493B3C91A968337913859BE /* Pods_VISPER_Wireframe_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VISPER_Wireframe_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D22CF47E2BC354C9B2D7466 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		60190F1FF5D2E0B4D2176B53 /* VISPER-Wireframe.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "VISPER-Wireframe.podspec"; path = "../VISPER-Wireframe.podspec"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* VISPER-Wireframe_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VISPER-Wireframe_Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,16 +48,21 @@
 		607FACE51AFB9204008FA782 /* VISPER-Wireframe_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "VISPER-Wireframe_Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* DefaultRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRouterTests.swift; sourceTree = "<group>"; };
-		8B1277BC6E936BCBEE1A81E7 /* Pods_VISPER_Wireframe_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VISPER_Wireframe_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8736F5BFDEB388B9E2489219 /* Pods-VISPER-Wireframe_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		9A7CD93A1FC1C17D0087A620 /* DefaultWireframeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWireframeTests.swift; sourceTree = "<group>"; };
 		9A7CD93C1FC1C1D40087A620 /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
 		9A7CD93F1FC1EDAA0087A620 /* MockRoutingOptionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoutingOptionProvider.swift; sourceTree = "<group>"; };
 		9A7CD9411FC2198B0087A620 /* MockRoutingObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoutingObserver.swift; sourceTree = "<group>"; };
 		9A7CD9431FC21D8D0087A620 /* MockRoutingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoutingPresenter.swift; sourceTree = "<group>"; };
-		A63C495D37B8F455D809AC01 /* Pods-VISPER-Wireframe_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		9AC50CCC1FC2DA3000BC3AF5 /* VISPER-Wireframe-UIViewController.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = "VISPER-Wireframe-UIViewController.podspec"; path = "../VISPER-Wireframe-UIViewController.podspec"; sourceTree = "<group>"; };
+		9AC50CCD1FC2DD8000BC3AF5 /* MockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockViewController.swift; sourceTree = "<group>"; };
+		9AE4A34F1FC2D70600BF264C /* VISPER-Wireframe-Protocols.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "VISPER-Wireframe-Protocols.podspec"; path = "../VISPER-Wireframe-Protocols.podspec"; sourceTree = "<group>"; };
 		ACC768CD5FF96F13B299680F /* MockControllerProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockControllerProvider.swift; sourceTree = "<group>"; };
-		B3D32729FC5E07CF856339E9 /* Pods-VISPER-Wireframe_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		EF3AF1E66DB8A3DA3D0810A0 /* Pods-VISPER-Wireframe_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example.release.xcconfig"; sourceTree = "<group>"; };
+		D7B9DE784C47AB26E32993D2 /* Pods-VISPER-Wireframe_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example.release.xcconfig"; sourceTree = "<group>"; };
+		DF875FE0EC82B79293CFC2D4 /* Pods_VISPER_Wireframe_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VISPER_Wireframe_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBDF393520815412413C99A3 /* Pods-VISPER-Wireframe_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		F57586BD53DD75723210F5F4 /* Pods-VISPER-Wireframe_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		F99056FEC045D802CA8E1428 /* Pods_VISPER_Wireframe_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VISPER_Wireframe_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10B58E2B52A590DC470C5F71 /* Pods_VISPER_Wireframe_Example.framework in Frameworks */,
+				79E426A46BA9706761250A94 /* Pods_VISPER_Wireframe_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,7 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B66A629071708DDCAB0BE038 /* Pods_VISPER_Wireframe_Tests.framework in Frameworks */,
+				3D38B2199ABD076905C922C5 /* Pods_VISPER_Wireframe_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,8 +92,8 @@
 				607FACD21AFB9204008FA782 /* Example for VISPER-Wireframe */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				951C366F741A1EF1EB3784FA /* Pods */,
-				F9D6E135E3C5F414E71BFBDE /* Frameworks */,
+				CCAC4D17E97033BE5C6497FA /* Pods */,
+				E53C31B9443343158A2DD9C6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,6 +139,7 @@
 				9A7CD93F1FC1EDAA0087A620 /* MockRoutingOptionProvider.swift */,
 				9A7CD9411FC2198B0087A620 /* MockRoutingObserver.swift */,
 				9A7CD9431FC21D8D0087A620 /* MockRoutingPresenter.swift */,
+				9AC50CCD1FC2DD8000BC3AF5 /* MockViewController.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -150,6 +155,8 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
+				9AC50CCC1FC2DA3000BC3AF5 /* VISPER-Wireframe-UIViewController.podspec */,
+				9AE4A34F1FC2D70600BF264C /* VISPER-Wireframe-Protocols.podspec */,
 				60190F1FF5D2E0B4D2176B53 /* VISPER-Wireframe.podspec */,
 				4D22CF47E2BC354C9B2D7466 /* README.md */,
 				36232BACBF28E8F0091D93C1 /* LICENSE */,
@@ -157,22 +164,22 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		951C366F741A1EF1EB3784FA /* Pods */ = {
+		CCAC4D17E97033BE5C6497FA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A63C495D37B8F455D809AC01 /* Pods-VISPER-Wireframe_Example.debug.xcconfig */,
-				EF3AF1E66DB8A3DA3D0810A0 /* Pods-VISPER-Wireframe_Example.release.xcconfig */,
-				B3D32729FC5E07CF856339E9 /* Pods-VISPER-Wireframe_Tests.debug.xcconfig */,
-				080960D286C38813B0854C07 /* Pods-VISPER-Wireframe_Tests.release.xcconfig */,
+				F57586BD53DD75723210F5F4 /* Pods-VISPER-Wireframe_Example.debug.xcconfig */,
+				D7B9DE784C47AB26E32993D2 /* Pods-VISPER-Wireframe_Example.release.xcconfig */,
+				EBDF393520815412413C99A3 /* Pods-VISPER-Wireframe_Tests.debug.xcconfig */,
+				8736F5BFDEB388B9E2489219 /* Pods-VISPER-Wireframe_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		F9D6E135E3C5F414E71BFBDE /* Frameworks */ = {
+		E53C31B9443343158A2DD9C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8B1277BC6E936BCBEE1A81E7 /* Pods_VISPER_Wireframe_Example.framework */,
-				4493B3C91A968337913859BE /* Pods_VISPER_Wireframe_Tests.framework */,
+				DF875FE0EC82B79293CFC2D4 /* Pods_VISPER_Wireframe_Example.framework */,
+				F99056FEC045D802CA8E1428 /* Pods_VISPER_Wireframe_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -184,12 +191,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "VISPER-Wireframe_Example" */;
 			buildPhases = (
-				5929C26B60B9ECEF9CB8E72C /* [CP] Check Pods Manifest.lock */,
+				0989EFC9C2CEE6DBB7A9D78B /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				0C1F8915E22C75FB5F8C90F9 /* [CP] Embed Pods Frameworks */,
-				252AF6BB28C2A3A69998BD58 /* [CP] Copy Pods Resources */,
+				8AFE43FA95EAE22BD6FD021A /* [CP] Embed Pods Frameworks */,
+				95E6EA53150F151EC0771348 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -204,12 +211,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "VISPER-Wireframe_Tests" */;
 			buildPhases = (
-				9B144A31A602708EC3D4A5A4 /* [CP] Check Pods Manifest.lock */,
+				5BA6E7D6FC3DC6E41CA8D8D1 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				D689E2ED3A19343E9F09C31A /* [CP] Embed Pods Frameworks */,
-				C704B0D6630437789C3F11AE /* [CP] Copy Pods Resources */,
+				9A087BAA3E367576423C8758 /* [CP] Embed Pods Frameworks */,
+				3DEEE52F83841175919CAA70 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -282,40 +289,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0C1F8915E22C75FB5F8C90F9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe/VISPER_Wireframe.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		252AF6BB28C2A3A69998BD58 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5929C26B60B9ECEF9CB8E72C /* [CP] Check Pods Manifest.lock */ = {
+		0989EFC9C2CEE6DBB7A9D78B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -333,7 +307,22 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9B144A31A602708EC3D4A5A4 /* [CP] Check Pods Manifest.lock */ = {
+		3DEEE52F83841175919CAA70 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5BA6E7D6FC3DC6E41CA8D8D1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -351,7 +340,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C704B0D6630437789C3F11AE /* [CP] Copy Pods Resources */ = {
+		8AFE43FA95EAE22BD6FD021A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe/VISPER_Wireframe.framework",
+				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-Protocols/VISPER_Wireframe_Protocols.framework",
+				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-UIViewController/VISPER_Wireframe_UIViewController.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_Protocols.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_UIViewController.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		95E6EA53150F151EC0771348 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -363,10 +374,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D689E2ED3A19343E9F09C31A /* [CP] Embed Pods Frameworks */ = {
+		9A087BAA3E367576423C8758 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -374,10 +385,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe/VISPER_Wireframe.framework",
+				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-Protocols/VISPER_Wireframe_Protocols.framework",
+				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-UIViewController/VISPER_Wireframe_UIViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_Protocols.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_UIViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -404,6 +419,7 @@
 				9A7CD93B1FC1C17D0087A620 /* DefaultWireframeTests.swift in Sources */,
 				9A7CD9421FC2198B0087A620 /* MockRoutingObserver.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* DefaultRouterTests.swift in Sources */,
+				9AC50CCF1FC2DE0700BC3AF5 /* MockViewController.swift in Sources */,
 				9A7CD9441FC21D8D0087A620 /* MockRoutingPresenter.swift in Sources */,
 				ACC7622071B775B518201CAC /* MockControllerProvider.swift in Sources */,
 				9A7CD9401FC1EDAA0087A620 /* MockRoutingOptionProvider.swift in Sources */,
@@ -541,7 +557,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A63C495D37B8F455D809AC01 /* Pods-VISPER-Wireframe_Example.debug.xcconfig */;
+			baseConfigurationReference = F57586BD53DD75723210F5F4 /* Pods-VISPER-Wireframe_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "VISPER-Wireframe/Info.plist";
@@ -556,7 +572,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF3AF1E66DB8A3DA3D0810A0 /* Pods-VISPER-Wireframe_Example.release.xcconfig */;
+			baseConfigurationReference = D7B9DE784C47AB26E32993D2 /* Pods-VISPER-Wireframe_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "VISPER-Wireframe/Info.plist";
@@ -571,7 +587,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B3D32729FC5E07CF856339E9 /* Pods-VISPER-Wireframe_Tests.debug.xcconfig */;
+			baseConfigurationReference = EBDF393520815412413C99A3 /* Pods-VISPER-Wireframe_Tests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -592,7 +608,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 080960D286C38813B0854C07 /* Pods-VISPER-Wireframe_Tests.release.xcconfig */;
+			baseConfigurationReference = 8736F5BFDEB388B9E2489219 /* Pods-VISPER-Wireframe_Tests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

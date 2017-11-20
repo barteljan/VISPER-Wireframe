@@ -6,12 +6,7 @@
 //
 
 import Foundation
-
-public protocol RouteResult {
-    var routePattern: String {get}
-    var parameters: [String : Any] {get}
-}
-
+import VISPER_Wireframe_Protocols
 
 public struct DefaultRouteResult : RouteResult {
     

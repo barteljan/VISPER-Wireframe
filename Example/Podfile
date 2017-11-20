@@ -6,6 +6,8 @@ end
 
 target 'VISPER-Wireframe_Tests' do
     pod 'VISPER-Wireframe', :path => '../'
+    pod 'VISPER-Wireframe-Protocols', :path => '../'
+    pod 'VISPER-Wireframe-UIViewController', :path => '../'
 end
 
 
