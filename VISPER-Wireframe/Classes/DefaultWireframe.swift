@@ -319,8 +319,8 @@ open class DefaultWireframe : Wireframe {
                                                                   parameters: parameters) {
                 //notify vc if it should be aware of it
                 if let viewController = viewController as? RoutingAwareViewController {
-                    viewController.willRoute(wireframe: self, routePattern: routeResult.routePattern, option: option, parameters: params)
-                    viewController.didRoute(wireframe: self, routePattern: routeResult.routePattern, option: option, parameters: params)
+                    viewController.willRoute(wireframe: self, routePattern: routePattern, option: option, parameters: parameters)
+                    viewController.didRoute(wireframe: self, routePattern: routePattern, option: option, parameters: parameters)
                 }
                 
                 return viewController
