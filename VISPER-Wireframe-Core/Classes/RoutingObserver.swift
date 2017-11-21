@@ -25,6 +25,6 @@ public protocol RoutingObserver {
                    routingOption: RoutingOption,
                       parameters: [String : Any],
                 routingPresenter: RoutingPresenter,
-                       wireframe: Wireframe)
+                       wireframe: Wireframe) throws
     
 }

@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import VISPER_Wireframe_Protocols
+import VISPER_Wireframe_Core
 
-open class DefaultComposedOptionProvider : ComposedOptionProvider {
+open class DefaultComposedRoutingOptionProvider : ComposedRoutingOptionProvider {
     
     var optionProviders: [OptionProviderWrapper]
     

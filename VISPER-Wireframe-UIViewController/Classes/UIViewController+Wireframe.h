@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@import VISPER_Wireframe_Protocols;
+@import VISPER_Wireframe_Core;
 
 @interface UIViewController (Wireframe)
 

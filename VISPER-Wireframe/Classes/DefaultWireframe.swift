@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import VISPER_Wireframe_Protocols
+import VISPER_Wireframe_Core
 import VISPER_Wireframe_UIViewController
 
 public enum DefaultWireframeError : Error {
@@ -21,14 +21,14 @@ open class DefaultWireframe : Wireframe {
     //MARK: internal properties
     
     let router: Router
-    var composedOptionProvider: ComposedOptionProvider
+    var composedOptionProvider: ComposedRoutingOptionProvider
     var routingProviders: [ProviderWrapper] = [ProviderWrapper]()
     var routingObservers: [RoutingObserverWrapper] = [RoutingObserverWrapper]()
     var routingPresenters: [RoutingPresenterWrapper] = [RoutingPresenterWrapper]()
     
     //MARK: Initializer
     public init(       router : Router = DefaultRouter(),
-        composedOptionProvider: ComposedOptionProvider = DefaultComposedOptionProvider()){
+        composedOptionProvider: ComposedRoutingOptionProvider = DefaultComposedRoutingOptionProvider()){
         self.composedOptionProvider = composedOptionProvider
         self.router = router
     }
@@ -72,7 +72,7 @@ open class DefaultWireframe : Wireframe {
             })
             
             //get the right routing option
-            var routingOption : RoutingOption? = self.composedOptionProvider.option(routePattern: routeResult.routePattern,
+            let routingOption : RoutingOption? = self.composedOptionProvider.option(routePattern: routeResult.routePattern,
                                                                                       parameters: params,
                                                                                    currentOption: option)
             
@@ -332,12 +332,12 @@ open class DefaultWireframe : Wireframe {
                 //notify all responsible routing observers that the presentation will occour soon
                 for observerWrapper in self.routingObservers {
                     if observerWrapper.routePattern == nil || observerWrapper.routePattern == routeResult.routePattern {
-                        observerWrapper.routingObserver.willPresent(controller: viewController,
-                                                                    routePattern: routeResult.routePattern,
-                                                                    routingOption: option,
-                                                                    parameters: params,
-                                                                    routingPresenter: routingPresenterWrapper.routingPresenter,
-                                                                    wireframe: self)
+                        try observerWrapper.routingObserver.willPresent(controller: viewController,
+                                                                      routePattern: routeResult.routePattern,
+                                                                     routingOption: option,
+                                                                        parameters: params,
+                                                                  routingPresenter: routingPresenterWrapper.routingPresenter,
+                                                                         wireframe: self)
                     }
                 }
                 
@@ -355,27 +355,27 @@ open class DefaultWireframe : Wireframe {
                     viewController.willRoute(wireframe: self, routePattern: routeResult.routePattern, option: option, parameters: params)
                 }
                 
-                routingPresenterWrapper.routingPresenter.present(controller: viewController,
-                                                                 routePattern: routeResult.routePattern,
-                                                                 option: option,
-                                                                 parameters: params,
-                                                                 wireframe: self,
-                                                                 completion: { (viewController, routePattern, option, parameters, wireframe) in
-                                                                    completion()
-                                                                    
-                                                                     //notify per objective c category
-                                                                    viewController.didRoute(wireframeObjc,
-                                                                                            routePattern: routePattern,
-                                                                                            option: routingOptionObjc,
-                                                                                            parameters: parameters)
-                                                                   
-                                                                    
-                                                                    //notify vc if it should be aware of it
-                                                                    if let viewController = viewController as? RoutingAwareViewController {
-                                                                        viewController.didRoute(wireframe: self,
-                                                                                             routePattern: routeResult.routePattern,
-                                                                                                   option: option, parameters: params)
-                                                                    }
+                try routingPresenterWrapper.routingPresenter.present(controller: viewController,
+                                                                   routePattern: routeResult.routePattern,
+                                                                         option: option,
+                                                                     parameters: params,
+                                                                      wireframe: self,
+                                                                     completion: { (viewController, routePattern, option, parameters, wireframe) in
+                                                                        completion()
+                                                                        
+                                                                         //notify per objective c category
+                                                                        viewController.didRoute(wireframeObjc,
+                                                                                                routePattern: routePattern,
+                                                                                                option: routingOptionObjc,
+                                                                                                parameters: parameters)
+                                                                       
+                                                                        
+                                                                        //notify vc if it should be aware of it
+                                                                        if let viewController = viewController as? RoutingAwareViewController {
+                                                                            viewController.didRoute(wireframe: self,
+                                                                                                 routePattern: routeResult.routePattern,
+                                                                                                       option: option, parameters: params)
+                                                                        }
                                                                     
                 })
             }

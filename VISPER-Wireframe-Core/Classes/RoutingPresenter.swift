@@ -38,5 +38,5 @@ public protocol RoutingPresenter {
                               _ routePattern: String,
                               _ option: RoutingOption,
                               _ parameters: [String : Any],
-                              _ wireframe: Wireframe) -> Void)
+                              _ wireframe: Wireframe) -> Void) throws
 }

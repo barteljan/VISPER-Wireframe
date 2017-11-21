@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import VISPER_Wireframe_Protocols
+import VISPER_Wireframe_Core
 
 public struct DefaultRouteResult : RouteResult {
     

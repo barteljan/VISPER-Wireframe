@@ -2,9 +2,9 @@
 # Be sure to run `pod lib lint VISPER-Wireframe.podspec' to ensure this is a
 
 Pod::Spec.new do |s|
-  s.name             = 'VISPER-Wireframe-Protocols'
+  s.name             = 'VISPER-Wireframe-Core'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of VISPER-Wireframe.'
+  s.summary          = 'The core protocols of a VISPER-Wireframe'
 
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
@@ -18,7 +18,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'VISPER-Wireframe-Protocols/Classes/**/*'
+  s.source_files = 'VISPER-Wireframe-Core/Classes/**/*'
   
 
 end

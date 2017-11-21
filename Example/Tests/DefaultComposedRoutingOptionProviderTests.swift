@@ -10,13 +10,13 @@ import Foundation
 import XCTest
 @testable import VISPER_Wireframe
 
-class DefaultComposedRoutingProviderTests: XCTestCase {
+class DefaultComposedRoutingOptionProviderTests: XCTestCase {
     
     func testAddRoutingOptionProvider() throws {
         
         let mockProvider = MockRoutingOptionProvider()
         
-        let composedProvider = DefaultComposedOptionProvider()
+        let composedProvider = DefaultComposedRoutingOptionProvider()
         
         let priority = 10
         composedProvider.add(optionProvider: mockProvider, priority: priority)
@@ -48,7 +48,7 @@ class DefaultComposedRoutingProviderTests: XCTestCase {
         let mockProvider2 = MockRoutingOptionProvider()
         let priority2 = 10
         
-        let composedProvider = DefaultComposedOptionProvider()
+        let composedProvider = DefaultComposedRoutingOptionProvider()
         
         
         composedProvider.add(optionProvider: mockProvider1, priority: priority1)
@@ -87,7 +87,7 @@ class DefaultComposedRoutingProviderTests: XCTestCase {
         mockProvider.stubbedOptionResult = stubbedOption
         let priority = 10
         
-        let composedProvider = DefaultComposedOptionProvider()
+        let composedProvider = DefaultComposedRoutingOptionProvider()
         
         
         composedProvider.add(optionProvider: mockProvider, priority: priority)
@@ -110,7 +110,7 @@ class DefaultComposedRoutingProviderTests: XCTestCase {
         let mockProvider = MockRoutingOptionProvider()
         let priority = 10
         
-        let composedProvider = DefaultComposedOptionProvider()
+        let composedProvider = DefaultComposedRoutingOptionProvider()
         
         
         composedProvider.add(optionProvider: mockProvider, priority: priority)
@@ -132,7 +132,7 @@ class DefaultComposedRoutingProviderTests: XCTestCase {
         let mockProvider = MockRoutingOptionProvider()
         let priority = 10
         
-        let composedProvider = DefaultComposedOptionProvider()
+        let composedProvider = DefaultComposedRoutingOptionProvider()
         
         composedProvider.add(optionProvider: mockProvider, priority: priority)
         
@@ -177,7 +177,7 @@ class DefaultComposedRoutingProviderTests: XCTestCase {
         lastCalledProvider.stubbedOptionResult = lastCalledOption
         let lastCalledPriority = 15
         
-        let composedProvider = DefaultComposedOptionProvider()
+        let composedProvider = DefaultComposedRoutingOptionProvider()
         
         composedProvider.add(optionProvider: secondCalledProvider, priority: secondCalledPriority)
         composedProvider.add(optionProvider: lastCalledProvider, priority: lastCalledPriority)
@@ -226,7 +226,7 @@ class DefaultComposedRoutingProviderTests: XCTestCase {
         lastCalledProvider.stubbedOptionResult = lastCalledOption
         let lastCalledPriority = 15
         
-        let composedProvider = DefaultComposedOptionProvider()
+        let composedProvider = DefaultComposedRoutingOptionProvider()
         
         composedProvider.add(optionProvider: secondCalledProvider, priority: secondCalledPriority)
         composedProvider.add(optionProvider: lastCalledProvider, priority: lastCalledPriority)
@@ -256,7 +256,7 @@ class DefaultComposedRoutingProviderTests: XCTestCase {
         let secondCalledPriority = 10
         
 
-        let composedProvider = DefaultComposedOptionProvider()
+        let composedProvider = DefaultComposedRoutingOptionProvider()
         
         composedProvider.add(optionProvider: secondCalledProvider, priority: secondCalledPriority)
         composedProvider.add(optionProvider: firstCalledProvider, priority: firstCalledPriority)

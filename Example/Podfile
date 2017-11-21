@@ -2,11 +2,13 @@ use_frameworks!
 
 target 'VISPER-Wireframe_Example' do
   pod 'VISPER-Wireframe', :path => '../'
+  pod 'VISPER-Wireframe-Core', :path => '../'
+  pod 'VISPER-Wireframe-UIViewController', :path => '../'
 end
 
 target 'VISPER-Wireframe_Tests' do
     pod 'VISPER-Wireframe', :path => '../'
-    pod 'VISPER-Wireframe-Protocols', :path => '../'
+    pod 'VISPER-Wireframe-Core', :path => '../'
     pod 'VISPER-Wireframe-UIViewController', :path => '../'
 end
 

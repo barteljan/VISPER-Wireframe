@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import VISPER_Wireframe_Core
 
-public protocol ComposedOptionProvider : RoutingOptionProvider {
+public protocol ComposedRoutingOptionProvider : RoutingOptionProvider {
     
     /// Add an instance providing routing options for a route
     ///

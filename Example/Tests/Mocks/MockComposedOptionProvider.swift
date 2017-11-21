@@ -7,9 +7,11 @@
 //
 
 import Foundation
-@testable import VISPER_Wireframe_Protocols
+import VISPER_Wireframe_Core
+import VISPER_Wireframe
 
-class MockComposedOptionProvider: ComposedOptionProvider {
+
+class MockComposedOptionProvider: ComposedRoutingOptionProvider {
 
     var invokedAdd = false
     var invokedAddCount = 0

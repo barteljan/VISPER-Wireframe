@@ -24,7 +24,7 @@
 		9AF3ACE81FC4BA4F00EBB3AC /* MockRoutingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF3ACE21FC4BA4F00EBB3AC /* MockRoutingObserver.swift */; };
 		9AF3ACE91FC4BA4F00EBB3AC /* MockRoutingOptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF3ACE31FC4BA4F00EBB3AC /* MockRoutingOptionProvider.swift */; };
 		9AF3ACEB1FC4BBDF00EBB3AC /* MockRoutingOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF3ACEA1FC4BBDF00EBB3AC /* MockRoutingOption.swift */; };
-		9AF3ACF51FC4C4BD00EBB3AC /* DefaultComposedRoutingProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF3ACF41FC4C4BD00EBB3AC /* DefaultComposedRoutingProviderTests.swift */; };
+		9AF3ACF51FC4C4BD00EBB3AC /* DefaultComposedRoutingOptionProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF3ACF41FC4C4BD00EBB3AC /* DefaultComposedRoutingOptionProviderTests.swift */; };
 		9AF3ACF71FC4C6E000EBB3AC /* MockComposedOptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF3ACF61FC4C6E000EBB3AC /* MockComposedOptionProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,7 +55,7 @@
 		8736F5BFDEB388B9E2489219 /* Pods-VISPER-Wireframe_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		9A7CD93A1FC1C17D0087A620 /* DefaultWireframeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWireframeTests.swift; sourceTree = "<group>"; };
 		9AC50CCC1FC2DA3000BC3AF5 /* VISPER-Wireframe-UIViewController.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = "VISPER-Wireframe-UIViewController.podspec"; path = "../VISPER-Wireframe-UIViewController.podspec"; sourceTree = "<group>"; };
-		9AE4A34F1FC2D70600BF264C /* VISPER-Wireframe-Protocols.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "VISPER-Wireframe-Protocols.podspec"; path = "../VISPER-Wireframe-Protocols.podspec"; sourceTree = "<group>"; };
+		9AE4A34F1FC2D70600BF264C /* VISPER-Wireframe-Core.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "VISPER-Wireframe-Core.podspec"; path = "../VISPER-Wireframe-Core.podspec"; sourceTree = "<group>"; };
 		9AF3ACDB1FC4BA0500EBB3AC /* DefaultWireframeRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWireframeRoutingTests.swift; sourceTree = "<group>"; };
 		9AF3ACDE1FC4BA4F00EBB3AC /* MockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockViewController.swift; sourceTree = "<group>"; };
 		9AF3ACDF1FC4BA4F00EBB3AC /* MockRoutingPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRoutingPresenter.swift; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 		9AF3ACE21FC4BA4F00EBB3AC /* MockRoutingObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRoutingObserver.swift; sourceTree = "<group>"; };
 		9AF3ACE31FC4BA4F00EBB3AC /* MockRoutingOptionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRoutingOptionProvider.swift; sourceTree = "<group>"; };
 		9AF3ACEA1FC4BBDF00EBB3AC /* MockRoutingOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoutingOption.swift; sourceTree = "<group>"; };
-		9AF3ACF41FC4C4BD00EBB3AC /* DefaultComposedRoutingProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultComposedRoutingProviderTests.swift; sourceTree = "<group>"; };
+		9AF3ACF41FC4C4BD00EBB3AC /* DefaultComposedRoutingOptionProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultComposedRoutingOptionProviderTests.swift; sourceTree = "<group>"; };
 		9AF3ACF61FC4C6E000EBB3AC /* MockComposedOptionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockComposedOptionProvider.swift; sourceTree = "<group>"; };
 		D7B9DE784C47AB26E32993D2 /* Pods-VISPER-Wireframe_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VISPER-Wireframe_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example.release.xcconfig"; sourceTree = "<group>"; };
 		DF875FE0EC82B79293CFC2D4 /* Pods_VISPER_Wireframe_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VISPER_Wireframe_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,7 +141,7 @@
 			children = (
 				9AF3ACDD1FC4BA4F00EBB3AC /* Mocks */,
 				607FACEB1AFB9204008FA782 /* DefaultRouterTests.swift */,
-				9AF3ACF41FC4C4BD00EBB3AC /* DefaultComposedRoutingProviderTests.swift */,
+				9AF3ACF41FC4C4BD00EBB3AC /* DefaultComposedRoutingOptionProviderTests.swift */,
 				9AF3ACDB1FC4BA0500EBB3AC /* DefaultWireframeRoutingTests.swift */,
 				9A7CD93A1FC1C17D0087A620 /* DefaultWireframeTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
@@ -161,7 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				9AC50CCC1FC2DA3000BC3AF5 /* VISPER-Wireframe-UIViewController.podspec */,
-				9AE4A34F1FC2D70600BF264C /* VISPER-Wireframe-Protocols.podspec */,
+				9AE4A34F1FC2D70600BF264C /* VISPER-Wireframe-Core.podspec */,
 				60190F1FF5D2E0B4D2176B53 /* VISPER-Wireframe.podspec */,
 				4D22CF47E2BC354C9B2D7466 /* README.md */,
 				36232BACBF28E8F0091D93C1 /* LICENSE */,
@@ -368,13 +368,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe/VISPER_Wireframe.framework",
-				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-Protocols/VISPER_Wireframe_Protocols.framework",
+				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-Core/VISPER_Wireframe_Core.framework",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-UIViewController/VISPER_Wireframe_UIViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_Protocols.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_Core.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_UIViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,13 +405,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe/VISPER_Wireframe.framework",
-				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-Protocols/VISPER_Wireframe_Protocols.framework",
+				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-Core/VISPER_Wireframe_Core.framework",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-UIViewController/VISPER_Wireframe_UIViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_Protocols.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_Core.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_UIViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,7 +445,7 @@
 				9AF3ACE71FC4BA4F00EBB3AC /* MockRouter.swift in Sources */,
 				9AF3ACE81FC4BA4F00EBB3AC /* MockRoutingObserver.swift in Sources */,
 				9AF3ACE91FC4BA4F00EBB3AC /* MockRoutingOptionProvider.swift in Sources */,
-				9AF3ACF51FC4C4BD00EBB3AC /* DefaultComposedRoutingProviderTests.swift in Sources */,
+				9AF3ACF51FC4C4BD00EBB3AC /* DefaultComposedRoutingOptionProviderTests.swift in Sources */,
 				9AF3ACE51FC4BA4F00EBB3AC /* MockRoutingPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
