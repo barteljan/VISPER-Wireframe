@@ -21,13 +21,15 @@ open class DefaultWireframe : Wireframe {
     //MARK: internal properties
     
     let router: Router
-    var optionProviders: [OptionProviderWrapper] = [OptionProviderWrapper]()
+    var composedOptionProvider: ComposedOptionProvider
     var routingProviders: [ProviderWrapper] = [ProviderWrapper]()
     var routingObservers: [RoutingObserverWrapper] = [RoutingObserverWrapper]()
     var routingPresenters: [RoutingPresenterWrapper] = [RoutingPresenterWrapper]()
     
     //MARK: Initializer
-    public init(router : Router = DefaultRouter()){
+    public init(       router : Router = DefaultRouter(),
+        composedOptionProvider: ComposedOptionProvider = DefaultComposedOptionProvider()){
+        self.composedOptionProvider = composedOptionProvider
         self.router = router
     }
     
@@ -70,12 +72,9 @@ open class DefaultWireframe : Wireframe {
             })
             
             //get the right routing option
-            var routingOption : RoutingOption? = option
-            for optionProviderWrapper in self.optionProviders {
-                routingOption = optionProviderWrapper.optionProvider.option(routePattern: routeResult.routePattern,
-                                                                              parameters: params,
-                                                                           currentOption: routingOption)
-            }
+            var routingOption : RoutingOption? = self.composedOptionProvider.option(routePattern: routeResult.routePattern,
+                                                                                      parameters: params,
+                                                                                   currentOption: option)
             
             var controller: UIViewController?
             
@@ -209,8 +208,7 @@ open class DefaultWireframe : Wireframe {
     ///   - optionProvider: instance providing routing options for a route
     ///   - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
     open func add(optionProvider: RoutingOptionProvider, priority: Int = 0) {
-        let wrapper = OptionProviderWrapper(priority: priority, optionProvider: optionProvider)
-        self.addOptionProviderWrapper(wrapper: wrapper)
+        self.composedOptionProvider.add(optionProvider: optionProvider, priority: priority)
     }
     
     /// Add an instance observing controllers before they are presented
@@ -247,12 +245,7 @@ open class DefaultWireframe : Wireframe {
         let controllerProvider : ControllerProvider?
         let handlerWrapper : RouteHandlerWrapper?
     }
-    
-    struct OptionProviderWrapper {
-        let priority : Int
-        let optionProvider : RoutingOptionProvider
-    }
-    
+
     internal struct RoutingObserverWrapper {
         let priority : Int
         let routePattern : String?
@@ -269,13 +262,6 @@ open class DefaultWireframe : Wireframe {
     func addRoutingProviderWrapper(wrapper: ProviderWrapper) {
         self.routingProviders.append(wrapper)
         self.routingProviders.sort { (wrapper1, wrapper2) -> Bool in
-            return wrapper1.priority > wrapper2.priority
-        }
-    }
-    
-    func addOptionProviderWrapper(wrapper: OptionProviderWrapper) {
-        self.optionProviders.append(wrapper)
-        self.optionProviders.sort { (wrapper1, wrapper2) -> Bool in
             return wrapper1.priority > wrapper2.priority
         }
     }

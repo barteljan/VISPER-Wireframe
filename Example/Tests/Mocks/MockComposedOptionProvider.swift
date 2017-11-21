@@ -1,18 +1,28 @@
 //
-//  MockRoutingOptionProvider.swift
+//  MockComposedOptionProvider.swift
 //  VISPER-Wireframe_Tests
 //
-//  Created by bartel on 19.11.17.
+//  Created by bartel on 21.11.17.
 //  Copyright © 2017 CocoaPods. All rights reserved.
 //
 
 import Foundation
 @testable import VISPER_Wireframe_Protocols
-@testable import VISPER_Wireframe
 
-class MockRoutingOptionProvider: RoutingOptionProvider {
+class MockComposedOptionProvider: ComposedOptionProvider {
 
-    var id : String? 
+    var invokedAdd = false
+    var invokedAddCount = 0
+    var invokedAddParameters: (optionProvider: RoutingOptionProvider, priority: Int)?
+    var invokedAddParametersList = [(optionProvider: RoutingOptionProvider, priority: Int)]()
+
+    func add(optionProvider: RoutingOptionProvider, priority: Int) {
+        invokedAdd = true
+        invokedAddCount += 1
+        invokedAddParameters = (optionProvider, priority)
+        invokedAddParametersList.append((optionProvider, priority))
+    }
+
     var invokedOption = false
     var invokedOptionCount = 0
     var invokedOptionParameters: (routePattern: String, parameters: [String: Any], currentOption: RoutingOption?)?

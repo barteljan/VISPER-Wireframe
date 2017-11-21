@@ -172,79 +172,30 @@ class DefaultWireframeTests: XCTestCase {
     }
     
     
-    func testAddRoutingOptionProvider() throws {
+    func testAddRoutingOptionProviderCallsComposedOptionProvider() throws {
         
-        let id = "mockProvider1"
+        
         let mockProvider = MockRoutingOptionProvider()
-        mockProvider.id = id
         
-        let wireframe = self.createWireframe()
+        let router = MockRouter()
+        let composedRoutingOptionProvider = MockComposedOptionProvider()
+        let wireframe = DefaultWireframe(router: router,
+                                         composedOptionProvider: composedRoutingOptionProvider)
         
         let priority = 10
         wireframe.add(optionProvider: mockProvider, priority: priority)
         
-        if wireframe.optionProviders.count == 1 {
-            
-            let wrapper = wireframe.optionProviders[0]
-            
-            guard let provider = wrapper.optionProvider as? MockRoutingOptionProvider else {
-                XCTFail("wrapper should contain our routing option provider")
-                return
-            }
-            
-            XCTAssertEqual(wrapper.priority, priority)
-            XCTAssertEqual(provider.id, mockProvider.id)
-            
-        } else {
-            XCTFail("There should be one RoutingOptionWrapper in there")
+        if let calledWithOptionProvider = composedRoutingOptionProvider.invokedAddParameters?.optionProvider as? MockRoutingOptionProvider {
+            XCTAssertEqual(calledWithOptionProvider, mockProvider)
+        }else {
+            XCTFail()
         }
+        
+        
         
     }
     
-    func testAddRoutingOptionProviderPriority() throws {
-        
-        let id1 = "mockProvider1"
-        let mockProvider1 = MockRoutingOptionProvider()
-        mockProvider1.id = id1
-        let priority1 = 5
-        
-        let id2 = "mockProvider2"
-        let mockProvider2 = MockRoutingOptionProvider()
-        mockProvider2.id = id2
-        let priority2 = 10
-        
-        let wireframe = self.createWireframe()
-        
-        
-        wireframe.add(optionProvider: mockProvider1, priority: priority1)
-        wireframe.add(optionProvider: mockProvider2, priority: priority2)
-        
-        if wireframe.optionProviders.count == 2 {
-            
-            let wrapper1 = wireframe.optionProviders[0]
-            guard let provider1 = wrapper1.optionProvider as? MockRoutingOptionProvider else {
-                XCTFail("wrapper should contain our routing option provider")
-                return
-            }
-            
-            let wrapper2 = wireframe.optionProviders[1]
-            guard let provider2 = wrapper2.optionProvider as? MockRoutingOptionProvider else {
-                XCTFail("wrapper should contain our routing option provider")
-                return
-            }
-            
-            XCTAssertEqual(wrapper1.priority, priority2)
-            XCTAssertEqual(provider1.id, mockProvider2.id)
-            
-            XCTAssertEqual(wrapper2.priority, priority1)
-            XCTAssertEqual(provider2.id, mockProvider1.id)
-            
-        } else {
-            XCTFail("There should be two RoutingOptionWrapper in there")
-        }
-        
-    }
-    
+
     func testAddRoutingObserver() throws {
         
         let id = "mockObserver1"
