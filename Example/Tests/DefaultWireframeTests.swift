@@ -10,6 +10,7 @@ import XCTest
 @testable import VISPER_Wireframe_Core
 @testable import VISPER_Wireframe
 
+
 class DefaultWireframeTests: XCTestCase {
     
     func createWireframe() -> DefaultWireframe {
@@ -269,10 +270,8 @@ class DefaultWireframeTests: XCTestCase {
     }
     
     func testAddRoutingPresenter() throws {
-        
-        let id = "mockPresenter1"
+    
         let mockPresenter1 = MockRoutingPresenter()
-        mockPresenter1.id = id
         
         let wireframe = self.createWireframe()
         
@@ -289,7 +288,7 @@ class DefaultWireframeTests: XCTestCase {
             }
             
             XCTAssertEqual(wrapper.priority, priority)
-            XCTAssertEqual(presenter.id, mockPresenter1.id)
+            XCTAssertEqual(presenter, mockPresenter1)
             
         } else {
             XCTFail("There should be one RoutingObserverWrapper in there")
@@ -299,14 +298,10 @@ class DefaultWireframeTests: XCTestCase {
     
     func testAddRoutingPresenterPriority() throws {
         
-        let id1 = "mockPresenter1"
         let mockPresenter1 = MockRoutingPresenter()
-        mockPresenter1.id = id1
         let priority1 = 5
         
-        let id2 = "mockPresenter2"
         let mockPresenter2 = MockRoutingPresenter()
-        mockPresenter2.id = id2
         let priority2 = 10
         
         let wireframe = self.createWireframe()
@@ -329,10 +324,10 @@ class DefaultWireframeTests: XCTestCase {
             }
             
             XCTAssertEqual(wrapper1.priority, priority2)
-            XCTAssertEqual(presenter1.id, mockPresenter2.id)
+            XCTAssertEqual(presenter1, mockPresenter2)
             
             XCTAssertEqual(wrapper2.priority, priority1)
-            XCTAssertEqual(presenter2.id, mockPresenter1.id)
+            XCTAssertEqual(presenter2, mockPresenter1)
             
         } else {
             XCTFail("There should be two RoutingObserverWrapper in there")
@@ -341,3 +336,4 @@ class DefaultWireframeTests: XCTestCase {
     }
     
 }
+

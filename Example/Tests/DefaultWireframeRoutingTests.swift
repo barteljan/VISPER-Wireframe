@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import VISPER_Wireframe
-
+/*
 class DefaultWireframeRoutingTests: XCTestCase {
     
     func testCallsRouterForUrl() throws {
@@ -32,3 +32,4 @@ class DefaultWireframeRoutingTests: XCTestCase {
     
     
 }
+*/
