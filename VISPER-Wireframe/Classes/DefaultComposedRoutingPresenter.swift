@@ -122,6 +122,14 @@ open class DefaultComposedRoutingPresenter : ComposedRoutingPresenter {
                                                                                                     routePattern: routePattern,
                                                                                                     option: option, parameters: parameters)
                                                                         }
+                                                                        
+                                                                        
+                                                                             self.composedRoutingObserver.didPresent(controller: controller,
+                                                                                                                   routePattern: routePattern,
+                                                                                                                  routingOption: option,
+                                                                                                                     parameters: parameters,
+                                                                                                               routingPresenter: routingPresenterWrapper.routingPresenter,
+                                                                                                                      wireframe: wireframe)
                                                                     
                 })
                 return

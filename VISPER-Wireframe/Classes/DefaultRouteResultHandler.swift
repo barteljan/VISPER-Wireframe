@@ -7,13 +7,12 @@
 
 import Foundation
 import VISPER_Wireframe_Core
+import VISPER_Wireframe_UIViewController
 
 open class DefaultRouteResultHandler : RouteResultHandler {
     
-    let composedRoutingPresenter : ComposedRoutingPresenter
     
     public init(composedRoutingPresenter : ComposedRoutingPresenter){
-        self.composedRoutingPresenter = composedRoutingPresenter
     }
     
     var routingProviders: [ProviderWrapper] = [ProviderWrapper]()
@@ -47,25 +46,6 @@ open class DefaultRouteResultHandler : RouteResultHandler {
         self.addRoutingProviderWrapper(wrapper: providerWrapper)
     }
     
-    /// Add an instance observing controllers before they are presented
-    ///
-    /// - Parameters:
-    ///   - routingObserver: An instance observing controllers before they are presented
-    ///   - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
-    ///   - routePattern: The route pattern to call this observer, the observer is called for every route if this pattern is nil
-    public func add(routingObserver: RoutingObserver, priority: Int, routePattern: String?) {
-        self.composedRoutingPresenter.add(routingObserver: routingObserver, priority: priority, routePattern: routePattern)
-    }
-    
-    /// Add an instance responsible for presenting view controllers.
-    /// It will be triggert after the wireframe resolves a route
-    ///
-    /// - Parameters:
-    ///    - routingPresenter: An instance responsible for presenting view controllers
-    ///    - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
-    public func add(routingPresenter: RoutingPresenter, priority: Int) {
-        self.composedRoutingPresenter.add(routingPresenter: routingPresenter, priority: priority)
-    }
     
     /// Handels a RouteResult. (call a registered handler or resolve a controller for this RouteResult)
     ///
@@ -73,9 +53,65 @@ open class DefaultRouteResultHandler : RouteResultHandler {
     ///   - routeResult: The RouteResult to be handeld
     ///   - routingOption: A routing option describing how a RouteResult should be handeled (it descibes often how a controller should be presented)
     /// - Throws: throws a RouteResultHandlerError.couldNotHandle(error:) if it could not handle this route result
-    public func handleRouteResult(routeResult: RouteResult, routingOption: RoutingOption) throws {
+    public func handleRouteResult(routeResult: RouteResult,
+                                routingOption: RoutingOption?,
+                                    presenter: RoutingPresenter,
+                                    wireframe: Wireframe,
+                                   completion: @escaping ()->Void) throws {
         
+        var controller: UIViewController?
         
+        for routingProviderWrapper in self.routingProviders {
+            
+            // call the handler if one is registered
+            // function returns true if a handler was called
+            // you can return in that case because you have found the highest priorized handler
+            if self.callHandlerFor(routePattern: routeResult.routePattern,
+                                   parameters: routeResult.parameters,
+                                   routingProviderWrapper: routingProviderWrapper,
+                                   completion: completion) {
+                return
+            }
+            
+            //since we don't call a handler, we are now shure that our routing option should not be nil
+            guard let routingOption = routingOption else {
+                throw DefaultWireframeError.noRoutingOptionFoundFor(routePattern: routeResult.routePattern, parameters: routeResult.parameters)
+            }
+            
+            
+            if let viewController = self.getController(wrapper: routingProviderWrapper,
+                                                       routePattern: routeResult.routePattern,
+                                                       option: routingOption,
+                                                       parameters: routeResult.parameters,
+                                                       wireframe: wireframe) {
+                controller = viewController
+                continue
+            }
+            
+        }
+        
+        //take care that routing option is not nil
+        guard let option = routingOption else {
+            throw DefaultWireframeError.noRoutingOptionFoundFor(routePattern: routeResult.routePattern, parameters: routeResult.parameters)
+        }
+        
+        //take care that controller is not nil
+        guard let viewController = controller else {
+            throw DefaultWireframeError.noControllerProviderFoundFor(routePattern: routeResult.routePattern,
+                                                                     option: option,
+                                                                     parameters: routeResult.parameters)
+        }
+        
+        //present view controller with RoutingPresenter
+        try presenter.present(controller: viewController,
+                            routePattern: routeResult.routePattern,
+                                  option: option,
+                              parameters: routeResult.parameters,
+                               wireframe: wireframe) { controller, routePattern, option, parameters, wireframe in
+                            completion()
+        }
+        
+       
         
     }
     
@@ -98,5 +134,45 @@ open class DefaultRouteResultHandler : RouteResultHandler {
             return wrapper1.priority > wrapper2.priority
         }
     }
+    
+    func getController(wrapper: ProviderWrapper,
+                       routePattern: String,
+                       option: RoutingOption,
+                       parameters: [String : Any],
+                       wireframe: Wireframe) -> UIViewController? {
+        
+        if let controllerProvider = wrapper.controllerProvider {
+            
+            if let viewController = controllerProvider.controller(routePattern: routePattern,
+                                                                  routingOption: option,
+                                                                  parameters: parameters) {
+                //notify vc if it should be aware of it
+                if let viewController = viewController as? RoutingAwareViewController {
+                    viewController.willRoute(wireframe: wireframe, routePattern: routePattern, option: option, parameters: parameters)
+                    viewController.didRoute(wireframe: wireframe, routePattern: routePattern, option: option, parameters: parameters)
+                }
+                
+                return viewController
+            }
+        }
+        return nil
+    }
+    
+    
+    func callHandlerFor(routePattern: String,
+                        parameters: [String : Any],
+                        routingProviderWrapper: ProviderWrapper,
+                        completion: @escaping ()->Void) -> Bool {
+        
+        if routingProviderWrapper.handlerWrapper?.routePattern == routePattern {
+            if let handler = routingProviderWrapper.handlerWrapper?.handler {
+                handler(parameters)
+                completion()
+                return true
+            }
+        }
+        return false
+    }
+    
     
 }

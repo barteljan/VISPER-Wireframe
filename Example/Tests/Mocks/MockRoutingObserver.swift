@@ -11,6 +11,11 @@ import Foundation
 @testable import VISPER_Wireframe
 
 class MockRoutingObserver: RoutingObserver {
+    
+    func didPresent(controller: UIViewController, routePattern: String, routingOption: RoutingOption, parameters: [String : Any], routingPresenter: RoutingPresenter, wireframe: Wireframe)  {
+        
+    }
+    
     var id: String?
     var invokedWillPresent = false
     var invokedWillPresentCount = 0

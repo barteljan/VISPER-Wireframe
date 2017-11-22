@@ -58,6 +58,38 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
         
     }
     
+    
+    /// Event that indicates that a view controller was presented
+    ///
+    /// - Parameters:
+    ///   - controller: The view controller that will be presented
+    ///   - routePattern: The route pattern triggering the presentation
+    ///   - routingOption: The RoutingOption describing how the controller will be presented
+    ///   - parameters: The parameters (data) extraced from the route, or given by the sender
+    ///   - routingPresenter: The RoutingPresenter responsible for presenting the controller
+    ///   - wireframe: The wireframe presenting the view controller
+    open func didPresent( controller: UIViewController,
+                        routePattern: String,
+                       routingOption: RoutingOption,
+                          parameters: [String : Any],
+                    routingPresenter: RoutingPresenter,
+                           wireframe: Wireframe)  {
+        
+        //notify all responsible routing observers that the view controller presentation did occure
+        for observerWrapper in self.routingObservers {
+            if observerWrapper.routePattern == nil || observerWrapper.routePattern == routePattern {
+                try observerWrapper.routingObserver.didPresent(   controller: controller,
+                                                                routePattern: routePattern,
+                                                               routingOption: routingOption,
+                                                                  parameters: parameters,
+                                                            routingPresenter: routingPresenter,
+                                                                   wireframe: wireframe)
+            }
+        }
+        
+    }
+    
+    
     internal struct RoutingObserverWrapper {
         let priority : Int
         let routePattern : String?

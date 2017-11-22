@@ -32,22 +32,6 @@ public protocol RouteResultHandler {
     ///   - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
     func add(controllerProvider: ControllerProvider, priority: Int)
     
-    /// Add an instance observing controllers before they are presented
-    ///
-    /// - Parameters:
-    ///   - routingObserver: An instance observing controllers before they are presented
-    ///   - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
-    ///   - routePattern: The route pattern to call this observer, the observer is called for every route if this pattern is nil
-    func add(routingObserver: RoutingObserver, priority: Int, routePattern: String?)
-    
-    /// Add an instance responsible for presenting view controllers.
-    /// It will be triggert after the wireframe resolves a route
-    ///
-    /// - Parameters:
-    ///    - routingPresenter: An instance responsible for presenting view controllers
-    ///    - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
-    func add(routingPresenter: RoutingPresenter,priority: Int)
-    
     
     /// Handels a RouteResult. (call a registered handler or resolve a controller for this RouteResult)
     ///
@@ -56,6 +40,9 @@ public protocol RouteResultHandler {
     ///   - routingOption: A routing option describing how a RouteResult should be handeled (it descibes often how a controller should be presented)
     /// - Throws: throws a RouteResultHandlerError.couldNotHandle(error:) if it could not handle this route result
     func handleRouteResult(routeResult: RouteResult,
-                         routingOption: RoutingOption) throws
+                         routingOption: RoutingOption?,
+                             presenter: RoutingPresenter,
+                             wireframe: Wireframe,
+                            completion: @escaping () -> Void) throws
     
 }
