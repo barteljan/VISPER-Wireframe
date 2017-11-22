@@ -56,6 +56,7 @@ open class DefaultRouteResultHandler : RouteResultHandler {
     public func handleRouteResult(routeResult: RouteResult,
                                 routingOption: RoutingOption?,
                                     presenter: RoutingPresenter,
+                            presenterDelegate: RoutingPresenterDelegate,
                                     wireframe: Wireframe,
                                    completion: @escaping ()->Void) throws {
         
@@ -107,11 +108,9 @@ open class DefaultRouteResultHandler : RouteResultHandler {
                             routePattern: routeResult.routePattern,
                                   option: option,
                               parameters: routeResult.parameters,
-                               wireframe: wireframe) { controller, routePattern, option, parameters, wireframe in
-                            completion()
-        }
-        
-       
+                               wireframe: wireframe,
+                                delegate: presenterDelegate,
+                              completion: completion)
         
     }
     

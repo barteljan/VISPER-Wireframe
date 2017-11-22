@@ -37,11 +37,11 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
     ///   - routingPresenter: The RoutingPresenter responsible for presenting the controller
     ///   - wireframe: The wireframe presenting the view controller
     public func willPresent(controller: UIViewController,
-                          routePattern: String,
-                         routingOption: RoutingOption,
+                            routePattern: String,
+                            routingOption: RoutingOption,
                             parameters: [String : Any],
-                      routingPresenter: RoutingPresenter?,
-                             wireframe: Wireframe) throws {
+                            routingPresenter: RoutingPresenter?,
+                            wireframe: Wireframe) throws {
         
         
         //notify all responsible routing observers that the presentation will occour soon

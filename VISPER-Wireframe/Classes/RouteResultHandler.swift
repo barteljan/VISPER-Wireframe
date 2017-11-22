@@ -40,9 +40,10 @@ public protocol RouteResultHandler {
     ///   - routingOption: A routing option describing how a RouteResult should be handeled (it descibes often how a controller should be presented)
     /// - Throws: throws a RouteResultHandlerError.couldNotHandle(error:) if it could not handle this route result
     func handleRouteResult(routeResult: RouteResult,
-                         routingOption: RoutingOption?,
-                             presenter: RoutingPresenter,
-                             wireframe: Wireframe,
-                            completion: @escaping () -> Void) throws
+                           routingOption: RoutingOption?,
+                           presenter: RoutingPresenter,
+                           presenterDelegate: RoutingPresenterDelegate,
+                           wireframe: Wireframe,
+                           completion: @escaping ()->Void) throws
     
 }
