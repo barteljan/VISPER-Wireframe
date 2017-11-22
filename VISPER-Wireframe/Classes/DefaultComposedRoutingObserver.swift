@@ -40,7 +40,7 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
                           routePattern: String,
                          routingOption: RoutingOption,
                             parameters: [String : Any],
-                      routingPresenter: RoutingPresenter,
+                      routingPresenter: RoutingPresenter?,
                              wireframe: Wireframe) throws {
         
         
@@ -72,7 +72,7 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
                         routePattern: String,
                        routingOption: RoutingOption,
                           parameters: [String : Any],
-                    routingPresenter: RoutingPresenter,
+                    routingPresenter: RoutingPresenter?,
                            wireframe: Wireframe)  {
         
         //notify all responsible routing observers that the view controller presentation did occure

@@ -24,7 +24,7 @@ public protocol RoutingObserver {
                     routePattern: String,
                    routingOption: RoutingOption,
                       parameters: [String : Any],
-                routingPresenter: RoutingPresenter,
+                routingPresenter: RoutingPresenter?,
                        wireframe: Wireframe) throws
     
     
@@ -41,7 +41,7 @@ public protocol RoutingObserver {
                       routePattern: String,
                      routingOption: RoutingOption,
                         parameters: [String : Any],
-                  routingPresenter: RoutingPresenter,
+                  routingPresenter: RoutingPresenter?,
                          wireframe: Wireframe) 
     
 }
@@ -53,7 +53,7 @@ public extension RoutingObserver {
                       routePattern: String,
                       routingOption: RoutingOption,
                       parameters: [String : Any],
-                      routingPresenter: RoutingPresenter,
+                      routingPresenter: RoutingPresenter?,
                       wireframe: Wireframe) throws {
         
     }
@@ -62,11 +62,9 @@ public extension RoutingObserver {
                      routePattern: String,
                      routingOption: RoutingOption,
                      parameters: [String : Any],
-                     routingPresenter: RoutingPresenter,
+                     routingPresenter: RoutingPresenter?,
                      wireframe: Wireframe)  {
         
-        
     }
-    
     
 }
