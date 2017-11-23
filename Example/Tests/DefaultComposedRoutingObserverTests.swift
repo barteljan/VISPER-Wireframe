@@ -14,10 +14,8 @@ import XCTest
 class DefaultComposedRoutingObserverTests: XCTestCase {
     
     func testAddRoutingObserver() throws {
-        
-        let id = "mockObserver1"
+    
         let mockObserver1 = MockRoutingObserver()
-        mockObserver1.id = id
         
         let composedObserver = DefaultComposedRoutingObserver()
         
@@ -36,7 +34,7 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
             
             XCTAssertEqual(wrapper.priority, priority)
             XCTAssertEqual(wrapper.routePattern, routePattern)
-            XCTAssertEqual(observer.id, mockObserver1.id)
+            XCTAssertEqual(observer, mockObserver1)
             
         } else {
             XCTFail("There should be one RoutingObserverWrapper in there")
@@ -46,14 +44,10 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
     
     func testAddRoutingObserverPriority() throws {
         
-        let id1 = "mockObserver1"
         let mockObserver1 = MockRoutingObserver()
-        mockObserver1.id = id1
         let priority1 = 5
         
-        let id2 = "mockObserver2"
         let mockObserver2 = MockRoutingObserver()
-        mockObserver2.id = id2
         let priority2 = 10
         
         let composedObserver = DefaultComposedRoutingObserver()
@@ -76,16 +70,297 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
             }
             
             XCTAssertEqual(wrapper1.priority, priority2)
-            XCTAssertEqual(observer1.id, mockObserver2.id)
+            XCTAssertEqual(observer1, mockObserver2)
             XCTAssertNil(wrapper1.routePattern)
             
             XCTAssertEqual(wrapper2.priority, priority1)
-            XCTAssertEqual(observer2.id, mockObserver1.id)
+            XCTAssertEqual(observer2, mockObserver1)
             XCTAssertNil(wrapper2.routePattern)
         } else {
             XCTFail("There should be two RoutingObserverWrapper in there")
         }
         
     }
+    
+    func testCallsWillPresentOfChild() throws{
+        
+        let mockObserver1 = MockRoutingObserver()
+        
+        let composedObserver = DefaultComposedRoutingObserver()
+        
+        let priority = 10
+        composedObserver.add(routingObserver: mockObserver1, priority: priority, routePattern: nil)
+        
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:])
+        let viewController = UIViewController()
+        let routingOption = MockRoutingOption()
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        try composedObserver.willPresent(controller: viewController,
+                                        routeResult: routeResult,
+                                      routingOption: routingOption,
+                                   routingPresenter: routingPresenter,
+                                          wireframe: wireframe)
+
+        guard mockObserver1.invokedWillPresent else {
+            XCTFail()
+            return
+        }
+        
+        guard let paramRouteResult = mockObserver1.invokedWillPresentParameters?.routeResult as? DefaultRouteResult else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramRouteResult, routeResult)
+        
+        guard let paramViewController = mockObserver1.invokedWillPresentParameters?.controller else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramViewController, viewController)
+        
+        guard let paramRoutingOption = mockObserver1.invokedWillPresentParameters?.routingOption as? MockRoutingOption else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramRoutingOption, routingOption)
+        
+        guard let paramRoutingPresenter = mockObserver1.invokedWillPresentParameters?.routingPresenter as? MockRoutingPresenter else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramRoutingPresenter, routingPresenter)
+        
+        guard let paramWireframe = mockObserver1.invokedWillPresentParameters?.wireframe as? MockWireframe else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramWireframe, wireframe)
+    }
+    
+    
+    func testCallsWillPresentOfChildWithCorrectRoutePattern() throws{
+        
+        let mockObserver1 = MockRoutingObserver()
+        
+        let composedObserver = DefaultComposedRoutingObserver()
+        
+        let priority = 10
+        let routePattern = "/this/is/a/route"
+        composedObserver.add(routingObserver: mockObserver1, priority: priority, routePattern: routePattern)
+        
+        let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: [:])
+        let viewController = UIViewController()
+        let routingOption = MockRoutingOption()
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        try composedObserver.willPresent(controller: viewController,
+                                         routeResult: routeResult,
+                                         routingOption: routingOption,
+                                         routingPresenter: routingPresenter,
+                                         wireframe: wireframe)
+        
+        XCTAssert(mockObserver1.invokedWillPresent)
+    }
+    
+    func testCallsWillPresentOfChildWithNoRoutePattern() throws{
+        
+        let mockObserver1 = MockRoutingObserver()
+        
+        let composedObserver = DefaultComposedRoutingObserver()
+        
+        let priority = 10
+        let routePattern = "/this/is/a/route"
+        composedObserver.add(routingObserver: mockObserver1, priority: priority, routePattern: nil)
+        
+        let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: [:])
+        let viewController = UIViewController()
+        let routingOption = MockRoutingOption()
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        try composedObserver.willPresent(controller: viewController,
+                                         routeResult: routeResult,
+                                         routingOption: routingOption,
+                                         routingPresenter: routingPresenter,
+                                         wireframe: wireframe)
+        
+        XCTAssert(mockObserver1.invokedWillPresent)
+    }
+    
+    func testDoNotCallWillPresentOfChildWithWrongRoutePattern() throws{
+        
+        let mockObserver1 = MockRoutingObserver()
+        
+        let composedObserver = DefaultComposedRoutingObserver()
+        
+        let priority = 10
+        
+        composedObserver.add(routingObserver: mockObserver1,
+                                    priority: priority,
+                                routePattern:  "/this/is/a/route")
+        
+        let routeResult = DefaultRouteResult(routePattern:"WRONG/ROUTE", parameters: [:])
+        let viewController = UIViewController()
+        let routingOption = MockRoutingOption()
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        try composedObserver.willPresent(controller: viewController,
+                                         routeResult: routeResult,
+                                         routingOption: routingOption,
+                                         routingPresenter: routingPresenter,
+                                         wireframe: wireframe)
+        
+        XCTAssertFalse(mockObserver1.invokedWillPresent)
+    }
+    
+    
+    func testCallsDidPresentOfChild() throws{
+        
+        let mockObserver1 = MockRoutingObserver()
+        
+        let composedObserver = DefaultComposedRoutingObserver()
+        
+        let priority = 10
+        composedObserver.add(routingObserver: mockObserver1, priority: priority, routePattern: nil)
+        
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:])
+        let viewController = UIViewController()
+        let routingOption = MockRoutingOption()
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        composedObserver.didPresent(controller: viewController,
+                                   routeResult: routeResult,
+                                 routingOption: routingOption,
+                              routingPresenter: routingPresenter,
+                                     wireframe: wireframe)
+        
+        guard mockObserver1.invokedDidPresent else {
+            XCTFail()
+            return
+        }
+        
+        guard let paramRouteResult = mockObserver1.invokedDidPresentParameters?.routeResult as? DefaultRouteResult else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramRouteResult, routeResult)
+        
+        guard let paramViewController = mockObserver1.invokedDidPresentParameters?.controller else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramViewController, viewController)
+        
+        guard let paramRoutingOption = mockObserver1.invokedDidPresentParameters?.routingOption as? MockRoutingOption else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramRoutingOption, routingOption)
+        
+        guard let paramRoutingPresenter = mockObserver1.invokedDidPresentParameters?.routingPresenter as? MockRoutingPresenter else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramRoutingPresenter, routingPresenter)
+        
+        guard let paramWireframe = mockObserver1.invokedDidPresentParameters?.wireframe as? MockWireframe else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramWireframe, wireframe)
+    }
+    
+    func testCallsDidPresentOfChildWithCorrectRoutePattern() throws{
+        
+        let mockObserver1 = MockRoutingObserver()
+        
+        let composedObserver = DefaultComposedRoutingObserver()
+        
+        let priority = 10
+        let routePattern = "/this/is/a/route"
+        composedObserver.add(routingObserver: mockObserver1, priority: priority, routePattern: routePattern)
+        
+        let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: [:])
+        let viewController = UIViewController()
+        let routingOption = MockRoutingOption()
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        composedObserver.didPresent( controller: viewController,
+                                     routeResult: routeResult,
+                                     routingOption: routingOption,
+                                     routingPresenter: routingPresenter,
+                                     wireframe: wireframe)
+        
+        XCTAssert(mockObserver1.invokedDidPresent)
+    }
+    
+    func testCallsDidPresentOfChildWithNoRoutePattern() throws{
+        
+        let mockObserver1 = MockRoutingObserver()
+        
+        let composedObserver = DefaultComposedRoutingObserver()
+        
+        let priority = 10
+        let routePattern = "/this/is/a/route"
+        composedObserver.add(routingObserver: mockObserver1, priority: priority, routePattern: nil)
+        
+        let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: [:])
+        let viewController = UIViewController()
+        let routingOption = MockRoutingOption()
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        composedObserver.didPresent( controller: viewController,
+                                     routeResult: routeResult,
+                                     routingOption: routingOption,
+                                     routingPresenter: routingPresenter,
+                                     wireframe: wireframe)
+        
+        XCTAssert(mockObserver1.invokedDidPresent)
+    }
+    
+    func testDoNotCallDidPresentOfChildWithWrongRoutePattern() throws{
+        
+        let mockObserver1 = MockRoutingObserver()
+        
+        let composedObserver = DefaultComposedRoutingObserver()
+        
+        let priority = 10
+        
+        composedObserver.add(routingObserver: mockObserver1,
+                             priority: priority,
+                             routePattern:  "/this/is/a/route")
+        
+        let routeResult = DefaultRouteResult(routePattern:"WRONG/ROUTE", parameters: [:])
+        let viewController = UIViewController()
+        let routingOption = MockRoutingOption()
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        composedObserver.didPresent( controller: viewController,
+                                     routeResult: routeResult,
+                                     routingOption: routingOption,
+                                     routingPresenter: routingPresenter,
+                                     wireframe: wireframe)
+        
+        XCTAssertFalse(mockObserver1.invokedDidPresent)
+    }
+    
     
 }
