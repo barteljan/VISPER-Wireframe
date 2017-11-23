@@ -52,9 +52,8 @@ open class DefaultComposedRoutingPresenter : ComposedRoutingPresenter {
     ///   - wireframe: The wireframe triggering the presenter
     ///   - delegate: A delegate called for routing event handling
     public func present(controller: UIViewController,
-                        routePattern: String,
+                       routeResult: RouteResult,
                         option: RoutingOption,
-                        parameters: [String : Any],
                         wireframe: Wireframe,
                         delegate: RoutingPresenterDelegate,
                         completion: @escaping () -> ()) throws{
@@ -64,9 +63,8 @@ open class DefaultComposedRoutingPresenter : ComposedRoutingPresenter {
             if routingPresenterWrapper.routingPresenter.isResponsible(option: option) {
                 
                 try routingPresenterWrapper.routingPresenter.present(controller: controller,
-                                                                   routePattern: routePattern,
+                                                                    routeResult: routeResult,
                                                                          option: option,
-                                                                     parameters: parameters,
                                                                       wireframe: wireframe,
                                                                        delegate: delegate,
                                                                      completion: completion)

@@ -43,8 +43,7 @@ struct RouteDefinition {
 
 
 public class DefaultRouter : Router {
-    
-    
+   
     public static let parametersJLRouteURLKey = "JLRouteURL"
     public static let parametersRouteURLKey = "RouteURL"
     public static let parametersJLRoutePatternKey = "JLRoutePattern"
@@ -106,10 +105,19 @@ public class DefaultRouter : Router {
     /// - Parameter url: a url
     /// - Returns: a RouteResult if the router can resolve the url, nil otherwise
     /// - Throws: throws routing errors if they occour
-    public func route(url: URL) throws ->  RouteResult? {
+    public func route(url: URL) throws -> RouteResult? {
+        return try self.route(url: url, parameters: nil)
+    }
+    
+    /// Route for an given url
+    ///
+    /// - Parameter url: a url
+    /// - Returns: a RouteResult if the router can resolve the url, nil otherwise
+    /// - Throws: throws routing errors if they occour
+    public func route(url: URL, parameters: [String: Any]?) throws ->  RouteResult? {
         
         for routeDefinition in self.routeDefinitions.reversed() {
-            if let result = try self.match(route: url, routeDefinition: routeDefinition) {
+            if let result = try self.match(route: url, routeDefinition: routeDefinition, params: parameters) {
                 return result
             }
         }
@@ -118,7 +126,7 @@ public class DefaultRouter : Router {
     }
     
     // Check if this routeDefinition matches an url
-    func match(route:URL, routeDefinition: RouteDefinition) throws -> RouteResult? {
+    func match(route:URL, routeDefinition: RouteDefinition, params: [String: Any]?) throws -> RouteResult? {
         
         let stringComponents = route.absoluteString.split(separator: "/").map { (substring) -> String in
             return String(substring)
@@ -175,6 +183,13 @@ public class DefaultRouter : Router {
         
         parameters[DefaultRouter.parametersRoutePatternKey] = routeDefinition.routePattern
         parameters[DefaultRouter.parametersJLRoutePatternKey] = routeDefinition.routePattern
+        
+        if let params = params {
+            //override the parameters from the routeResult with the given parameters from this function
+            params.forEach({ (key,value) in
+                parameters[key] = value
+            })
+        }
         
         return DefaultRouteResult(routePattern: routeDefinition.routePattern, parameters: parameters)
     }

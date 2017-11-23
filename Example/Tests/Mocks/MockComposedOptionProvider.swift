@@ -11,7 +11,8 @@ import VISPER_Wireframe_Core
 import VISPER_Wireframe
 
 
-class MockComposedOptionProvider: ComposedRoutingOptionProvider {
+class MockComposedOptionProvider: NSObject, ComposedRoutingOptionProvider {
+
 
     var invokedAdd = false
     var invokedAddCount = 0
@@ -27,15 +28,15 @@ class MockComposedOptionProvider: ComposedRoutingOptionProvider {
 
     var invokedOption = false
     var invokedOptionCount = 0
-    var invokedOptionParameters: (routePattern: String, parameters: [String: Any], currentOption: RoutingOption?)?
-    var invokedOptionParametersList = [(routePattern: String, parameters: [String: Any], currentOption: RoutingOption?)]()
+    var invokedOptionParameters: (routeResult: RouteResult, currentOption: RoutingOption?)?
+    var invokedOptionParametersList = [(routeResult: RouteResult, currentOption: RoutingOption?)]()
     var stubbedOptionResult: RoutingOption!
 
-    func option(routePattern: String, parameters: [String: Any], currentOption: RoutingOption?) -> RoutingOption? {
+    func option(routeResult: RouteResult, currentOption: RoutingOption?) -> RoutingOption? {
         invokedOption = true
         invokedOptionCount += 1
-        invokedOptionParameters = (routePattern, parameters, currentOption)
-        invokedOptionParametersList.append((routePattern, parameters, currentOption))
+        invokedOptionParameters = (routeResult, currentOption)
+        invokedOptionParametersList.append((routeResult, currentOption))
         return stubbedOptionResult
     }
 }

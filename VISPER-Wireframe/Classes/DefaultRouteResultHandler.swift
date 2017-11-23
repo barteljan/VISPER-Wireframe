@@ -11,11 +11,11 @@ import VISPER_Wireframe_UIViewController
 
 open class DefaultRouteResultHandler : RouteResultHandler {
     
+    var routingProviders: [ProviderWrapper]
     
-    public init(composedRoutingPresenter : ComposedRoutingPresenter){
+    public init(){
+        self.routingProviders = [ProviderWrapper]()
     }
-    
-    var routingProviders: [ProviderWrapper] = [ProviderWrapper]()
     
     /// Register a route pattern and a handler
     /// The handler will be called if a route matches your route pattern.
@@ -81,9 +81,8 @@ open class DefaultRouteResultHandler : RouteResultHandler {
             
             
             if let viewController = self.getController(wrapper: routingProviderWrapper,
-                                                       routePattern: routeResult.routePattern,
+                                                       routeResult: routeResult,
                                                        option: routingOption,
-                                                       parameters: routeResult.parameters,
                                                        wireframe: wireframe) {
                 controller = viewController
                 continue
@@ -105,9 +104,8 @@ open class DefaultRouteResultHandler : RouteResultHandler {
         
         //present view controller with RoutingPresenter
         try presenter.present(controller: viewController,
-                            routePattern: routeResult.routePattern,
+                             routeResult: routeResult,
                                   option: option,
-                              parameters: routeResult.parameters,
                                wireframe: wireframe,
                                 delegate: presenterDelegate,
                               completion: completion)
@@ -135,20 +133,18 @@ open class DefaultRouteResultHandler : RouteResultHandler {
     }
     
     func getController(wrapper: ProviderWrapper,
-                       routePattern: String,
+                       routeResult: RouteResult,
                        option: RoutingOption,
-                       parameters: [String : Any],
                        wireframe: Wireframe) -> UIViewController? {
         
         if let controllerProvider = wrapper.controllerProvider {
             
-            if let viewController = controllerProvider.controller(routePattern: routePattern,
-                                                                  routingOption: option,
-                                                                  parameters: parameters) {
+            if let viewController = controllerProvider.controller(routeResult: routeResult,
+                                                                  routingOption: option) {
                 //notify vc if it should be aware of it
                 if let viewController = viewController as? RoutingAwareViewController {
-                    viewController.willRoute(wireframe: wireframe, routePattern: routePattern, option: option, parameters: parameters)
-                    viewController.didRoute(wireframe: wireframe, routePattern: routePattern, option: option, parameters: parameters)
+                    viewController.willRoute(wireframe: wireframe, routeResult: routeResult, option: option)
+                    viewController.didRoute(wireframe: wireframe, routeResult: routeResult, option: option)
                 }
                 
                 return viewController

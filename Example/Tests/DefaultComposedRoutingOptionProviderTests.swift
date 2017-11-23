@@ -92,9 +92,9 @@ class DefaultComposedRoutingOptionProviderTests: XCTestCase {
         
         composedProvider.add(optionProvider: mockProvider, priority: priority)
         
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:])
         
-        guard let option = composedProvider.option(routePattern: "/some/pattern",
-                                                     parameters: [:],
+        guard let option = composedProvider.option(routeResult: routeResult,
                                                   currentOption: MockRoutingOption()) as? MockRoutingOption else {
                                                         XCTFail()
                                                         return
@@ -115,9 +115,9 @@ class DefaultComposedRoutingOptionProviderTests: XCTestCase {
         
         composedProvider.add(optionProvider: mockProvider, priority: priority)
         
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:])
         
-        let _ = composedProvider.option(routePattern: "/some/pattern",
-                                          parameters: [:],
+        let _ = composedProvider.option(routeResult: routeResult,
                                        currentOption: MockRoutingOption())
         
         XCTAssertTrue(mockProvider.invokedOption)
@@ -139,17 +139,17 @@ class DefaultComposedRoutingOptionProviderTests: XCTestCase {
         let routePattern = "/some/pattern"
         let params = ["id" : "15"]
         let currentOption = MockRoutingOption()
+        let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: params)
         
-        let _ = composedProvider.option(routePattern: routePattern,
-                                             parameters: params,
-                                             currentOption: currentOption)
+        let _ = composedProvider.option(routeResult: routeResult,
+                                      currentOption: currentOption)
         
 
         
         
-        XCTAssertEqual(mockProvider.invokedOptionParameters?.routePattern, routePattern)
-        XCTAssertNotNil(mockProvider.invokedOptionParameters?.parameters["id"])
-        XCTAssertEqual(mockProvider.invokedOptionParameters?.parameters["id"] as? String, params["id"])
+        XCTAssertEqual(mockProvider.invokedOptionParameters?.routeResult.routePattern, routeResult.routePattern)
+        XCTAssertNotNil(mockProvider.invokedOptionParameters?.routeResult.parameters["id"])
+        XCTAssertEqual(mockProvider.invokedOptionParameters?.routeResult.parameters["id"] as? String, params["id"])
         
         guard let invokedOption = mockProvider.invokedOptionParameters?.currentOption as? MockRoutingOption else {
             XCTFail()
@@ -183,8 +183,9 @@ class DefaultComposedRoutingOptionProviderTests: XCTestCase {
         composedProvider.add(optionProvider: lastCalledProvider, priority: lastCalledPriority)
         composedProvider.add(optionProvider: firstCalledProvider, priority: firstCalledPriority)
         
-        let _ = composedProvider.option(routePattern: "/some/pattern",
-                                          parameters: [:],
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:])
+        
+        let _ = composedProvider.option(routeResult: routeResult,
                                        currentOption: nil)
         
         
@@ -232,8 +233,9 @@ class DefaultComposedRoutingOptionProviderTests: XCTestCase {
         composedProvider.add(optionProvider: lastCalledProvider, priority: lastCalledPriority)
         composedProvider.add(optionProvider: firstCalledProvider, priority: firstCalledPriority)
         
-        guard let resultOption = composedProvider.option(routePattern: "/some/pattern",
-                                                         parameters: [:],
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:])
+        
+        guard let resultOption = composedProvider.option(routeResult: routeResult,
                                                          currentOption: nil) as? MockRoutingOption else {
                                                             XCTFail()
                                                             return
@@ -261,8 +263,9 @@ class DefaultComposedRoutingOptionProviderTests: XCTestCase {
         composedProvider.add(optionProvider: secondCalledProvider, priority: secondCalledPriority)
         composedProvider.add(optionProvider: firstCalledProvider, priority: firstCalledPriority)
         
-        let _ = composedProvider.option(routePattern: "/some/pattern",
-                                          parameters: [:],
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:])
+        
+        let _ = composedProvider.option(routeResult: routeResult,
                                        currentOption: nil)
         
         

@@ -20,8 +20,7 @@ public protocol ControllerProvider {
     ///   - routingOption: The routing option which describes how the created controller will be presented
     ///   - parameters: The parameters (data) provided for view controller presentation
     /// - Returns: a view controller if the provider is responsible for this route pattern, and parameter combination, nil otherwise
-    func controller(routePattern: String,
-                   routingOption: RoutingOption,
-                      parameters: [String : Any]) -> UIViewController?
+    func controller( routeResult: RouteResult,
+                   routingOption: RoutingOption) -> UIViewController?
     
 }

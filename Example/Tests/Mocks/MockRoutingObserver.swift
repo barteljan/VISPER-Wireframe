@@ -10,7 +10,7 @@ import Foundation
 @testable import VISPER_Wireframe_Core
 @testable import VISPER_Wireframe
 
-class MockRoutingObserver: RoutingObserver {
+class MockRoutingObserver: NSObject,RoutingObserver {
     
     func didPresent(controller: UIViewController, routePattern: String, routingOption: RoutingOption, parameters: [String : Any], routingPresenter: RoutingPresenter, wireframe: Wireframe)  {
         

@@ -8,21 +8,21 @@ import Foundation
 @testable import VISPER_Wireframe
 
 
-class MockControllerProvider: ControllerProvider {
+class MockControllerProvider: NSObject,ControllerProvider {
 
-    var id : String?
-    
+
     var invokedController = false
     var invokedControllerCount = 0
-    var invokedControllerParameters: (routePattern: String, routingOption: RoutingOption, parameters: [String: Any])?
-    var invokedControllerParametersList = [(routePattern: String, routingOption: RoutingOption, parameters: [String: Any])]()
+    var invokedControllerParameters: (routeResult: RouteResult, routingOption: RoutingOption)?
+    var invokedControllerParametersList = [(routeResult: RouteResult, routingOption: RoutingOption)]()
     var stubbedControllerResult: UIViewController!
 
-    func controller(routePattern: String, routingOption: RoutingOption, parameters: [String: Any]) -> UIViewController? {
+    func controller(routeResult: RouteResult, routingOption: RoutingOption) -> UIViewController? {
         invokedController = true
         invokedControllerCount += 1
-        invokedControllerParameters = (routePattern, routingOption, parameters)
-        invokedControllerParametersList.append((routePattern, routingOption, parameters))
+        invokedControllerParameters = (routeResult, routingOption)
+        invokedControllerParametersList.append((routeResult, routingOption))
         return stubbedControllerResult
     }
 }
+

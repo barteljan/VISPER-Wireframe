@@ -21,9 +21,8 @@ public protocol RoutingObserver {
     ///   - routingPresenter: The RoutingPresenter responsible for presenting the controller
     ///   - wireframe: The wireframe presenting the view controller
     func willPresent( controller: UIViewController,
-                    routePattern: String,
+                     routeResult: RouteResult,
                    routingOption: RoutingOption,
-                      parameters: [String : Any],
                 routingPresenter: RoutingPresenter?,
                        wireframe: Wireframe) throws
     
@@ -38,9 +37,8 @@ public protocol RoutingObserver {
     ///   - routingPresenter: The RoutingPresenter responsible for presenting the controller
     ///   - wireframe: The wireframe presenting the view controller
     func didPresent(    controller: UIViewController,
-                      routePattern: String,
+                       routeResult: RouteResult,
                      routingOption: RoutingOption,
-                        parameters: [String : Any],
                   routingPresenter: RoutingPresenter?,
                          wireframe: Wireframe) 
     
@@ -50,18 +48,16 @@ public protocol RoutingObserver {
 public extension RoutingObserver {
     
     func willPresent( controller: UIViewController,
-                      routePattern: String,
+                      routeResult: RouteResult,
                       routingOption: RoutingOption,
-                      parameters: [String : Any],
                       routingPresenter: RoutingPresenter?,
                       wireframe: Wireframe) throws {
         
     }
     
     func didPresent( controller: UIViewController,
-                     routePattern: String,
+                     routeResult: RouteResult,
                      routingOption: RoutingOption,
-                     parameters: [String : Any],
                      routingPresenter: RoutingPresenter?,
                      wireframe: Wireframe)  {
         

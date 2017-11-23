@@ -10,22 +10,22 @@ import Foundation
 @testable import VISPER_Wireframe_Core
 @testable import VISPER_Wireframe
 
-class MockRoutingOptionProvider: NSObject,RoutingOptionProvider {
+class MockRoutingOptionProvider: NSObject, RoutingOptionProvider {
 
     var invokedOption = false
-    var invokedOptionTime : Date?
     var invokedOptionCount = 0
-    var invokedOptionParameters: (routePattern: String, parameters: [String: Any], currentOption: RoutingOption?)?
-    var invokedOptionParametersList = [(routePattern: String, parameters: [String: Any], currentOption: RoutingOption?)]()
+    var invokedOptionParameters: (routeResult: RouteResult, currentOption: RoutingOption?)?
+    var invokedOptionParametersList = [(routeResult: RouteResult, currentOption: RoutingOption?)]()
     var stubbedOptionResult: RoutingOption!
+    var invokedOptionTime : Date?
 
-    func option(routePattern: String, parameters: [String: Any], currentOption: RoutingOption?) -> RoutingOption? {
+    func option(routeResult: RouteResult, currentOption: RoutingOption?) -> RoutingOption? {
         invokedOption = true
-        invokedOptionCount += 1
         invokedOptionTime = Date()
-        invokedOptionParameters = (routePattern, parameters, currentOption)
-        invokedOptionParametersList.append((routePattern, parameters, currentOption))
-        usleep(10000)
+        invokedOptionCount += 1
+        invokedOptionParameters = (routeResult, currentOption)
+        invokedOptionParametersList.append((routeResult, currentOption))
         return stubbedOptionResult
     }
 }
+

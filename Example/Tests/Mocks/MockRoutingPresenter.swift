@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import VISPER_Wireframe_Core
 
-class MockRoutingPresenter: NSObject,RoutingPresenter {
-    
+class MockRoutingPresenter: NSObject, RoutingPresenter {
+
     var invokedIsResponsible = false
     var invokedIsResponsibleCount = 0
     var invokedIsResponsibleParameters: (option: RoutingOption, Void)?
@@ -28,14 +28,14 @@ class MockRoutingPresenter: NSObject,RoutingPresenter {
 
     var invokedPresent = false
     var invokedPresentCount = 0
-    var invokedPresentParameters: (controller: UIViewController, routePattern: String, option: RoutingOption, parameters: [String: Any], wireframe: Wireframe, delegate: RoutingPresenterDelegate)?
-    var invokedPresentParametersList = [(controller: UIViewController, routePattern: String, option: RoutingOption, parameters: [String: Any], wireframe: Wireframe, delegate: RoutingPresenterDelegate)]()
+    var invokedPresentParameters: (controller: UIViewController, routeResult: RouteResult, option: RoutingOption, wireframe: Wireframe, delegate: RoutingPresenterDelegate)?
+    var invokedPresentParametersList = [(controller: UIViewController, routeResult: RouteResult, option: RoutingOption, wireframe: Wireframe, delegate: RoutingPresenterDelegate)]()
 
-    func present(controller: UIViewController, routePattern: String, option: RoutingOption, parameters: [String: Any], wireframe: Wireframe, delegate: RoutingPresenterDelegate, completion: @escaping () -> ()) {
+    func present(controller: UIViewController, routeResult: RouteResult, option: RoutingOption, wireframe: Wireframe, delegate: RoutingPresenterDelegate, completion: @escaping () -> ()) {
         invokedPresent = true
         invokedPresentCount += 1
-        invokedPresentParameters = (controller, routePattern, option, parameters, wireframe, delegate)
-        invokedPresentParametersList.append((controller, routePattern, option, parameters, wireframe, delegate))
+        invokedPresentParameters = (controller, routeResult, option, wireframe, delegate)
+        invokedPresentParametersList.append((controller, routeResult, option, wireframe, delegate))
         completion()
     }
 }

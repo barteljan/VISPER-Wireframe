@@ -37,20 +37,18 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
     ///   - routingPresenter: The RoutingPresenter responsible for presenting the controller
     ///   - wireframe: The wireframe presenting the view controller
     public func willPresent(controller: UIViewController,
-                            routePattern: String,
+                            routeResult: RouteResult,
                             routingOption: RoutingOption,
-                            parameters: [String : Any],
                             routingPresenter: RoutingPresenter?,
                             wireframe: Wireframe) throws {
         
         
         //notify all responsible routing observers that the presentation will occour soon
         for observerWrapper in self.routingObservers {
-            if observerWrapper.routePattern == nil || observerWrapper.routePattern == routePattern {
+            if observerWrapper.routePattern == nil || observerWrapper.routePattern == routeResult.routePattern {
                 try observerWrapper.routingObserver.willPresent(controller: controller,
-                                                              routePattern: routePattern,
+                                                               routeResult: routeResult,
                                                              routingOption: routingOption,
-                                                                parameters: parameters,
                                                           routingPresenter: routingPresenter,
                                                                  wireframe: wireframe)
             }
@@ -69,21 +67,19 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
     ///   - routingPresenter: The RoutingPresenter responsible for presenting the controller
     ///   - wireframe: The wireframe presenting the view controller
     open func didPresent( controller: UIViewController,
-                        routePattern: String,
+                         routeResult: RouteResult,
                        routingOption: RoutingOption,
-                          parameters: [String : Any],
                     routingPresenter: RoutingPresenter?,
                            wireframe: Wireframe)  {
         
         //notify all responsible routing observers that the view controller presentation did occure
         for observerWrapper in self.routingObservers {
-            if observerWrapper.routePattern == nil || observerWrapper.routePattern == routePattern {
-                try observerWrapper.routingObserver.didPresent(   controller: controller,
-                                                                routePattern: routePattern,
-                                                               routingOption: routingOption,
-                                                                  parameters: parameters,
-                                                            routingPresenter: routingPresenter,
-                                                                   wireframe: wireframe)
+            if observerWrapper.routePattern == nil || observerWrapper.routePattern == routeResult.routePattern {
+                observerWrapper.routingObserver.didPresent(   controller: controller,
+                                                             routeResult: routeResult,
+                                                           routingOption: routingOption,
+                                                        routingPresenter: routingPresenter,
+                                                               wireframe: wireframe)
             }
         }
         

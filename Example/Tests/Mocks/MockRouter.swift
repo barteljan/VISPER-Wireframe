@@ -10,8 +10,8 @@ import Foundation
 @testable import VISPER_Wireframe_Core
 @testable import VISPER_Wireframe
 
-class MockRouter: Router {
-
+class MockRouter: NSObject, Router {
+    
     var invokedAdd = false
     var invokedAddCount = 0
     var invokedAddParameters: (routePattern: String, Void)?
@@ -22,6 +22,20 @@ class MockRouter: Router {
         invokedAddCount += 1
         invokedAddParameters = (routePattern, ())
         invokedAddParametersList.append((routePattern, ()))
+    }
+
+    var invokedRouteUrl = false
+    var invokedRouteUrlCount = 0
+    var invokedRouteUrlParameters: (url: URL, parameters: [String: Any]?)?
+    var invokedRouteUrlParametersList = [(url: URL, parameters: [String: Any]?)]()
+    var stubbedRouteUrlResult: RouteResult!
+
+    func route(url: URL, parameters: [String: Any]?) -> RouteResult? {
+        invokedRouteUrl = true
+        invokedRouteUrlCount += 1
+        invokedRouteUrlParameters = (url, parameters)
+        invokedRouteUrlParametersList.append((url, parameters))
+        return stubbedRouteUrlResult
     }
 
     var invokedRoute = false

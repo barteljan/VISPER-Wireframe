@@ -9,6 +9,6 @@
 import Foundation
 @testable import VISPER_Wireframe_Core
 
-class MockRoutingOption : NSObject,RoutingOption {
+class MockRoutingOption : NSObject, RoutingOption {
     
 }

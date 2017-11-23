@@ -30,9 +30,8 @@ public protocol RoutingPresenter {
     ///   - wireframe: The wireframe triggering the presenter
     ///   - delegate: A delegate called for routing event handling
     func present(controller: UIViewController,
-               routePattern: String,
+                routeResult: RouteResult,
                      option: RoutingOption,
-                 parameters: [String : Any],
                   wireframe: Wireframe,
                    delegate: RoutingPresenterDelegate,
                  completion: @escaping () -> ()) throws

@@ -36,12 +36,11 @@ open class DefaultComposedRoutingOptionProvider : ComposedRoutingOptionProvider 
     ///   - parameters: some additional data for creating the view controller presented by this routing option
     ///   - currentOption: The currently determined routing option - Be careful to overwrite it only on purpose
     /// - Returns: A default routing option if you are responsible for this route, nil otherwise
-    open func option(routePattern: String, parameters: [String : Any], currentOption: RoutingOption?) -> RoutingOption? {
+    open func option(routeResult: RouteResult, currentOption: RoutingOption?) -> RoutingOption? {
         
         var routingOption : RoutingOption? = currentOption
         for optionProviderWrapper in self.optionProviders.reversed() {
-            routingOption = optionProviderWrapper.optionProvider.option(routePattern: routePattern,
-                                                                        parameters: parameters,
+            routingOption = optionProviderWrapper.optionProvider.option(routeResult:   routeResult,
                                                                         currentOption: routingOption)
         }
         return routingOption

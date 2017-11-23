@@ -22,6 +22,13 @@ public protocol Router {
     /// - Parameter url: a url
     /// - Returns: a RouteResult if the router can resolve the url, nil otherwise
     /// - Throws: throws routing errors if they occour
+    func route(url: URL, parameters: [String: Any]?) throws ->  RouteResult?
+    
+    /// Route for an given url
+    ///
+    /// - Parameter url: a url
+    /// - Returns: a RouteResult if the router can resolve the url, nil otherwise
+    /// - Throws: throws routing errors if they occour
     func route(url: URL) throws ->  RouteResult?
 }
 
