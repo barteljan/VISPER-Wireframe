@@ -8,7 +8,7 @@
 import Foundation
 import VISPER_Wireframe_Core
 
-open class DefaultRoutingPresenterDelegate : RoutingPresenterDelegate {
+open class DefaultRoutingDelegate : RoutingDelegate {
     
     
     let composedRoutingObserver : ComposedRoutingObserver

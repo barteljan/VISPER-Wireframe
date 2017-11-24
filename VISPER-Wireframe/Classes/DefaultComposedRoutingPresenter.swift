@@ -55,7 +55,7 @@ open class DefaultComposedRoutingPresenter : ComposedRoutingPresenter {
                        routeResult: RouteResult,
                         option: RoutingOption,
                         wireframe: Wireframe,
-                        delegate: RoutingPresenterDelegate,
+                        delegate: RoutingDelegate,
                         completion: @escaping () -> ()) throws{
         
         for routingPresenterWrapper in self.routingPresenters {

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-
+import UIKit
 @testable import VISPER_Wireframe_Core
 @testable import VISPER_Wireframe
 
@@ -76,6 +76,233 @@ class DefaultComposedRoutingPresenterTests: XCTestCase {
         } else {
             XCTFail("There should be two RoutingObserverWrapper in there")
         }
+        
+    }
+    
+    func testCallsIsResponsibleOfChild() throws{
+        
+        let mockPresenter = MockRoutingPresenter()
+        mockPresenter.stubbedIsResponsibleResult = true
+        let composedPresenter = DefaultComposedRoutingPresenter()
+        
+        let priority = 10
+        composedPresenter.add(routingPresenter: mockPresenter, priority: priority)
+        
+        let routingOption = MockRoutingOption()
+        
+        let isResponsible = composedPresenter.isResponsible(option: routingOption)
+        
+        XCTAssert(mockPresenter.invokedIsResponsible)
+        XCTAssert(isResponsible)
+        
+        guard let paramRoutingOption = mockPresenter.invokedIsResponsibleParameters?.option as? MockRoutingOption else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(paramRoutingOption, routingOption)
+        
+    }
+    
+    func testCallsIsResponsibleOfEachChildUntilAResponsibleChildIsFound() throws{
+        
+        let firstPresenter = MockRoutingPresenter()
+        firstPresenter.stubbedIsResponsibleResult = false
+        let firstPriority = 20
+        
+        let secondPresenter = MockRoutingPresenter()
+        secondPresenter.stubbedIsResponsibleResult = true
+        let secondPriority = 10
+        
+        let thirdPresenter = MockRoutingPresenter()
+        thirdPresenter.stubbedIsResponsibleResult = true
+        let thirdPriority = 0
+        
+        
+        let composedPresenter = DefaultComposedRoutingPresenter()
+        
+        composedPresenter.add(routingPresenter: secondPresenter, priority: secondPriority)
+        composedPresenter.add(routingPresenter: thirdPresenter, priority: thirdPriority)
+        composedPresenter.add(routingPresenter: firstPresenter, priority: firstPriority)
+        
+        let routingOption = MockRoutingOption()
+        
+        let isResponsible = composedPresenter.isResponsible(option: routingOption)
+        
+        XCTAssert(firstPresenter.invokedIsResponsible)
+        XCTAssert(secondPresenter.invokedIsResponsible)
+        XCTAssertFalse(thirdPresenter.invokedIsResponsible)
+        
+        XCTAssert(isResponsible)
+        
+    }
+    
+    func testCallsIsResponsibleOfEachChildWhenAllReturnFalse() throws {
+        
+        let firstPresenter = MockRoutingPresenter()
+        firstPresenter.stubbedIsResponsibleResult = false
+        let firstPriority = 20
+        
+        let secondPresenter = MockRoutingPresenter()
+        secondPresenter.stubbedIsResponsibleResult = false
+        let secondPriority = 10
+        
+        let thirdPresenter = MockRoutingPresenter()
+        thirdPresenter.stubbedIsResponsibleResult = false
+        let thirdPriority = 0
+        
+        
+        let composedPresenter = DefaultComposedRoutingPresenter()
+        
+        composedPresenter.add(routingPresenter: secondPresenter, priority: secondPriority)
+        composedPresenter.add(routingPresenter: thirdPresenter, priority: thirdPriority)
+        composedPresenter.add(routingPresenter: firstPresenter, priority: firstPriority)
+        
+        let routingOption = MockRoutingOption()
+        
+        let isResponsible = composedPresenter.isResponsible(option: routingOption)
+        
+        XCTAssert(firstPresenter.invokedIsResponsible)
+        XCTAssert(secondPresenter.invokedIsResponsible)
+        XCTAssert(thirdPresenter.invokedIsResponsible)
+        
+        XCTAssertFalse(isResponsible)
+    }
+    
+    
+    func testCallsPresentOnChildIfItIsResponsible() throws {
+        
+        let mockPresenter = MockRoutingPresenter()
+        mockPresenter.stubbedIsResponsibleResult = true
+        
+        let composedPresenter = DefaultComposedRoutingPresenter()
+        
+        let priority = 10
+        composedPresenter.add(routingPresenter: mockPresenter, priority: priority)
+        
+        let viewController = UIViewController()
+        let routeResult = DefaultRouteResult(routePattern: "/thats/a/pattern", parameters: ["id" : "55"])
+        let option = MockRoutingOption()
+        let wireframe = MockWireframe()
+        let delegate = MockRoutingDelegate()
+        
+        var didCallCompletion = false
+        try composedPresenter.present(controller: viewController,
+                                     routeResult: routeResult,
+                                          option: option,
+                                       wireframe: wireframe,
+                                        delegate: delegate) {
+                                    didCallCompletion = true
+        }
+        
+        XCTAssertTrue(mockPresenter.invokedIsResponsible)
+        XCTAssertTrue(mockPresenter.invokedPresent)
+        
+        XCTAssertNotNil(mockPresenter.invokedPresentParameters?.controller)
+        XCTAssertEqual(mockPresenter.invokedPresentParameters?.controller,viewController)
+        
+        guard let paramRouteResult = mockPresenter.invokedPresentParameters?.routeResult as? DefaultRouteResult else {
+            XCTFail()
+            return
+        }
+        XCTAssertEqual(paramRouteResult, routeResult)
+        
+        guard let paramOption = mockPresenter.invokedPresentParameters?.option as? MockRoutingOption else {
+            XCTFail()
+            return
+        }
+        XCTAssertEqual(paramOption, option)
+        
+        guard let paramWireframe = mockPresenter.invokedPresentParameters?.wireframe as? MockWireframe else {
+            XCTFail()
+            return
+        }
+        XCTAssertEqual(paramWireframe, wireframe)
+        
+        guard let paramDelegate = mockPresenter.invokedPresentParameters?.delegate as? MockRoutingDelegate else {
+            XCTFail()
+            return
+        }
+        XCTAssertEqual(paramDelegate, delegate)
+        
+        XCTAssert(didCallCompletion)
+    }
+    
+    
+    func testDoesNotCallPresentOnChildIfItIsINotResponsible() throws {
+        
+        let mockPresenter = MockRoutingPresenter()
+        mockPresenter.stubbedIsResponsibleResult = false
+        
+        let composedPresenter = DefaultComposedRoutingPresenter()
+        
+        let priority = 10
+        composedPresenter.add(routingPresenter: mockPresenter, priority: priority)
+        
+        let viewController = UIViewController()
+        let routeResult = DefaultRouteResult(routePattern: "/thats/a/pattern", parameters: ["id" : "55"])
+        let option = MockRoutingOption()
+        let wireframe = MockWireframe()
+        let delegate = MockRoutingDelegate()
+        
+        var didCallCompletion = false
+        try composedPresenter.present(controller: viewController,
+                                      routeResult: routeResult,
+                                      option: option,
+                                      wireframe: wireframe,
+                                      delegate: delegate) {
+                                        didCallCompletion = true
+        }
+        
+        XCTAssertTrue(mockPresenter.invokedIsResponsible)
+        XCTAssertFalse(mockPresenter.invokedPresent)
+        XCTAssertFalse(didCallCompletion)
+        
+    }
+    
+    
+    func testCallHighPriorizedPresentersFirst() throws {
+        
+        let firstPresenter = MockRoutingPresenter()
+        firstPresenter.stubbedIsResponsibleResult = false
+        let heighestPriority = 100
+        
+        let secondPresenter = MockRoutingPresenter()
+        secondPresenter.stubbedIsResponsibleResult = false
+        let secondHeighestPriority = 50
+        
+        let thirdPresenter = MockRoutingPresenter()
+        thirdPresenter.stubbedIsResponsibleResult = false
+        let lowestPriority = 10
+        
+        let composedPresenter = DefaultComposedRoutingPresenter()
+    
+        composedPresenter.add(routingPresenter: thirdPresenter, priority: lowestPriority)
+        composedPresenter.add(routingPresenter: firstPresenter, priority: heighestPriority)
+        composedPresenter.add(routingPresenter: secondPresenter, priority: secondHeighestPriority)
+        
+        let viewController = UIViewController()
+        let routeResult = DefaultRouteResult(routePattern: "/thats/a/pattern", parameters: ["id" : "55"])
+        let option = MockRoutingOption()
+        let wireframe = MockWireframe()
+        let delegate = MockRoutingDelegate()
+        
+        
+        try composedPresenter.present(controller: viewController,
+                                      routeResult: routeResult,
+                                      option: option,
+                                      wireframe: wireframe,
+                                      delegate: delegate) {
+                                        
+        }
+        
+        XCTAssertNotNil(firstPresenter.invokedIsResponsibleTime)
+        XCTAssertNotNil(secondPresenter.invokedIsResponsibleTime)
+        XCTAssertNotNil(thirdPresenter.invokedIsResponsibleTime)
+        
+        AssertThat(time1: firstPresenter.invokedIsResponsibleTime, isEarlierThan: secondPresenter.invokedIsResponsibleTime)
+        AssertThat(time1: firstPresenter.invokedIsResponsibleTime, isEarlierThan: thirdPresenter.invokedIsResponsibleTime)
+        AssertThat(time1: secondPresenter.invokedIsResponsibleTime, isEarlierThan: thirdPresenter.invokedIsResponsibleTime)
         
     }
   

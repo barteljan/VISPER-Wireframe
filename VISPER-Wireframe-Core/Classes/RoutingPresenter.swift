@@ -33,6 +33,6 @@ public protocol RoutingPresenter {
                 routeResult: RouteResult,
                      option: RoutingOption,
                   wireframe: Wireframe,
-                   delegate: RoutingPresenterDelegate,
+                   delegate: RoutingDelegate,
                  completion: @escaping () -> ()) throws
 }

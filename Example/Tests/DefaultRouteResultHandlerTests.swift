@@ -144,5 +144,78 @@ class DefaultRouteResultHandlerTests: XCTestCase {
         
     }
     
+    func testHandlerForCorrectRouteResultIsCalled() throws {
+        
+        var handlerWasCalled = false
+        var invokedWithParams : [String : Any]?
+
+        let handler1 = { (parameters: [String : Any]) in
+            handlerWasCalled = true
+            invokedWithParams = parameters
+        }
+        
+        let pattern1 = "/test/pattern1"
+        let priority1 = 5
+        
+        let routeResultHandler = DefaultRouteResultHandler()
+        
+        try routeResultHandler.addRoutePattern(pattern1, priority: priority1, handler: handler1)
+        
+        let params = ["id" : "55"]
+        let routeResult = DefaultRouteResult(routePattern: pattern1, parameters: params)
+        let option = MockRoutingOption()
+        let presenter = MockRoutingPresenter()
+        let delegate = MockRoutingDelegate()
+        let wireframe = MockWireframe()
+        
+        try routeResultHandler.handleRouteResult(routeResult: routeResult,
+                                               routingOption: option,
+                                                   presenter: presenter,
+                                           presenterDelegate: delegate,
+                                                   wireframe: wireframe,
+                                                  completion: {
+                                        
+        })
+        
+        XCTAssertTrue(handlerWasCalled)
+        
+        guard let invokedParams = invokedWithParams else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertEqual(NSDictionary(dictionary:params), NSDictionary(dictionary:invokedParams))
+    }
+
+    func testHandlerForCorrectRouteResultCompletionIsCalled() throws {
+        
+        var completionWasCalled = false
+        let handler1 = { ([String : Any]) -> Void in }
+        
+        let pattern1 = "/test/pattern1"
+        let priority1 = 5
+        
+        let routeResultHandler = DefaultRouteResultHandler()
+        
+        try routeResultHandler.addRoutePattern(pattern1, priority: priority1, handler: handler1)
+        
+        let routeResult = DefaultRouteResult(routePattern: pattern1, parameters: [:])
+        let option = MockRoutingOption()
+        let presenter = MockRoutingPresenter()
+        let delegate = MockRoutingDelegate()
+        let wireframe = MockWireframe()
+        
+        try routeResultHandler.handleRouteResult(routeResult: routeResult,
+                                                 routingOption: option,
+                                                 presenter: presenter,
+                                                 presenterDelegate: delegate,
+                                                 wireframe: wireframe,
+                                                 completion: {
+            completionWasCalled = true
+        })
+        
+        XCTAssertTrue(completionWasCalled)
+    }
+    
     
 }

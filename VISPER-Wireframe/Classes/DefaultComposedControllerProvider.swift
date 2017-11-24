@@ -10,6 +10,7 @@ import VISPER_Wireframe_Core
 
 public class DefaultComposedControllerProvider : ComposedControllerProvider {
     
+    
     var routingProviders: [ProviderWrapper]
     
     public init(){
@@ -22,11 +23,7 @@ public class DefaultComposedControllerProvider : ComposedControllerProvider {
         self.addRoutingProviderWrapper(wrapper: wrapper)
     }
     
-    public func controller(routeResult: RouteResult,
-                             wireframe: Wireframe,
-              routingPresenterDelegate: RoutingPresenterDelegate) throws -> UIViewController? {
-        
-        let routingOption = DefaultGetControllerRoutingOption()
+    public func controller(routeResult: RouteResult, routingOption: RoutingOption) -> UIViewController? {
         
         for wrapper in self.routingProviders {
             
@@ -34,13 +31,6 @@ public class DefaultComposedControllerProvider : ComposedControllerProvider {
                 
             if let viewController = controllerProvider.controller(routeResult: routeResult,
                                                                   routingOption: routingOption) {
-                
-                try routingPresenterDelegate.willPresent(controller: viewController,
-                                                        routeResult: routeResult,
-                                                      routingOption: routingOption,
-                                                   routingPresenter: nil,
-                                                          wireframe: wireframe)
-                
                 return viewController
             }
             

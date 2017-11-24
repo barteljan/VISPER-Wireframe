@@ -355,5 +355,55 @@ class DefaultRouterTests: XCTestCase {
         
     }
     
+    func testParamsAreMerged() throws {
+        
+        let router = DefaultRouter()
+        
+        let pattern1 =  "/das/ist/ein/:var1"
+        try router.add(routePattern:pattern1)
+        
+        let url = URL(string: "/das/ist/ein/test/")!
+        
+        if let result = try router.route(url:url, parameters: ["id" : "55"]) {
+            XCTAssertEqual(result.routePattern, pattern1)
+            XCTAssert(result.parameters.count == 6)
+            XCTAssertEqual(result.parameters[DefaultRouter.parametersRoutePatternKey] as! String?, pattern1)
+            XCTAssertEqual(result.parameters[DefaultRouter.parametersJLRoutePatternKey] as! String?, pattern1)
+            XCTAssertEqual(result.parameters[DefaultRouter.parametersRouteURLKey] as! URL?, url)
+            XCTAssertEqual(result.parameters[DefaultRouter.parametersJLRouteURLKey] as! URL?, url)
+            XCTAssertEqual(result.parameters["var1"] as? String, "test")
+            XCTAssertEqual(result.parameters["id"] as? String, "55")
+            
+        } else {
+            XCTFail("router should give an result")
+        }
+        
+        
+    }
+    
+    func testExternalParamsOverwriteParamsExtractedFromTheRouteMerged() throws {
+        
+        let router = DefaultRouter()
+        
+        let pattern1 =  "/das/ist/ein/:var1"
+        try router.add(routePattern:pattern1)
+        
+        let url = URL(string: "/das/ist/ein/test/")!
+        
+        if let result = try router.route(url:url, parameters: ["var1" : "55"]) {
+            XCTAssertEqual(result.routePattern, pattern1)
+            XCTAssert(result.parameters.count == 5)
+            XCTAssertEqual(result.parameters[DefaultRouter.parametersRoutePatternKey] as! String?, pattern1)
+            XCTAssertEqual(result.parameters[DefaultRouter.parametersJLRoutePatternKey] as! String?, pattern1)
+            XCTAssertEqual(result.parameters[DefaultRouter.parametersRouteURLKey] as! URL?, url)
+            XCTAssertEqual(result.parameters[DefaultRouter.parametersJLRouteURLKey] as! URL?, url)
+            XCTAssertEqual(result.parameters["var1"] as? String, "55")
+        } else {
+            XCTFail("router should give an result")
+        }
+        
+        
+    }
+    
     
 }

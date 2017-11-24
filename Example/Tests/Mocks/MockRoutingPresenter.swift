@@ -17,21 +17,23 @@ class MockRoutingPresenter: NSObject, RoutingPresenter {
     var invokedIsResponsibleParameters: (option: RoutingOption, Void)?
     var invokedIsResponsibleParametersList = [(option: RoutingOption, Void)]()
     var stubbedIsResponsibleResult: Bool! = false
+    var invokedIsResponsibleTime : Date?
 
     func isResponsible(option: RoutingOption) -> Bool {
         invokedIsResponsible = true
         invokedIsResponsibleCount += 1
         invokedIsResponsibleParameters = (option, ())
         invokedIsResponsibleParametersList.append((option, ()))
+        invokedIsResponsibleTime = Date()
         return stubbedIsResponsibleResult
     }
 
     var invokedPresent = false
     var invokedPresentCount = 0
-    var invokedPresentParameters: (controller: UIViewController, routeResult: RouteResult, option: RoutingOption, wireframe: Wireframe, delegate: RoutingPresenterDelegate)?
-    var invokedPresentParametersList = [(controller: UIViewController, routeResult: RouteResult, option: RoutingOption, wireframe: Wireframe, delegate: RoutingPresenterDelegate)]()
+    var invokedPresentParameters: (controller: UIViewController, routeResult: RouteResult, option: RoutingOption, wireframe: Wireframe, delegate: RoutingDelegate)?
+    var invokedPresentParametersList = [(controller: UIViewController, routeResult: RouteResult, option: RoutingOption, wireframe: Wireframe, delegate: RoutingDelegate)]()
 
-    func present(controller: UIViewController, routeResult: RouteResult, option: RoutingOption, wireframe: Wireframe, delegate: RoutingPresenterDelegate, completion: @escaping () -> ()) {
+    func present(controller: UIViewController, routeResult: RouteResult, option: RoutingOption, wireframe: Wireframe, delegate: RoutingDelegate, completion: @escaping () -> ()) {
         invokedPresent = true
         invokedPresentCount += 1
         invokedPresentParameters = (controller, routeResult, option, wireframe, delegate)

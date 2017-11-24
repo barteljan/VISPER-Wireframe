@@ -362,5 +362,70 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         XCTAssertFalse(mockObserver1.invokedDidPresent)
     }
     
+    func testCallsRouterWithHighPriorityFirst() throws{
+        
+        let firstCalledObserver = MockRoutingObserver()
+        let firstCalledPriority = 20
+        
+        let secondCalledObserver = MockRoutingObserver()
+        let secondCalledPriority = 10
+        
+        let thirdCalledObserver = MockRoutingObserver()
+        let thirdCalledPriority = 5
+        
+        
+        let composedObserver = DefaultComposedRoutingObserver()
+        
+        composedObserver.add(routingObserver: secondCalledObserver,
+                             priority: secondCalledPriority,
+                             routePattern:  nil)
+        
+        composedObserver.add(routingObserver: firstCalledObserver,
+                             priority: firstCalledPriority,
+                             routePattern:  nil)
+        
+        composedObserver.add(routingObserver: thirdCalledObserver,
+                             priority: thirdCalledPriority,
+                             routePattern:  nil)
+        
+        let routeResult = DefaultRouteResult(routePattern:"a/cool/route", parameters: [:])
+        let viewController = UIViewController()
+        let routingOption = MockRoutingOption()
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        try composedObserver.willPresent( controller: viewController,
+                                     routeResult: routeResult,
+                                   routingOption: routingOption,
+                                routingPresenter: routingPresenter,
+                                       wireframe: wireframe)
+        
+        
+        composedObserver.didPresent( controller: viewController,
+                                     routeResult: routeResult,
+                                     routingOption: routingOption,
+                                     routingPresenter: routingPresenter,
+                                     wireframe: wireframe)
+        
+        XCTAssertNotNil(secondCalledObserver.invokedWillPresentTime)
+        XCTAssertNotNil(secondCalledObserver.invokedDidPresentTime)
+        XCTAssertNotNil(firstCalledObserver.invokedWillPresentTime)
+        XCTAssertNotNil(firstCalledObserver.invokedDidPresentTime)
+        XCTAssertNotNil(firstCalledObserver.invokedWillPresentTime)
+        XCTAssertNotNil(firstCalledObserver.invokedDidPresentTime)
+        
+        
+        AssertThat(time1: firstCalledObserver.invokedWillPresentTime, isEarlierThan: secondCalledObserver.invokedWillPresentTime)
+        AssertThat(time1: firstCalledObserver.invokedDidPresentTime, isEarlierThan: secondCalledObserver.invokedDidPresentTime)
+        
+        AssertThat(time1: firstCalledObserver.invokedWillPresentTime, isEarlierThan: thirdCalledObserver.invokedWillPresentTime)
+        AssertThat(time1: firstCalledObserver.invokedDidPresentTime, isEarlierThan: thirdCalledObserver.invokedDidPresentTime)
+        
+        AssertThat(time1: secondCalledObserver.invokedWillPresentTime, isEarlierThan: thirdCalledObserver.invokedWillPresentTime)
+        AssertThat(time1: secondCalledObserver.invokedDidPresentTime, isEarlierThan: thirdCalledObserver.invokedDidPresentTime)
+        
+    }
+    
+    
     
 }

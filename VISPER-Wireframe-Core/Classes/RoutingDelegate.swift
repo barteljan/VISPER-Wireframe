@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol RoutingPresenterDelegate {
+public protocol RoutingDelegate {
     
     /// Add an instance observing controllers before they are presented
     ///

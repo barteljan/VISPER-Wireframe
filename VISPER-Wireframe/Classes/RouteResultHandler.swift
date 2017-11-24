@@ -42,7 +42,7 @@ public protocol RouteResultHandler {
     func handleRouteResult(routeResult: RouteResult,
                            routingOption: RoutingOption?,
                            presenter: RoutingPresenter,
-                           presenterDelegate: RoutingPresenterDelegate,
+                           presenterDelegate: RoutingDelegate,
                            wireframe: Wireframe,
                            completion: @escaping ()->Void) throws
     

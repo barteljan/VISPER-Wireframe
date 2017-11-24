@@ -45,7 +45,8 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
         
         //notify all responsible routing observers that the presentation will occour soon
         for observerWrapper in self.routingObservers {
-            if observerWrapper.routePattern == nil || observerWrapper.routePattern == routeResult.routePattern {
+            if observerWrapper.routePattern == nil ||
+               observerWrapper.routePattern == routeResult.routePattern {
                 try observerWrapper.routingObserver.willPresent(controller: controller,
                                                                routeResult: routeResult,
                                                              routingOption: routingOption,
@@ -74,7 +75,8 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
         
         //notify all responsible routing observers that the view controller presentation did occure
         for observerWrapper in self.routingObservers {
-            if observerWrapper.routePattern == nil || observerWrapper.routePattern == routeResult.routePattern {
+            if observerWrapper.routePattern == nil ||
+                observerWrapper.routePattern == routeResult.routePattern {
                 observerWrapper.routingObserver.didPresent(   controller: controller,
                                                              routeResult: routeResult,
                                                            routingOption: routingOption,
