@@ -50,16 +50,16 @@ public protocol Wireframe {
     ///   - pattern: the route pattern to register
     func addRoutePattern(_ pattern: String) throws
     
-    /// Register a route pattern and a handler
+    /// Register a handler for a route pattern
     /// The handler will be called if a route matches your route pattern.
     /// (you dont't have to add your pattern manually in this case)
     /// - Parameters:
-    ///   - pattern: The route pattern for calling your handler
     ///   - priority: The priority for calling your handler, higher priorities are called first. (Defaults to 0)
+    ///   - responsibleFor: nil if this handler should be registered for every routing option, or a spec
     ///   - handler: A handler called when a route matches your route pattern
-    func addRoutePattern(_ pattern: String,
-                         priority: Int,
-                         handler: @escaping (_ parameters: [String : Any]) -> Void ) throws
+    func add( priority: Int,
+              responsibleFor: @escaping (_ routeResult: RouteResult, _ routingOption : RoutingOption?) -> Bool,
+              handler: @escaping RoutingHandler) throws
     
     /// Add an instance providing a controller for a route
     ///

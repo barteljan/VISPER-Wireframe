@@ -10,6 +10,15 @@ import VISPER_Wireframe_Core
 
 public protocol ComposedControllerProvider : ControllerProvider {
     
+    
+    /// Returns the highest priority of a responsible child controller provider
+    ///
+    /// - Parameters:
+    ///   - routeResult: a RouteResult
+    ///   - routingOption: a RoutingOption
+    /// - Returns: nil if none was found, highest priority if a responsible provider was found
+    func priorityOfHighestResponsibleProvider(routeResult: RouteResult, routingOption: RoutingOption?) -> Int?
+    
     /// Add an instance providing a controller for a route
     ///
     /// - Parameters:

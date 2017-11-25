@@ -4,7 +4,7 @@
 //
 //  Created by bartel on 21.11.17.
 //
-
+/*
 import Foundation
 import VISPER_Wireframe_Core
 import VISPER_Wireframe_UIViewController
@@ -23,7 +23,7 @@ open class DefaultRouteResultHandler : RouteResultHandler {
     /// - Parameters:
     ///   - pattern: The route pattern for calling your handler
     ///   - priority: The priority for calling your handler, higher priorities are called first. (Defaults to 0)
-    public func addRoutePattern(_ pattern: String, priority: Int, handler: @escaping ([String : Any]) -> Void) throws {
+    public func addRoutePattern(_ pattern: String, priority: Int, handler: @escaping (_ routeResult: RouteResult) -> Void) throws {
         let handlerWrapper = RouteHandlerWrapper(routePattern: pattern,
                                                  handler: handler)
         
@@ -56,7 +56,7 @@ open class DefaultRouteResultHandler : RouteResultHandler {
     public func handleRouteResult(routeResult: RouteResult,
                                 routingOption: RoutingOption?,
                                     presenter: RoutingPresenter,
-                            presenterDelegate: RoutingDelegate,
+                              routingDelegate: RoutingDelegate,
                                     wireframe: Wireframe,
                                    completion: @escaping ()->Void) throws {
         
@@ -67,8 +67,7 @@ open class DefaultRouteResultHandler : RouteResultHandler {
             // call the handler if one is registered
             // function returns true if a handler was called
             // you can return in that case because you have found the highest priorized handler
-            if self.callHandlerFor(routePattern: routeResult.routePattern,
-                                   parameters: routeResult.parameters,
+            if self.callHandlerFor(routeResult: routeResult,
                                    routingProviderWrapper: routingProviderWrapper,
                                    completion: completion) {
                 return
@@ -76,14 +75,14 @@ open class DefaultRouteResultHandler : RouteResultHandler {
             
             //since we don't call a handler, we are now shure that our routing option should not be nil
             guard let routingOption = routingOption else {
-                throw DefaultWireframeError.noRoutingOptionFoundFor(routePattern: routeResult.routePattern, parameters: routeResult.parameters)
+                throw DefaultWireframeError.noRoutingOptionFoundFor(routeResult: routeResult)
             }
             
             
-            if let viewController = self.getController(wrapper: routingProviderWrapper,
+            if let viewController = try self.getController(wrapper: routingProviderWrapper,
                                                        routeResult: routeResult,
-                                                       option: routingOption,
-                                                       wireframe: wireframe) {
+                                                            option: routingOption,
+                                                         wireframe: wireframe) {
                 controller = viewController
                 continue
             }
@@ -92,14 +91,13 @@ open class DefaultRouteResultHandler : RouteResultHandler {
         
         //take care that routing option is not nil
         guard let option = routingOption else {
-            throw DefaultWireframeError.noRoutingOptionFoundFor(routePattern: routeResult.routePattern, parameters: routeResult.parameters)
+            throw DefaultWireframeError.noRoutingOptionFoundFor(routeResult: routeResult)
         }
         
         //take care that controller is not nil
         guard let viewController = controller else {
-            throw DefaultWireframeError.noControllerProviderFoundFor(routePattern: routeResult.routePattern,
-                                                                     option: option,
-                                                                     parameters: routeResult.parameters)
+            throw DefaultWireframeError.canNotHandleRoute(routeResult: routeResult,
+                                                                option: option)
         }
         
         //present view controller with RoutingPresenter
@@ -107,7 +105,7 @@ open class DefaultRouteResultHandler : RouteResultHandler {
                              routeResult: routeResult,
                                   option: option,
                                wireframe: wireframe,
-                                delegate: presenterDelegate,
+                                delegate: routingDelegate,
                               completion: completion)
         
     }
@@ -115,7 +113,7 @@ open class DefaultRouteResultHandler : RouteResultHandler {
     //MARK: some helper structs
     struct RouteHandlerWrapper {
         let routePattern : String
-        let handler : (([String : Any]) -> Void)
+        let handler : ((_ routeResult: RouteResult) -> Void)
     }
     
     struct ProviderWrapper {
@@ -135,33 +133,27 @@ open class DefaultRouteResultHandler : RouteResultHandler {
     func getController(wrapper: ProviderWrapper,
                        routeResult: RouteResult,
                        option: RoutingOption,
-                       wireframe: Wireframe) -> UIViewController? {
+                       wireframe: Wireframe) throws -> UIViewController? {
         
         if let controllerProvider = wrapper.controllerProvider {
-            
-            if let viewController = controllerProvider.controller(routeResult: routeResult,
-                                                                  routingOption: option) {
-                //notify vc if it should be aware of it
-                if let viewController = viewController as? RoutingAwareViewController {
-                    viewController.willRoute(wireframe: wireframe, routeResult: routeResult, option: option)
-                    viewController.didRoute(wireframe: wireframe, routeResult: routeResult, option: option)
-                }
+            if controllerProvider.isResponsible(routeResult: routeResult, routingOption: option) {
                 
-                return viewController
+                return try controllerProvider.makeController(routeResult: routeResult,
+                                                          routingOption: option)
+                
             }
         }
         return nil
     }
     
     
-    func callHandlerFor(routePattern: String,
-                        parameters: [String : Any],
+    func callHandlerFor(routeResult: RouteResult,
                         routingProviderWrapper: ProviderWrapper,
                         completion: @escaping ()->Void) -> Bool {
         
-        if routingProviderWrapper.handlerWrapper?.routePattern == routePattern {
+        if routingProviderWrapper.handlerWrapper?.routePattern == routeResult.routePattern {
             if let handler = routingProviderWrapper.handlerWrapper?.handler {
-                handler(parameters)
+                handler(routeResult)
                 completion()
                 return true
             }
@@ -171,3 +163,4 @@ open class DefaultRouteResultHandler : RouteResultHandler {
     
     
 }
+*/

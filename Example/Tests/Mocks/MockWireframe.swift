@@ -66,19 +66,19 @@ class MockWireframe: NSObject, Wireframe {
         invokedAddRoutePatternParametersList.append((pattern, ()))
     }
 
-    var invokedAddRoutePatternPriority = false
-    var invokedAddRoutePatternPriorityCount = 0
-    var invokedAddRoutePatternPriorityParameters: (pattern: String, priority: Int)?
-    var invokedAddRoutePatternPriorityParametersList = [(pattern: String, priority: Int)]()
-    var stubbedAddRoutePatternHandlerResult: ([String: Any], Void)?
+    var invokedAddPriority = false
+    var invokedAddPriorityCount = 0
+    var invokedAddPriorityParameters: (priority: Int, handler: RoutingHandler)?
+    var invokedAddPriorityParametersList = [(priority: Int, handler: RoutingHandler)]()
+    var stubbedAddResponsibleForResult: (RouteResult, RoutingOption?)?
 
-    func addRoutePattern(_ pattern: String, priority: Int, handler: @escaping (_ parameters: [String: Any]) -> Void) {
-        invokedAddRoutePatternPriority = true
-        invokedAddRoutePatternPriorityCount += 1
-        invokedAddRoutePatternPriorityParameters = (pattern, priority)
-        invokedAddRoutePatternPriorityParametersList.append((pattern, priority))
-        if let result = stubbedAddRoutePatternHandlerResult {
-            handler(result.0)
+    func add(priority: Int, responsibleFor: @escaping (_ routeResult: RouteResult, _ routingOption: RoutingOption?) -> Bool, handler: @escaping RoutingHandler) {
+        invokedAddPriority = true
+        invokedAddPriorityCount += 1
+        invokedAddPriorityParameters = (priority, handler)
+        invokedAddPriorityParametersList.append((priority, handler))
+        if let result = stubbedAddResponsibleForResult {
+            _ = responsibleFor(result.0, result.1)
         }
     }
 

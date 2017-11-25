@@ -57,43 +57,6 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-
-    func testAddRoutingObserverCallsComposedRoutingPresenter() throws {
-        
-        let mockObserver1 = MockRoutingObserver()
-        
-        let router = MockRouter()
-        
-        let composedOptionProvider = MockComposedOptionProvider()
-        let composedRoutingObserver = MockComposedRoutingObserver()
-        
-        let wireframe = DefaultWireframe(router: router,
-                         composedOptionProvider: composedOptionProvider)
-        
-        /*
-        DefaultWireframe(router: <#T##Router#>,
-         composedOptionProvider: <#T##ComposedRoutingOptionProvider#>,
-       composedRoutingPresenter: <#T##ComposedRoutingPresenter#>,
-       routingPresenterDelegate: <#T##RoutingPresenterDelegate#>,
-             routeResultHandler: <#T##RouteResultHandler#>,
-     composedControllerProvider: <#T##ComposedControllerProvider#>)
-        */
-        
-        
-        let priority = 10
-        wireframe.add(routingObserver: mockObserver1, priority: priority)
-        
-        XCTAssertTrue(composedRoutingObserver.invokedAdd)
-        
-        guard let paramObserver = composedRoutingObserver.invokedAddParameters?.routingObserver as? MockRoutingObserver else {
-            XCTFail()
-            return
-        }
-        
-        XCTAssertEqual(paramObserver, mockObserver1)
-        
-    }
-    
     
 }
 

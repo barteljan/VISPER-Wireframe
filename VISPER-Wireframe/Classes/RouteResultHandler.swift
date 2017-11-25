@@ -8,6 +8,7 @@
 import Foundation
 import VISPER_Wireframe_Core
 
+/*
 public enum RouteResultHandlerError {
     case couldNotHandle(result: RouteResult)
 }
@@ -23,7 +24,7 @@ public protocol RouteResultHandler {
     ///   - handler: A handler called when a route matches your route pattern
     func addRoutePattern(_ pattern: String,
                           priority: Int,
-                           handler: @escaping (_ parameters: [String : Any]) -> Void ) throws
+                           handler: @escaping (_ routeResult: RouteResult) -> Void ) throws
     
     /// Add an instance providing a controller for a route
     ///
@@ -42,8 +43,9 @@ public protocol RouteResultHandler {
     func handleRouteResult(routeResult: RouteResult,
                            routingOption: RoutingOption?,
                            presenter: RoutingPresenter,
-                           presenterDelegate: RoutingDelegate,
+                           routingDelegate: RoutingDelegate,
                            wireframe: Wireframe,
                            completion: @escaping ()->Void) throws
     
 }
+*/
