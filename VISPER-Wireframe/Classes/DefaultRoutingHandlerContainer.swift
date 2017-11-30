@@ -41,7 +41,7 @@ open class DefaultRoutingHandlerContainer : RoutingHandlerContainer {
     /// - Returns: priority of the highest registered handler
     open func priorityOfHighestResponsibleProvider(routeResult: RouteResult,
                                                    routingOption: RoutingOption?) -> Int? {
-        for wrapper in routeHandlers {
+        for wrapper in self.routeHandlers {
             if wrapper.isResponsible(routeResult, routingOption) {
                 return wrapper.priority
             }
@@ -59,7 +59,7 @@ open class DefaultRoutingHandlerContainer : RoutingHandlerContainer {
     open func handler(routeResult: RouteResult,
                       routingOption: RoutingOption?) -> RoutingHandler? {
         
-        for wrapper in routeHandlers {
+        for wrapper in self.routeHandlers {
             if wrapper.isResponsible(routeResult, routingOption) {
                 return wrapper.handler
             }
