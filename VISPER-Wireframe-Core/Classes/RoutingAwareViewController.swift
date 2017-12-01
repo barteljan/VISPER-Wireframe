@@ -9,16 +9,16 @@ import Foundation
 
 public protocol RoutingAwareViewController {
     
-    func willRoute(wireframe: Wireframe, routeResult: RouteResult, option: RoutingOption)
+    func willRoute(wireframe: Wireframe, routeResult: RouteResult)
     
-    func didRoute(wireframe: Wireframe, routeResult: RouteResult, option: RoutingOption)
+    func didRoute(wireframe: Wireframe, routeResult: RouteResult)
     
 }
 
 public extension RoutingAwareViewController {
     
-    func willRoute(wireframe: Wireframe, routeResult: RouteResult, option: RoutingOption){}
+    func willRoute(wireframe: Wireframe, routeResult: RouteResult){}
     
-    func didRoute(wireframe: Wireframe, routeResult: RouteResult, option: RoutingOption){}
+    func didRoute(wireframe: Wireframe, routeResult: RouteResult){}
     
 }

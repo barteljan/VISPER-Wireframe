@@ -13,30 +13,31 @@ import VISPER_Wireframe
 
 class MockWireframe: NSObject, Wireframe {
 
+
     var invokedCanRoute = false
     var invokedCanRouteCount = 0
-    var invokedCanRouteParameters: (url: URL, parameters: [String: Any])?
-    var invokedCanRouteParametersList = [(url: URL, parameters: [String: Any])]()
+    var invokedCanRouteParameters: (url: URL, parameters: [String: Any], option: RoutingOption?)?
+    var invokedCanRouteParametersList = [(url: URL, parameters: [String: Any], option: RoutingOption?)]()
     var stubbedCanRouteResult: Bool! = false
 
-    func canRoute(url: URL, parameters: [String: Any]) -> Bool {
+    func canRoute(url: URL, parameters: [String: Any], option: RoutingOption?) -> Bool {
         invokedCanRoute = true
         invokedCanRouteCount += 1
-        invokedCanRouteParameters = (url, parameters)
-        invokedCanRouteParametersList.append((url, parameters))
+        invokedCanRouteParameters = (url, parameters, option)
+        invokedCanRouteParametersList.append((url, parameters, option))
         return stubbedCanRouteResult
     }
 
     var invokedRoute = false
     var invokedRouteCount = 0
-    var invokedRouteParameters: (url: URL, option: RoutingOption?, parameters: [String: Any])?
-    var invokedRouteParametersList = [(url: URL, option: RoutingOption?, parameters: [String: Any])]()
+    var invokedRouteParameters: (url: URL, parameters: [String: Any], option: RoutingOption?)?
+    var invokedRouteParametersList = [(url: URL, parameters: [String: Any], option: RoutingOption?)]()
 
-    func route(url: URL, option: RoutingOption?, parameters: [String: Any], completion: @escaping () -> Void) {
+    func route(url: URL, parameters: [String: Any], option: RoutingOption?, completion: @escaping () -> Void) {
         invokedRoute = true
         invokedRouteCount += 1
-        invokedRouteParameters = (url, option, parameters)
-        invokedRouteParametersList.append((url, option, parameters))
+        invokedRouteParameters = (url, parameters, option)
+        invokedRouteParametersList.append((url, parameters, option))
         completion()
     }
 
@@ -68,17 +69,21 @@ class MockWireframe: NSObject, Wireframe {
 
     var invokedAddPriority = false
     var invokedAddPriorityCount = 0
-    var invokedAddPriorityParameters: (priority: Int, handler: RoutingHandler)?
-    var invokedAddPriorityParametersList = [(priority: Int, handler: RoutingHandler)]()
-    var stubbedAddResponsibleForResult: (RouteResult, RoutingOption?)?
+    var invokedAddPriorityParameters: (priority: Int, Void)?
+    var invokedAddPriorityParametersList = [(priority: Int, Void)]()
+    var stubbedAddResponsibleForResult: (RouteResult, Void)?
+    var stubbedAddHandlerResult: (RouteResult, Void)?
 
-    func add(priority: Int, responsibleFor: @escaping (_ routeResult: RouteResult, _ routingOption: RoutingOption?) -> Bool, handler: @escaping RoutingHandler) {
+    func add(priority: Int, responsibleFor: @escaping (_ routeResult: RouteResult) -> Bool, handler: @escaping RoutingHandler) {
         invokedAddPriority = true
         invokedAddPriorityCount += 1
-        invokedAddPriorityParameters = (priority, handler)
-        invokedAddPriorityParametersList.append((priority, handler))
+        invokedAddPriorityParameters = (priority, ())
+        invokedAddPriorityParametersList.append((priority, ()))
         if let result = stubbedAddResponsibleForResult {
-            _ = responsibleFor(result.0, result.1)
+            _ = responsibleFor(result.0)
+        }
+        if let result = stubbedAddHandlerResult {
+            handler(result.0)
         }
     }
 

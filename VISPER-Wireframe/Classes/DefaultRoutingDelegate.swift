@@ -41,32 +41,35 @@ open class DefaultRoutingDelegate : RoutingDelegate {
     ///   - wireframe: The wireframe presenting the view controller
     open func willPresent(controller: UIViewController,
                          routeResult: RouteResult,
-                       routingOption: RoutingOption,
                     routingPresenter: RoutingPresenter?,
                            wireframe: Wireframe) throws {
         
         try self.composedRoutingObserver.willPresent(controller: controller,
                                                      routeResult: routeResult,
-                                                     routingOption: routingOption,
                                                      routingPresenter: routingPresenter,
                                                      wireframe: wireframe)
         
         
-        
+        /*
         //notify per objective c category
         let wireframeObjc = WireframeObjc(wireframe: wireframe)
-        let routingOptionObjc = RoutingOptionObjc(routingOption: routingOption)
+
+        var routingOptionObjc : RoutingOptionObjc?
+        
+        if let option = routeResult.routingOption {
+            routingOptionObjc = RoutingOptionObjc(routingOption: option)
+        }
         
         controller.willRoute(wireframeObjc,
                              routePattern: routeResult.routePattern,
                              option: routingOptionObjc,
                              parameters: routeResult.parameters)
+        */
         
         //notify vc if it should be aware of it
         if let viewController = controller as? RoutingAwareViewController {
             viewController.willRoute(wireframe: wireframe,
-                                   routeResult: routeResult,
-                                        option: routingOption)
+                                   routeResult: routeResult)
         }
         
     }
@@ -82,30 +85,34 @@ open class DefaultRoutingDelegate : RoutingDelegate {
     ///   - wireframe: The wireframe presenting the view controller
     open func didPresent(controller: UIViewController,
                         routeResult: RouteResult,
-                      routingOption: RoutingOption,
                    routingPresenter: RoutingPresenter?,
                           wireframe: Wireframe) {
         
         
-        let routingOptionObjc = RoutingOptionObjc(routingOption: routingOption)
+        /*
         let wireframeObjc = WireframeObjc(wireframe: wireframe)
+        
+        var routingOptionObjc : RoutingOptionObjc?
+        
+        if let option = routeResult.routingOption {
+            routingOptionObjc = RoutingOptionObjc(routingOption: option)
+        }
+        
         //notify per objective c category
         controller.didRoute(wireframeObjc, routePattern: routeResult.routePattern,
                                                  option: routingOptionObjc,
                                              parameters: routeResult.parameters)
-        
+        */
         
         //notify vc if it should be aware of it
         if let viewController = controller as? RoutingAwareViewController {
             viewController.didRoute(wireframe: wireframe,
-                                 routeResult: routeResult,
-                                       option: routingOption)
+                                 routeResult: routeResult)
         }
         
         
         self.composedRoutingObserver.didPresent(controller: controller,
                                                routeResult: routeResult,
-                                             routingOption: routingOption,
                                           routingPresenter: routingPresenter,
                                                  wireframe: wireframe)
         

@@ -19,7 +19,7 @@ public protocol RoutingHandlerContainer {
     ///   - responsibleFor: nil if this handler should be registered for every routing option, or a spec
     ///   - handler: A handler called when a route matches your route pattern
     func add( priority: Int,
-        responsibleFor: @escaping (_ routeResult: RouteResult, _ routingOption : RoutingOption?) -> Bool,
+        responsibleFor: @escaping (_ routeResult: RouteResult) -> Bool,
                handler: @escaping RoutingHandler) throws
     
     
@@ -30,7 +30,7 @@ public protocol RoutingHandlerContainer {
     ///   - routeResult: a RouteResult
     ///   - routingOption: a RoutingOption
     /// - Returns: priority of the highest registered handler
-    func priorityOfHighestResponsibleProvider(routeResult: RouteResult, routingOption: RoutingOption?) -> Int?
+    func priorityOfHighestResponsibleProvider(routeResult: RouteResult) -> Int?
     
     
     
@@ -40,7 +40,7 @@ public protocol RoutingHandlerContainer {
     ///   - routeResult: a RouteResult
     ///   - routingOption: a RoutingOption
     /// - Returns: a routing handler if some is registered
-    func handler(routeResult: RouteResult, routingOption: RoutingOption?) -> RoutingHandler?
+    func handler(routeResult: RouteResult) -> RoutingHandler?
 }
 
 

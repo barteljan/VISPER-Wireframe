@@ -9,7 +9,7 @@ import Foundation
 import VISPER_Wireframe_Core
 
 public enum DefaultComposedControllerProviderError : Error {
-    case noControllerFoundFor(routeResult: RouteResult, routingOption: RoutingOption?)
+    case noControllerFoundFor(routeResult: RouteResult)
 }
 
 
@@ -26,19 +26,19 @@ public class DefaultComposedControllerProvider : ComposedControllerProvider {
         self.addRoutingProviderWrapper(wrapper: wrapper)
     }
     
-    public func isResponsible(routeResult: RouteResult, routingOption: RoutingOption?) -> Bool {
+    public func isResponsible(routeResult: RouteResult) -> Bool {
         for wrapper in self.routingProviders {
-            if wrapper.controllerProvider.isResponsible(routeResult: routeResult, routingOption: routingOption) {
+            if wrapper.controllerProvider.isResponsible(routeResult: routeResult) {
                 return true
             }
         }
         return false
     }
     
-    public func priorityOfHighestResponsibleProvider(routeResult: RouteResult, routingOption: RoutingOption?) -> Int? {
+    public func priorityOfHighestResponsibleProvider(routeResult: RouteResult) -> Int? {
         
         for wrapper in self.routingProviders {
-            if wrapper.controllerProvider.isResponsible(routeResult: routeResult, routingOption: routingOption) {
+            if wrapper.controllerProvider.isResponsible(routeResult: routeResult) {
                 return wrapper.priority
             }
         }
@@ -46,20 +46,18 @@ public class DefaultComposedControllerProvider : ComposedControllerProvider {
         return nil
     }
     
-    public func makeController(routeResult: RouteResult, routingOption: RoutingOption?) throws -> UIViewController {
+    public func makeController(routeResult: RouteResult) throws -> UIViewController {
         
         for wrapper in self.routingProviders {
             
             let controllerProvider = wrapper.controllerProvider
             
-            if controllerProvider.isResponsible(routeResult: routeResult, routingOption: routingOption) {
-                return try controllerProvider.makeController(routeResult: routeResult,
-                                                           routingOption: routingOption)
+            if controllerProvider.isResponsible(routeResult: routeResult) {
+                return try controllerProvider.makeController(routeResult: routeResult)
             }
         }
         
-        throw DefaultComposedControllerProviderError.noControllerFoundFor(routeResult: routeResult,
-                                                                        routingOption: routingOption)
+        throw DefaultComposedControllerProviderError.noControllerFoundFor(routeResult: routeResult)
 
         
     }

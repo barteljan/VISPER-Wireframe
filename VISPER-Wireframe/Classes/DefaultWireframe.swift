@@ -11,8 +11,8 @@ import VISPER_Wireframe_UIViewController
 
 public enum DefaultWireframeError : Error {
     case noRoutingOptionFoundFor(routeResult: RouteResult)
-    case canNotHandleRoute(routeResult: RouteResult, option: RoutingOption?)
-    case noRoutingPresenterFoundFor(option: RoutingOption)
+    case canNotHandleRoute(routeResult: RouteResult)
+    case noRoutingPresenterFoundFor(result: RouteResult)
     case noRoutePatternFoundFor(url: URL, parameters: [String : Any])
 }
 
@@ -54,9 +54,9 @@ open class DefaultWireframe : Wireframe {
     ///   - url: the url to check for resolution
     ///   - parameters: the parameters (data) given to the controller
     /// - Returns: Can the wireframe find a route for the given url
-    open func canRoute(url: URL, parameters: [String : Any]) throws -> Bool {
+    public func canRoute(url: URL, parameters: [String : Any], option: RoutingOption?) throws -> Bool{
         
-        if let _ = try self.router.route(url: url, parameters: parameters) {
+        if let _ = try self.router.route(url: url, parameters: parameters, routingOption: option) {
             return true
         }else {
             return false
@@ -73,58 +73,59 @@ open class DefaultWireframe : Wireframe {
     ///   - completion: function called when the view controller was presented (default is empty completion)
     /// - Throws: throws an error when no controller and/or option provider can be found.
     open func route(url: URL,
-                 option: RoutingOption? = nil,
              parameters: [String : Any] = [:],
+                 option: RoutingOption? = nil,
              completion: @escaping () -> Void = {}) throws {
         
-        guard let routeResult = try self.router.route(url: url, parameters: parameters) else {
+        
+        guard var routeResult = try self.router.route(url: url, parameters: parameters, routingOption: option) else {
             throw DefaultWireframeError.noRoutePatternFoundFor(url: url, parameters: parameters)
         }
         
-        //get the right routing option
-        let routingOption : RoutingOption? = self.composedOptionProvider.option(routeResult: routeResult,
-                                                                              currentOption: option)
+        //check if someone wants to modify your routing option
+        let modifiedRoutingOption : RoutingOption? = self.composedOptionProvider.option(routeResult: routeResult)
+        
+        routeResult.routingOption = modifiedRoutingOption
         
         //check if there is a routing handler responsible for this RouteResult/RoutingOption combination
-        let handlerPriority = self.routingHandlerContainer.priorityOfHighestResponsibleProvider(routeResult: routeResult,
-                                                                                              routingOption: routingOption)
+        let handlerPriority = self.routingHandlerContainer.priorityOfHighestResponsibleProvider(routeResult: routeResult)
         
         //check if there is a controller provider responsible for this RouteResult/RoutingOption combination 
-        let controllerPriority = self.composedControllerProvider.priorityOfHighestResponsibleProvider(routeResult: routeResult,
-                                                                                                      routingOption: routingOption)
+        let controllerPriority = self.composedControllerProvider.priorityOfHighestResponsibleProvider(routeResult: routeResult)
         
         //call handler and terminate if its priority is higher than the controllers provider
         if controllerPriority != nil && handlerPriority != nil {
             if handlerPriority! >= controllerPriority! {
-                try self.callHandler(routeResult: routeResult, routingOption: routingOption, completion: completion)
+                try self.callHandler(routeResult: routeResult, completion: completion)
                 return
             }
         } else if controllerPriority == nil && handlerPriority != nil {
-            try self.callHandler(routeResult: routeResult, routingOption: routingOption, completion: completion)
+            try self.callHandler(routeResult: routeResult, completion: completion)
             return
         }
         
         //proceed with controller presentation if no handler with higher priority was found
-        guard self.composedControllerProvider.isResponsible(routeResult: routeResult, routingOption: routingOption) else {
-            throw DefaultWireframeError.canNotHandleRoute(routeResult: routeResult, option: routingOption)
+        guard self.composedControllerProvider.isResponsible(routeResult: routeResult) else {
+            throw DefaultWireframeError.canNotHandleRoute(routeResult: routeResult)
         }
         
-        let controller = try self.composedControllerProvider.makeController(routeResult: routeResult, routingOption: routingOption)
+        let controller = try self.composedControllerProvider.makeController(routeResult: routeResult)
         
+        /*
         //take care that a routing option is available for presenting
-        guard let option = routingOption else {
+        guard let option = routeResult.routingOption else {
             throw DefaultWireframeError.noRoutingOptionFoundFor(routeResult: routeResult)
         }
+        */
         
         //check if we have a presenter responsible for this option
-        guard self.composedRoutingPresenter.isResponsible(option: option) else {
-            throw DefaultWireframeError.noRoutingPresenterFoundFor(option: option)
+        guard self.composedRoutingPresenter.isResponsible(routeResult: routeResult) else {
+            throw DefaultWireframeError.noRoutingPresenterFoundFor(result: routeResult)
         }
         
         //present view controller
         try self.composedRoutingPresenter.present(controller: controller,
                                              routeResult: routeResult,
-                                                  option: option,
                                                wireframe: self,
                                                 delegate: self.routingPresenterDelegate,
                                               completion: completion)
@@ -134,11 +135,11 @@ open class DefaultWireframe : Wireframe {
         
     }
     
-    func callHandler(routeResult: RouteResult, routingOption: RoutingOption?, completion: @escaping () -> Void) throws{
-        if let handler = self.routingHandlerContainer.handler(routeResult: routeResult, routingOption: routingOption) {
+    func callHandler(routeResult: RouteResult, completion: @escaping () -> Void) throws{
+        if let handler = self.routingHandlerContainer.handler(routeResult: routeResult) {
             handler(routeResult)
         }
-        throw DefaultWireframeError.canNotHandleRoute(routeResult: routeResult, option: routingOption)
+        throw DefaultWireframeError.canNotHandleRoute(routeResult: routeResult)
     }
     
     /// Return the view controller for a given url
@@ -149,26 +150,23 @@ open class DefaultWireframe : Wireframe {
     /// - Returns: nil if no controller was found, the found controller otherwise
     open func controller(url: URL, parameters: [String : Any]) throws -> UIViewController? {
         
-        guard let routeResult = try self.router.route(url: url, parameters: parameters) else {
+        let routingOption = DefaultGetControllerRoutingOption()
+        
+        guard let routeResult = try self.router.route(url: url, parameters: parameters, routingOption: routingOption) else {
             return nil
         }
         
-        let routingOption = DefaultGetControllerRoutingOption()
-        
-        if self.composedControllerProvider.isResponsible(routeResult: routeResult, routingOption: routingOption) {
+        if self.composedControllerProvider.isResponsible(routeResult: routeResult) {
             
-            let controller = try self.composedControllerProvider.makeController(routeResult: routeResult,
-                                                                             routingOption: routingOption)
+            let controller = try self.composedControllerProvider.makeController(routeResult: routeResult)
             
             try self.routingPresenterDelegate.willPresent(controller: controller,
                                                      routeResult: routeResult,
-                                                   routingOption: routingOption,
                                                 routingPresenter: nil,
                                                        wireframe: self)
         
             self.routingPresenterDelegate.didPresent(controller: controller,
                                                     routeResult: routeResult,
-                                                  routingOption: routingOption,
                                                routingPresenter: nil,
                                                       wireframe: self)
         
@@ -198,9 +196,9 @@ open class DefaultWireframe : Wireframe {
     ///   - priority: The priority for calling your handler, higher priorities are called first. (Defaults to 0)
     ///   - responsibleFor: nil if this handler should be registered for every routing option, or a spec
     ///   - handler: A handler called when a route matches your route pattern
-    open func add( priority: Int,
-              responsibleFor: @escaping (_ routeResult: RouteResult, _ routingOption : RoutingOption?) -> Bool,
-              handler: @escaping RoutingHandler) throws {
+     public func add(priority: Int,
+               responsibleFor: @escaping (RouteResult) -> Bool,
+                      handler: @escaping RoutingHandler) throws {
         try self.routingHandlerContainer.add(priority: priority,
                                        responsibleFor: responsibleFor,
                                               handler: handler)

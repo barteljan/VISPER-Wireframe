@@ -11,7 +11,7 @@ import Foundation
 @testable import VISPER_Wireframe
 
 class MockRouter: NSObject, Router {
-    
+
     var invokedAdd = false
     var invokedAddCount = 0
     var invokedAddParameters: (routePattern: String, Void)?
@@ -22,6 +22,20 @@ class MockRouter: NSObject, Router {
         invokedAddCount += 1
         invokedAddParameters = (routePattern, ())
         invokedAddParametersList.append((routePattern, ()))
+    }
+
+    var invokedRouteUrlRoutingOptionParameters = false
+    var invokedRouteUrlRoutingOptionParametersCount = 0
+    var invokedRouteUrlRoutingOptionParametersParameters: (url: URL, parameters: [String: Any]?, routingOption: RoutingOption?)?
+    var invokedRouteUrlRoutingOptionParametersParametersList = [(url: URL, parameters: [String: Any]?, routingOption: RoutingOption?)]()
+    var stubbedRouteUrlRoutingOptionParametersResult: RouteResult!
+
+    func route(url: URL, parameters: [String: Any]?, routingOption: RoutingOption?) -> RouteResult? {
+        invokedRouteUrlRoutingOptionParameters = true
+        invokedRouteUrlRoutingOptionParametersCount += 1
+        invokedRouteUrlRoutingOptionParametersParameters = (url, parameters, routingOption)
+        invokedRouteUrlRoutingOptionParametersParametersList.append((url, parameters, routingOption))
+        return stubbedRouteUrlRoutingOptionParametersResult
     }
 
     var invokedRouteUrl = false

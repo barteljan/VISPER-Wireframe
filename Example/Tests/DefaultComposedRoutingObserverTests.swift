@@ -99,7 +99,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         try composedObserver.willPresent(controller: viewController,
                                         routeResult: routeResult,
-                                      routingOption: routingOption,
                                    routingPresenter: routingPresenter,
                                           wireframe: wireframe)
 
@@ -121,13 +120,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         }
         
         XCTAssertEqual(paramViewController, viewController)
-        
-        guard let paramRoutingOption = mockObserver1.invokedWillPresentParameters?.routingOption as? MockRoutingOption else {
-            XCTFail()
-            return
-        }
-        
-        XCTAssertEqual(paramRoutingOption, routingOption)
         
         guard let paramRoutingPresenter = mockObserver1.invokedWillPresentParameters?.routingPresenter as? MockRoutingPresenter else {
             XCTFail()
@@ -163,7 +155,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         try composedObserver.willPresent(controller: viewController,
                                          routeResult: routeResult,
-                                         routingOption: routingOption,
                                          routingPresenter: routingPresenter,
                                          wireframe: wireframe)
         
@@ -188,7 +179,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         try composedObserver.willPresent(controller: viewController,
                                          routeResult: routeResult,
-                                         routingOption: routingOption,
                                          routingPresenter: routingPresenter,
                                          wireframe: wireframe)
         
@@ -215,7 +205,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         try composedObserver.willPresent(controller: viewController,
                                          routeResult: routeResult,
-                                         routingOption: routingOption,
                                          routingPresenter: routingPresenter,
                                          wireframe: wireframe)
         
@@ -240,7 +229,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         composedObserver.didPresent(controller: viewController,
                                    routeResult: routeResult,
-                                 routingOption: routingOption,
                               routingPresenter: routingPresenter,
                                      wireframe: wireframe)
         
@@ -263,12 +251,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         XCTAssertEqual(paramViewController, viewController)
         
-        guard let paramRoutingOption = mockObserver1.invokedDidPresentParameters?.routingOption as? MockRoutingOption else {
-            XCTFail()
-            return
-        }
-        
-        XCTAssertEqual(paramRoutingOption, routingOption)
         
         guard let paramRoutingPresenter = mockObserver1.invokedDidPresentParameters?.routingPresenter as? MockRoutingPresenter else {
             XCTFail()
@@ -303,7 +285,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         composedObserver.didPresent( controller: viewController,
                                      routeResult: routeResult,
-                                     routingOption: routingOption,
                                      routingPresenter: routingPresenter,
                                      wireframe: wireframe)
         
@@ -328,7 +309,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         composedObserver.didPresent( controller: viewController,
                                      routeResult: routeResult,
-                                     routingOption: routingOption,
                                      routingPresenter: routingPresenter,
                                      wireframe: wireframe)
         
@@ -355,7 +335,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         composedObserver.didPresent( controller: viewController,
                                      routeResult: routeResult,
-                                     routingOption: routingOption,
                                      routingPresenter: routingPresenter,
                                      wireframe: wireframe)
         
@@ -396,14 +375,12 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         try composedObserver.willPresent( controller: viewController,
                                      routeResult: routeResult,
-                                   routingOption: routingOption,
                                 routingPresenter: routingPresenter,
                                        wireframe: wireframe)
         
         
         composedObserver.didPresent( controller: viewController,
                                      routeResult: routeResult,
-                                     routingOption: routingOption,
                                      routingPresenter: routingPresenter,
                                      wireframe: wireframe)
         

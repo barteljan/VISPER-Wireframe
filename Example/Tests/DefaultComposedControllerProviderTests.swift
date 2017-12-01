@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import VISPER_Wireframe
+import VISPER_Wireframe_Core
 
 class DefaultComposedControllerProviderTests: XCTestCase {
     
@@ -87,20 +88,12 @@ class DefaultComposedControllerProviderTests: XCTestCase {
         let priority = 10
         composedControllerProvider.add(controllerProvider: controllerProvider, priority: priority)
         
-        let routingOption = MockRoutingOption()
         let routeResult = DefaultRouteResult(routePattern: "/this/is/a/path", parameters: [:])
         
-        let isResponsible = composedControllerProvider.isResponsible(routeResult: routeResult, routingOption: routingOption)
+        let isResponsible = composedControllerProvider.isResponsible(routeResult: routeResult)
         
         XCTAssert(controllerProvider.invokedIsResponsible)
         XCTAssert(isResponsible)
-        
-        guard let paramRoutingOption = controllerProvider.invokedIsResponsibleParameters?.routingOption as? MockRoutingOption else {
-            XCTFail()
-            return
-        }
-        
-        XCTAssertEqual(paramRoutingOption, routingOption)
         
         guard let paramRouteResult = controllerProvider.invokedIsResponsibleParameters?.routeResult as? DefaultRouteResult else {
             XCTFail()
@@ -132,10 +125,9 @@ class DefaultComposedControllerProviderTests: XCTestCase {
         composedControllerProvider.add(controllerProvider: thirdControllerProvider, priority: thirdPriority)
         composedControllerProvider.add(controllerProvider: firstControllerProvider, priority: firstPriority)
         
-        let routingOption = MockRoutingOption()
         let routeResult = DefaultRouteResult(routePattern: "/this/is/a/path", parameters: [:])
         
-        let isResponsible = composedControllerProvider.isResponsible(routeResult: routeResult,routingOption: routingOption)
+        let isResponsible = composedControllerProvider.isResponsible(routeResult: routeResult)
         
         XCTAssert(firstControllerProvider.invokedIsResponsible)
         XCTAssert(secondControllerProvider.invokedIsResponsible)
@@ -165,10 +157,9 @@ class DefaultComposedControllerProviderTests: XCTestCase {
         composedControllerProvider.add(controllerProvider: thirdControllerProvider, priority: thirdPriority)
         composedControllerProvider.add(controllerProvider: firstControllerProvider, priority: firstPriority)
         
-        let routingOption = MockRoutingOption()
         let routeResult = DefaultRouteResult(routePattern: "/this/is/a/path", parameters: [:])
         
-        let isResponsible = composedControllerProvider.isResponsible(routeResult: routeResult, routingOption: routingOption)
+        let isResponsible = composedControllerProvider.isResponsible(routeResult: routeResult)
         
         XCTAssert(firstControllerProvider.invokedIsResponsible)
         XCTAssert(secondControllerProvider.invokedIsResponsible)
@@ -189,9 +180,8 @@ class DefaultComposedControllerProviderTests: XCTestCase {
         composedControllerProvider.add(controllerProvider: controllerProvider, priority: priority)
         
         let routeResult = DefaultRouteResult(routePattern: "/thats/a/pattern", parameters: ["id" : "55"])
-        let option = MockRoutingOption()
         
-        let controller = try composedControllerProvider.makeController(routeResult: routeResult, routingOption: option)
+        let controller = try composedControllerProvider.makeController(routeResult: routeResult)
         
         XCTAssertEqual(controllerProvider.stubbedMakeControllerResult, controller)
         
@@ -203,12 +193,6 @@ class DefaultComposedControllerProviderTests: XCTestCase {
             return
         }
         XCTAssertEqual(paramRouteResult, routeResult)
-        
-        guard let paramOption = controllerProvider.invokedMakeControllerParameters?.routingOption as? MockRoutingOption else {
-            XCTFail()
-            return
-        }
-        XCTAssertEqual(paramOption, option)
     
     }
     
@@ -224,14 +208,12 @@ class DefaultComposedControllerProviderTests: XCTestCase {
         composedControllerProvider.add(controllerProvider: controllerProvider, priority: priority)
         
         let routeResult = DefaultRouteResult(routePattern: "/thats/a/pattern", parameters: ["id" : "55"])
-        let routingOption = MockRoutingOption()
         
-        XCTAssertThrowsError(try composedControllerProvider.makeController(routeResult: routeResult, routingOption: routingOption),
+        XCTAssertThrowsError(try composedControllerProvider.makeController(routeResult: routeResult),
                              "Should throw  error") { error in
             switch error {
-            case DefaultComposedControllerProviderError.noControllerFoundFor(let result, let option):
+            case DefaultComposedControllerProviderError.noControllerFoundFor(let result):
                 AssertThat(result, isOfType: DefaultRouteResult.self, andEquals: routeResult)
-                AssertThat(option, isOfType: MockRoutingOption.self, andEquals: routingOption)
             default:
                 XCTFail("should throw an DefaultComposedControllerProviderError.noControllerFoundFor error")
             }
@@ -265,9 +247,8 @@ class DefaultComposedControllerProviderTests: XCTestCase {
         composedControllerProvider.add(controllerProvider: secondControllerProvider, priority: secondHeighestPriority)
         
         let routeResult = DefaultRouteResult(routePattern: "/thats/a/pattern", parameters: ["id" : "55"])
-        let routingOption = MockRoutingOption()
         
-        XCTAssertThrowsError(try composedControllerProvider.makeController(routeResult: routeResult, routingOption: routingOption))
+        XCTAssertThrowsError(try composedControllerProvider.makeController(routeResult: routeResult))
 
         XCTAssertNotNil(firstControllerProvider.invokedIsResponsibleTime)
         XCTAssertNotNil(secondControllerProvider.invokedIsResponsibleTime)
@@ -276,6 +257,75 @@ class DefaultComposedControllerProviderTests: XCTestCase {
         AssertThat(time1: firstControllerProvider.invokedIsResponsibleTime, isEarlierThan: secondControllerProvider.invokedIsResponsibleTime)
         AssertThat(time1: firstControllerProvider.invokedIsResponsibleTime, isEarlierThan: thirdControllerProvider.invokedIsResponsibleTime)
         AssertThat(time1: secondControllerProvider.invokedIsResponsibleTime, isEarlierThan: thirdControllerProvider.invokedIsResponsibleTime)
+        
+    }
+    
+    
+    func testReturnsHighestPriorityOfResposibleHandler1() throws {
+        
+        let lowPriorityControllerProvider = MockControllerProvider()
+        lowPriorityControllerProvider.stubbedIsResponsibleResult = true
+        let lowPriority = 5
+        
+        let highPriorityControllerProvider = MockControllerProvider()
+        lowPriorityControllerProvider.stubbedIsResponsibleResult = true
+        let highPriority = 10
+        
+        let composedControllerProvider = DefaultComposedControllerProvider()
+        
+        composedControllerProvider.add(controllerProvider: lowPriorityControllerProvider, priority: lowPriority)
+        composedControllerProvider.add(controllerProvider: highPriorityControllerProvider, priority: highPriority)
+        
+        let routeResult = DefaultRouteResult(routePattern: "/test/pattern1", parameters: [:])
+        
+        let highestResponsiblePriority = composedControllerProvider.priorityOfHighestResponsibleProvider(routeResult: routeResult)
+        
+        XCTAssertTrue(highestResponsiblePriority == 10)
+        
+    }
+    
+    func testReturnsHighestPriorityOfResposibleHandler2() throws {
+        
+        let lowPriorityControllerProvider = MockControllerProvider()
+        lowPriorityControllerProvider.stubbedIsResponsibleResult = true
+        let lowPriority = 5
+        
+        let highPriorityControllerProvider = MockControllerProvider()
+        lowPriorityControllerProvider.stubbedIsResponsibleResult = false
+        let highPriority = 10
+        
+        let composedControllerProvider = DefaultComposedControllerProvider()
+        
+        composedControllerProvider.add(controllerProvider: lowPriorityControllerProvider, priority: lowPriority)
+        composedControllerProvider.add(controllerProvider: highPriorityControllerProvider, priority: highPriority)
+        
+        let routeResult = DefaultRouteResult(routePattern: "/test/pattern1", parameters: [:])
+        
+        let highestResponsiblePriority = composedControllerProvider.priorityOfHighestResponsibleProvider(routeResult: routeResult)
+        
+        XCTAssertTrue(highestResponsiblePriority == 5)
+        
+    }
+    
+    func testReturnsNilWithNoResposibleProvider() throws {
+        
+        let lowPriorityControllerProvider = MockControllerProvider()
+        lowPriorityControllerProvider.stubbedIsResponsibleResult = false
+        let lowPriority = 5
+        
+        let highPriorityControllerProvider = MockControllerProvider()
+        lowPriorityControllerProvider.stubbedIsResponsibleResult = false
+        let highPriority = 10
+        
+        let composedControllerProvider = DefaultComposedControllerProvider()
+        
+        composedControllerProvider.add(controllerProvider: lowPriorityControllerProvider, priority: lowPriority)
+        composedControllerProvider.add(controllerProvider: highPriorityControllerProvider, priority: highPriority)
+        
+        let routeResult = DefaultRouteResult(routePattern: "/test/pattern1", parameters: [:])
+        
+        let highestResponsiblePriority = composedControllerProvider.priorityOfHighestResponsibleProvider(routeResult: routeResult)
+        XCTAssertNil(highestResponsiblePriority)
         
     }
     

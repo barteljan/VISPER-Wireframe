@@ -18,8 +18,7 @@ public protocol ControllerProvider {
     ///   - routeResult: The route result for which a controller is searched
     ///   - routingOption: The routing option which describes how the created controller will be presented
     /// - Returns: true if it can create a controller, false otherwise
-    func isResponsible( routeResult: RouteResult,
-                      routingOption: RoutingOption? ) -> Bool
+    func isResponsible( routeResult: RouteResult) -> Bool
     
     /// The provider return a view controller if he is responsible for
     ///
@@ -27,7 +26,6 @@ public protocol ControllerProvider {
     ///   - routeResult: The route result for which a controller is searched
     ///   - routingOption: The routing option which describes how the created controller will be presented
     /// - Returns: a view controller
-    func makeController( routeResult: RouteResult,
-                       routingOption: RoutingOption?) throws -> UIViewController
+    func makeController( routeResult: RouteResult) throws -> UIViewController
     
 }

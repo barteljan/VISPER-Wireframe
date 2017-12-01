@@ -21,7 +21,6 @@ public protocol RoutingOptionProvider {
     ///   - parameters: some additional data for creating the view controller presented by this routing option
     ///   - currentOption: The currently determined routing option - Be careful to overwrite it only on purpose
     /// - Returns: A default routing option if you are responsible for this route, nil otherwise
-    func option(  routeResult: RouteResult,
-                currentOption: RoutingOption?) -> RoutingOption?
+    func option(  routeResult: RouteResult ) -> RoutingOption?
     
 }

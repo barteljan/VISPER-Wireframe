@@ -24,7 +24,7 @@ open class DefaultRoutingHandlerContainer : RoutingHandlerContainer {
     ///   - responsibleFor: nil if this handler should be registered for every routing option, or a spec
     ///   - handler: A handler called when a route matches your route pattern
     open func add( priority: Int,
-                   responsibleFor: @escaping (RouteResult, RoutingOption?) -> Bool,
+                   responsibleFor: @escaping (RouteResult) -> Bool,
                    handler: @escaping RoutingHandler) throws {
         let wrapper = RouteHandlerWrapper(priority: priority,
                                           isResponsible: responsibleFor,
@@ -39,10 +39,9 @@ open class DefaultRoutingHandlerContainer : RoutingHandlerContainer {
     ///   - routeResult: a RouteResult
     ///   - routingOption: a RoutingOption
     /// - Returns: priority of the highest registered handler
-    open func priorityOfHighestResponsibleProvider(routeResult: RouteResult,
-                                                   routingOption: RoutingOption?) -> Int? {
+    open func priorityOfHighestResponsibleProvider(routeResult: RouteResult) -> Int? {
         for wrapper in self.routeHandlers {
-            if wrapper.isResponsible(routeResult, routingOption) {
+            if wrapper.isResponsible(routeResult) {
                 return wrapper.priority
             }
         }
@@ -56,11 +55,10 @@ open class DefaultRoutingHandlerContainer : RoutingHandlerContainer {
     ///   - routeResult: a RouteResult
     ///   - routingOption: a RoutingOption
     /// - Returns: a routing handler if some is registered
-    open func handler(routeResult: RouteResult,
-                      routingOption: RoutingOption?) -> RoutingHandler? {
+    open func handler(routeResult: RouteResult) -> RoutingHandler? {
         
         for wrapper in self.routeHandlers {
-            if wrapper.isResponsible(routeResult, routingOption) {
+            if wrapper.isResponsible(routeResult) {
                 return wrapper.handler
             }
         }
@@ -73,7 +71,7 @@ open class DefaultRoutingHandlerContainer : RoutingHandlerContainer {
     
     struct RouteHandlerWrapper {
         let priority : Int
-        let isResponsible: (RouteResult, RoutingOption?) -> Bool
+        let isResponsible: (RouteResult) -> Bool
         let handler : (_ routeResult: RouteResult) -> Void
     }
     

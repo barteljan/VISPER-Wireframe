@@ -31,10 +31,10 @@ open class DefaultComposedRoutingPresenter : ComposedRoutingPresenter {
     ///
     /// - Parameter option: a given routing option
     /// - Returns: true if it is responsible, false if not
-    public func isResponsible(option: RoutingOption) -> Bool {
+     public func isResponsible(routeResult: RouteResult) -> Bool  {
         
         for wrapper in self.routingPresenters {
-            if wrapper.routingPresenter.isResponsible(option: option) {
+            if wrapper.routingPresenter.isResponsible(routeResult: routeResult) {
                 return true
             }
         }
@@ -53,18 +53,16 @@ open class DefaultComposedRoutingPresenter : ComposedRoutingPresenter {
     ///   - delegate: A delegate called for routing event handling
     public func present(controller: UIViewController,
                        routeResult: RouteResult,
-                        option: RoutingOption,
                         wireframe: Wireframe,
                         delegate: RoutingDelegate,
                         completion: @escaping () -> ()) throws{
         
         for routingPresenterWrapper in self.routingPresenters {
             
-            if routingPresenterWrapper.routingPresenter.isResponsible(option: option) {
+            if routingPresenterWrapper.routingPresenter.isResponsible(routeResult: routeResult) {
                 
                 try routingPresenterWrapper.routingPresenter.present(controller: controller,
                                                                     routeResult: routeResult,
-                                                                         option: option,
                                                                       wireframe: wireframe,
                                                                        delegate: delegate,
                                                                      completion: completion)

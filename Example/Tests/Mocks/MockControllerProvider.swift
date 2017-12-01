@@ -8,36 +8,36 @@ import Foundation
 @testable import VISPER_Wireframe
 
 
-class MockControllerProvider: NSObject, ControllerProvider {
 
+class MockControllerProvider: NSObject, ControllerProvider {
 
     var invokedIsResponsible = false
     var invokedIsResponsibleCount = 0
-    var invokedIsResponsibleParameters: (routeResult: RouteResult, routingOption: RoutingOption?)?
-    var invokedIsResponsibleParametersList = [(routeResult: RouteResult, routingOption: RoutingOption?)]()
+    var invokedIsResponsibleParameters: (routeResult: RouteResult, Void)?
+    var invokedIsResponsibleParametersList = [(routeResult: RouteResult, Void)]()
     var stubbedIsResponsibleResult: Bool! = false
     var invokedIsResponsibleTime: Date?
 
-    func isResponsible(routeResult: RouteResult, routingOption: RoutingOption?) -> Bool {
+    func isResponsible(routeResult: RouteResult) -> Bool {
         invokedIsResponsible = true
-        invokedIsResponsibleCount += 1
-        invokedIsResponsibleParameters = (routeResult, routingOption)
-        invokedIsResponsibleParametersList.append((routeResult, routingOption))
         invokedIsResponsibleTime = Date()
+        invokedIsResponsibleCount += 1
+        invokedIsResponsibleParameters = (routeResult, ())
+        invokedIsResponsibleParametersList.append((routeResult, ()))
         return stubbedIsResponsibleResult
     }
 
     var invokedMakeController = false
     var invokedMakeControllerCount = 0
-    var invokedMakeControllerParameters: (routeResult: RouteResult, routingOption: RoutingOption?)?
-    var invokedMakeControllerParametersList = [(routeResult: RouteResult, routingOption: RoutingOption?)]()
+    var invokedMakeControllerParameters: (routeResult: RouteResult, Void)?
+    var invokedMakeControllerParametersList = [(routeResult: RouteResult, Void)]()
     var stubbedMakeControllerResult: UIViewController!
 
-    func makeController(routeResult: RouteResult, routingOption: RoutingOption?) -> UIViewController {
+    func makeController(routeResult: RouteResult) -> UIViewController {
         invokedMakeController = true
         invokedMakeControllerCount += 1
-        invokedMakeControllerParameters = (routeResult, routingOption)
-        invokedMakeControllerParametersList.append((routeResult, routingOption))
+        invokedMakeControllerParameters = (routeResult, ())
+        invokedMakeControllerParametersList.append((routeResult, ()))
         return stubbedMakeControllerResult
     }
 }

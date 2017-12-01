@@ -9,7 +9,7 @@
 import Foundation
 import VISPER_Wireframe_Core
 
-class MockRoutingDelegate: NSObject,RoutingDelegate {
+class MockRoutingDelegate: NSObject, RoutingDelegate {
 
 
     var invokedAdd = false
@@ -26,26 +26,25 @@ class MockRoutingDelegate: NSObject,RoutingDelegate {
 
     var invokedWillPresent = false
     var invokedWillPresentCount = 0
-    var invokedWillPresentParameters: (controller: UIViewController, routeResult: RouteResult, routingOption: RoutingOption, routingPresenter: RoutingPresenter?, wireframe: Wireframe)?
-    var invokedWillPresentParametersList = [(controller: UIViewController, routeResult: RouteResult, routingOption: RoutingOption, routingPresenter: RoutingPresenter?, wireframe: Wireframe)]()
+    var invokedWillPresentParameters: (controller: UIViewController, routeResult: RouteResult, routingPresenter: RoutingPresenter?, wireframe: Wireframe)?
+    var invokedWillPresentParametersList = [(controller: UIViewController, routeResult: RouteResult, routingPresenter: RoutingPresenter?, wireframe: Wireframe)]()
 
-    func willPresent(controller: UIViewController, routeResult: RouteResult, routingOption: RoutingOption, routingPresenter: RoutingPresenter?, wireframe: Wireframe) {
+    func willPresent(controller: UIViewController, routeResult: RouteResult, routingPresenter: RoutingPresenter?, wireframe: Wireframe) {
         invokedWillPresent = true
         invokedWillPresentCount += 1
-        invokedWillPresentParameters = (controller, routeResult, routingOption, routingPresenter, wireframe)
-        invokedWillPresentParametersList.append((controller, routeResult, routingOption, routingPresenter, wireframe))
+        invokedWillPresentParameters = (controller, routeResult, routingPresenter, wireframe)
+        invokedWillPresentParametersList.append((controller, routeResult, routingPresenter, wireframe))
     }
 
     var invokedDidPresent = false
     var invokedDidPresentCount = 0
-    var invokedDidPresentParameters: (controller: UIViewController, routeResult: RouteResult, routingOption: RoutingOption, routingPresenter: RoutingPresenter?, wireframe: Wireframe)?
-    var invokedDidPresentParametersList = [(controller: UIViewController, routeResult: RouteResult, routingOption: RoutingOption, routingPresenter: RoutingPresenter?, wireframe: Wireframe)]()
+    var invokedDidPresentParameters: (controller: UIViewController, routeResult: RouteResult, routingPresenter: RoutingPresenter?, wireframe: Wireframe)?
+    var invokedDidPresentParametersList = [(controller: UIViewController, routeResult: RouteResult, routingPresenter: RoutingPresenter?, wireframe: Wireframe)]()
 
-    func didPresent(controller: UIViewController, routeResult: RouteResult, routingOption: RoutingOption, routingPresenter: RoutingPresenter?, wireframe: Wireframe) {
+    func didPresent(controller: UIViewController, routeResult: RouteResult, routingPresenter: RoutingPresenter?, wireframe: Wireframe) {
         invokedDidPresent = true
         invokedDidPresentCount += 1
-        invokedDidPresentParameters = (controller, routeResult, routingOption, routingPresenter, wireframe)
-        invokedDidPresentParametersList.append((controller, routeResult, routingOption, routingPresenter, wireframe))
+        invokedDidPresentParameters = (controller, routeResult, routingPresenter, wireframe)
+        invokedDidPresentParametersList.append((controller, routeResult, routingPresenter, wireframe))
     }
-    
 }

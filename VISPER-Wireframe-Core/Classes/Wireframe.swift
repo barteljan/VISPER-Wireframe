@@ -18,7 +18,8 @@ public protocol Wireframe {
     ///   - parameters: the parameters (data) given to the controller
     /// - Returns: Can the wireframe find a route for the given url
     func canRoute(   url: URL,
-                     parameters: [String : Any]) throws -> Bool
+                     parameters: [String : Any],
+                     option: RoutingOption?) throws -> Bool
     
     /// Route to a new route presenting a view controller
     ///
@@ -29,8 +30,8 @@ public protocol Wireframe {
     ///   - completion: function called when the view controller was presented
     /// - Throws: throws an error when no controller and/or option provider can be found.
     func route(url: URL,
-               option: RoutingOption?,
                parameters: [String : Any],
+               option: RoutingOption?,
                completion: @escaping () -> Void) throws
     
     /// Return the view controller for a given url
@@ -58,7 +59,7 @@ public protocol Wireframe {
     ///   - responsibleFor: nil if this handler should be registered for every routing option, or a spec
     ///   - handler: A handler called when a route matches your route pattern
     func add( priority: Int,
-              responsibleFor: @escaping (_ routeResult: RouteResult, _ routingOption : RoutingOption?) -> Bool,
+              responsibleFor: @escaping (_ routeResult: RouteResult) -> Bool,
               handler: @escaping RoutingHandler) throws
     
     /// Add an instance providing a controller for a route

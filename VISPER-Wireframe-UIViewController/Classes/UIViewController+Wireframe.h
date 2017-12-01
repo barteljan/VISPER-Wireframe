@@ -5,6 +5,7 @@
 //  Created by Jan Bartel on 20.11.17.
 //
 
+/*
 #import <UIKit/UIKit.h>
 @import VISPER_Wireframe_Core;
 
@@ -22,5 +23,5 @@
 
 @end
 
-
+*/
 

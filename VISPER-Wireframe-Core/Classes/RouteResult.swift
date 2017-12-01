@@ -9,5 +9,6 @@ import Foundation
 
 public protocol RouteResult {
     var routePattern: String {get}
+    var routingOption: RoutingOption? {get set}
     var parameters: [String : Any] {get}
 }

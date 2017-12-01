@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+/*
 @objc open class WireframeObjc : NSObject {
     
     public let wireframe : Wireframe
@@ -75,4 +75,4 @@ import Foundation
     }
     
 }
-
+*/

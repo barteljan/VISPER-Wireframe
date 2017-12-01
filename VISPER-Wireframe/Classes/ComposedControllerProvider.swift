@@ -17,7 +17,7 @@ public protocol ComposedControllerProvider : ControllerProvider {
     ///   - routeResult: a RouteResult
     ///   - routingOption: a RoutingOption
     /// - Returns: nil if none was found, highest priority if a responsible provider was found
-    func priorityOfHighestResponsibleProvider(routeResult: RouteResult, routingOption: RoutingOption?) -> Int?
+    func priorityOfHighestResponsibleProvider(routeResult: RouteResult) -> Int?
     
     /// Add an instance providing a controller for a route
     ///

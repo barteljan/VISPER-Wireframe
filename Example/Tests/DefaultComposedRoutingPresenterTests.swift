@@ -88,19 +88,19 @@ class DefaultComposedRoutingPresenterTests: XCTestCase {
         let priority = 10
         composedPresenter.add(routingPresenter: mockPresenter, priority: priority)
         
-        let routingOption = MockRoutingOption()
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:], routingOption: MockRoutingOption())
         
-        let isResponsible = composedPresenter.isResponsible(option: routingOption)
+        let isResponsible = composedPresenter.isResponsible(routeResult: routeResult)
         
         XCTAssert(mockPresenter.invokedIsResponsible)
         XCTAssert(isResponsible)
         
-        guard let paramRoutingOption = mockPresenter.invokedIsResponsibleParameters?.option as? MockRoutingOption else {
+        guard let paramRoutingResult = mockPresenter.invokedIsResponsibleParameters?.routeResult as? DefaultRouteResult else {
             XCTFail()
             return
         }
         
-        XCTAssertEqual(paramRoutingOption, routingOption)
+        XCTAssertEqual(paramRoutingResult, routeResult)
         
     }
     
@@ -125,9 +125,9 @@ class DefaultComposedRoutingPresenterTests: XCTestCase {
         composedPresenter.add(routingPresenter: thirdPresenter, priority: thirdPriority)
         composedPresenter.add(routingPresenter: firstPresenter, priority: firstPriority)
         
-        let routingOption = MockRoutingOption()
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:], routingOption: MockRoutingOption())
         
-        let isResponsible = composedPresenter.isResponsible(option: routingOption)
+        let isResponsible = composedPresenter.isResponsible(routeResult: routeResult)
         
         XCTAssert(firstPresenter.invokedIsResponsible)
         XCTAssert(secondPresenter.invokedIsResponsible)
@@ -158,9 +158,9 @@ class DefaultComposedRoutingPresenterTests: XCTestCase {
         composedPresenter.add(routingPresenter: thirdPresenter, priority: thirdPriority)
         composedPresenter.add(routingPresenter: firstPresenter, priority: firstPriority)
         
-        let routingOption = MockRoutingOption()
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:], routingOption: MockRoutingOption())
         
-        let isResponsible = composedPresenter.isResponsible(option: routingOption)
+        let isResponsible = composedPresenter.isResponsible(routeResult: routeResult)
         
         XCTAssert(firstPresenter.invokedIsResponsible)
         XCTAssert(secondPresenter.invokedIsResponsible)
@@ -169,6 +169,7 @@ class DefaultComposedRoutingPresenterTests: XCTestCase {
         XCTAssertFalse(isResponsible)
     }
     
+
     func testCallsPresentOnChildIfItIsResponsible() throws {
         
         let mockPresenter = MockRoutingPresenter()
@@ -180,15 +181,13 @@ class DefaultComposedRoutingPresenterTests: XCTestCase {
         composedPresenter.add(routingPresenter: mockPresenter, priority: priority)
         
         let viewController = UIViewController()
-        let routeResult = DefaultRouteResult(routePattern: "/thats/a/pattern", parameters: ["id" : "55"])
-        let option = MockRoutingOption()
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:], routingOption: MockRoutingOption())
         let wireframe = MockWireframe()
         let delegate = MockRoutingDelegate()
         
         var didCallCompletion = false
         try composedPresenter.present(controller: viewController,
                                      routeResult: routeResult,
-                                          option: option,
                                        wireframe: wireframe,
                                         delegate: delegate) {
                                     didCallCompletion = true
@@ -205,12 +204,6 @@ class DefaultComposedRoutingPresenterTests: XCTestCase {
             return
         }
         XCTAssertEqual(paramRouteResult, routeResult)
-        
-        guard let paramOption = mockPresenter.invokedPresentParameters?.option as? MockRoutingOption else {
-            XCTFail()
-            return
-        }
-        XCTAssertEqual(paramOption, option)
         
         guard let paramWireframe = mockPresenter.invokedPresentParameters?.wireframe as? MockWireframe else {
             XCTFail()
@@ -239,15 +232,13 @@ class DefaultComposedRoutingPresenterTests: XCTestCase {
         composedPresenter.add(routingPresenter: mockPresenter, priority: priority)
         
         let viewController = UIViewController()
-        let routeResult = DefaultRouteResult(routePattern: "/thats/a/pattern", parameters: ["id" : "55"])
-        let option = MockRoutingOption()
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:], routingOption: MockRoutingOption())
         let wireframe = MockWireframe()
         let delegate = MockRoutingDelegate()
         
         var didCallCompletion = false
         try composedPresenter.present(controller: viewController,
                                       routeResult: routeResult,
-                                      option: option,
                                       wireframe: wireframe,
                                       delegate: delegate) {
                                         didCallCompletion = true
@@ -281,15 +272,13 @@ class DefaultComposedRoutingPresenterTests: XCTestCase {
         composedPresenter.add(routingPresenter: secondPresenter, priority: secondHeighestPriority)
         
         let viewController = UIViewController()
-        let routeResult = DefaultRouteResult(routePattern: "/thats/a/pattern", parameters: ["id" : "55"])
-        let option = MockRoutingOption()
+        let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:], routingOption: MockRoutingOption())
         let wireframe = MockWireframe()
         let delegate = MockRoutingDelegate()
         
         
         try composedPresenter.present(controller: viewController,
                                       routeResult: routeResult,
-                                      option: option,
                                       wireframe: wireframe,
                                       delegate: delegate) {
                                         

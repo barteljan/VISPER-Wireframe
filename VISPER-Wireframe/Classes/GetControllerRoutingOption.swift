@@ -11,5 +11,10 @@ import VISPER_Wireframe_Core
 public protocol GetControllerRoutingOption : RoutingOption{}
 
 public struct DefaultGetControllerRoutingOption : GetControllerRoutingOption {
+    
+    public func isEqual(otherOption: RoutingOption?) -> Bool {
+        return otherOption is DefaultGetControllerRoutingOption
+    }
+    
     public init(){}
 }

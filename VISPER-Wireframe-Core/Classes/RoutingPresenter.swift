@@ -16,7 +16,7 @@ public protocol RoutingPresenter {
     ///
     /// - Parameter option: a given routing option
     /// - Returns: true if it is responsible, false if not
-    func isResponsible(option: RoutingOption) -> Bool
+    func isResponsible(routeResult: RouteResult) -> Bool
     
     
     
@@ -31,7 +31,6 @@ public protocol RoutingPresenter {
     ///   - delegate: A delegate called for routing event handling
     func present(controller: UIViewController,
                 routeResult: RouteResult,
-                     option: RoutingOption,
                   wireframe: Wireframe,
                    delegate: RoutingDelegate,
                  completion: @escaping () -> ()) throws

@@ -115,9 +115,20 @@ public class DefaultRouter : Router {
     /// - Returns: a RouteResult if the router can resolve the url, nil otherwise
     /// - Throws: throws routing errors if they occour
     public func route(url: URL, parameters: [String: Any]?) throws ->  RouteResult? {
-        
+        return try self.route(url: url, parameters: parameters, routingOption: nil)
+    }
+    
+    /// Route for an given url
+    ///
+    /// - Parameter url: a url
+    /// - Returns: a RouteResult if the router can resolve the url, nil otherwise
+    /// - Throws: throws routing errors if they occour
+    public func route(url: URL, parameters: [String: Any]?, routingOption: RoutingOption?) throws ->  RouteResult? {
         for routeDefinition in self.routeDefinitions.reversed() {
-            if let result = try self.match(route: url, routeDefinition: routeDefinition, params: parameters) {
+            if let result = try self.match(route: url,
+                                 routeDefinition: routeDefinition,
+                                          params: parameters,
+                                   routingOption:routingOption) {
                 return result
             }
         }
@@ -126,7 +137,7 @@ public class DefaultRouter : Router {
     }
     
     // Check if this routeDefinition matches an url
-    func match(route:URL, routeDefinition: RouteDefinition, params: [String: Any]?) throws -> RouteResult? {
+    func match(route:URL, routeDefinition: RouteDefinition, params: [String: Any]?, routingOption: RoutingOption?) throws -> RouteResult? {
         
         let stringComponents = route.absoluteString.split(separator: "/").map { (substring) -> String in
             return String(substring)
@@ -191,7 +202,7 @@ public class DefaultRouter : Router {
             })
         }
         
-        return DefaultRouteResult(routePattern: routeDefinition.routePattern, parameters: parameters)
+        return DefaultRouteResult(routePattern: routeDefinition.routePattern, parameters: parameters, routingOption: routingOption)
     }
     
     

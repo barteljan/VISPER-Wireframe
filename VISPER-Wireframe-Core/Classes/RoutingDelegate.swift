@@ -28,7 +28,6 @@ public protocol RoutingDelegate {
     ///   - wireframe: The wireframe presenting the view controller
     func willPresent(controller: UIViewController,
                    routeResult:  RouteResult,
-                  routingOption: RoutingOption,
                routingPresenter: RoutingPresenter?,
                       wireframe: Wireframe) throws
     
@@ -44,7 +43,6 @@ public protocol RoutingDelegate {
     ///   - wireframe: The wireframe presenting the view controller
     func didPresent( controller: UIViewController,
                     routeResult:  RouteResult,
-                  routingOption: RoutingOption,
                routingPresenter: RoutingPresenter?,
                       wireframe: Wireframe)
     

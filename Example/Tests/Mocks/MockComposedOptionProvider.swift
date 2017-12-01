@@ -28,15 +28,15 @@ class MockComposedOptionProvider: NSObject, ComposedRoutingOptionProvider {
 
     var invokedOption = false
     var invokedOptionCount = 0
-    var invokedOptionParameters: (routeResult: RouteResult, currentOption: RoutingOption?)?
-    var invokedOptionParametersList = [(routeResult: RouteResult, currentOption: RoutingOption?)]()
+    var invokedOptionParameters: (routeResult: RouteResult, Void)?
+    var invokedOptionParametersList = [(routeResult: RouteResult, Void)]()
     var stubbedOptionResult: RoutingOption!
 
-    func option(routeResult: RouteResult, currentOption: RoutingOption?) -> RoutingOption? {
+    func option(routeResult: RouteResult) -> RoutingOption? {
         invokedOption = true
         invokedOptionCount += 1
-        invokedOptionParameters = (routeResult, currentOption)
-        invokedOptionParametersList.append((routeResult, currentOption))
+        invokedOptionParameters = (routeResult, ())
+        invokedOptionParametersList.append((routeResult, ()))
         return stubbedOptionResult
     }
 }

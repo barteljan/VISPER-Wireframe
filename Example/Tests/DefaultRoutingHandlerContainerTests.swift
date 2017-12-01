@@ -24,7 +24,7 @@ class DefaultRoutingHandlerContainerTests: XCTestCase {
         let container = DefaultRoutingHandlerContainer()
         
         try container.add(priority: priority,
-                    responsibleFor: { result,option in return result.routePattern == pattern },
+                    responsibleFor: { result in return result.routePattern == pattern },
                            handler: handler)
         
         if container.routeHandlers.count == 1 {
@@ -62,10 +62,10 @@ class DefaultRoutingHandlerContainerTests: XCTestCase {
         
         
         try container.add(priority: lowPriority,
-                          responsibleFor: { result,option in return false},
+                          responsibleFor: { result in return false},
                           handler: lowPriorityHandler)
         try container.add(priority: highPriority,
-                          responsibleFor: { result,option in return false },
+                          responsibleFor: { result in return false },
                           handler: highPriorityHandler)
         
         if container.routeHandlers.count == 2 {
@@ -101,13 +101,13 @@ class DefaultRoutingHandlerContainerTests: XCTestCase {
         
         var didCallResponsibleForHandler = false
         try container.add(priority: priority,
-                          responsibleFor: { result,option in
+                          responsibleFor: { result in
                                 didCallResponsibleForHandler = true
                                 return true
                           },
                           handler: handler)
         
-        _ = container.handler(routeResult: routeResult, routingOption: routingOption)
+        _ = container.handler(routeResult: routeResult)
         
         XCTAssertTrue(didCallResponsibleForHandler)
         
@@ -126,12 +126,12 @@ class DefaultRoutingHandlerContainerTests: XCTestCase {
         let container = DefaultRoutingHandlerContainer()
         
         try container.add(priority: priority,
-                          responsibleFor: { result,option in
+                          responsibleFor: { result in
                               return true
                           },
                           handler: handler)
         
-        guard let resultHandler = container.handler(routeResult: routeResult, routingOption: routingOption) else {
+        guard let resultHandler = container.handler(routeResult: routeResult) else {
             XCTFail("should return handler")
             return
         }
@@ -155,12 +155,12 @@ class DefaultRoutingHandlerContainerTests: XCTestCase {
         let container = DefaultRoutingHandlerContainer()
         
         try container.add(priority: priority,
-                          responsibleFor: { result,option in
+                          responsibleFor: { result in
                             return false
         },
                           handler: handler)
         
-        let resultHandler = container.handler(routeResult: routeResult, routingOption: routingOption)
+        let resultHandler = container.handler(routeResult: routeResult)
         XCTAssertNil(resultHandler)
         
     }
@@ -183,16 +183,16 @@ class DefaultRoutingHandlerContainerTests: XCTestCase {
         
         
         try container.add(priority: lowPriority,
-                          responsibleFor: { result,option in return true},
+                          responsibleFor: { result in return true},
                           handler: lowPriorityHandler)
         try container.add(priority: highPriority,
-                          responsibleFor: { result,option in return true },
+                          responsibleFor: { result in return true },
                           handler: highPriorityHandler)
         
         let routeResult = DefaultRouteResult(routePattern: "/test/pattern1", parameters: [:])
         let routingOption = MockRoutingOption()
         
-        guard let resultHandler = container.handler(routeResult: routeResult, routingOption: routingOption) else {
+        guard let resultHandler = container.handler(routeResult: routeResult) else {
             XCTFail("should return handler")
             return
         }
@@ -223,16 +223,16 @@ class DefaultRoutingHandlerContainerTests: XCTestCase {
         
         
         try container.add(priority: lowPriority,
-                          responsibleFor: { result,option in return true},
+                          responsibleFor: { result in return true},
                           handler: lowPriorityHandler)
         try container.add(priority: highPriority,
-                          responsibleFor: { result,option in return false },
+                          responsibleFor: { result in return false },
                           handler: highPriorityHandler)
         
         let routeResult = DefaultRouteResult(routePattern: "/test/pattern1", parameters: [:])
         let routingOption = MockRoutingOption()
         
-        guard let resultHandler = container.handler(routeResult: routeResult, routingOption: routingOption) else {
+        guard let resultHandler = container.handler(routeResult: routeResult) else {
             XCTFail("should return handler")
             return
         }
@@ -257,17 +257,16 @@ class DefaultRoutingHandlerContainerTests: XCTestCase {
         
         
         try container.add(priority: lowPriority,
-                          responsibleFor: { result,option in return true},
+                          responsibleFor: { result in return true},
                           handler: lowPriorityHandler)
         try container.add(priority: highPriority,
-                          responsibleFor: { result,option in return true },
+                          responsibleFor: { result in return true },
                           handler: highPriorityHandler)
         
         let routeResult = DefaultRouteResult(routePattern: "/test/pattern1", parameters: [:])
         let routingOption = MockRoutingOption()
         
-        let highestResponsiblePriority = container.priorityOfHighestResponsibleProvider(routeResult: routeResult,
-                                                                                        routingOption: routingOption)
+        let highestResponsiblePriority = container.priorityOfHighestResponsibleProvider(routeResult: routeResult)
         XCTAssertTrue(highestResponsiblePriority == 10)
        
     }
@@ -284,17 +283,16 @@ class DefaultRoutingHandlerContainerTests: XCTestCase {
         
         
         try container.add(priority: lowPriority,
-                          responsibleFor: { result,option in return true},
+                          responsibleFor: { result in return true},
                           handler: lowPriorityHandler)
         try container.add(priority: highPriority,
-                          responsibleFor: { result,option in return false },
+                          responsibleFor: { result in return false },
                           handler: highPriorityHandler)
         
         let routeResult = DefaultRouteResult(routePattern: "/test/pattern1", parameters: [:])
         let routingOption = MockRoutingOption()
         
-        let highestResponsiblePriority = container.priorityOfHighestResponsibleProvider(routeResult: routeResult,
-                                                                                        routingOption: routingOption)
+        let highestResponsiblePriority = container.priorityOfHighestResponsibleProvider(routeResult: routeResult)
         XCTAssertTrue(highestResponsiblePriority == 5)
         
     }
@@ -311,17 +309,16 @@ class DefaultRoutingHandlerContainerTests: XCTestCase {
         
         
         try container.add(priority: lowPriority,
-                          responsibleFor: { result,option in return false },
+                          responsibleFor: { result in return false },
                           handler: lowPriorityHandler)
         try container.add(priority: highPriority,
-                          responsibleFor: { result,option in return false },
+                          responsibleFor: { result in return false },
                           handler: highPriorityHandler)
         
         let routeResult = DefaultRouteResult(routePattern: "/test/pattern1", parameters: [:])
         let routingOption = MockRoutingOption()
         
-        let highestResponsiblePriority = container.priorityOfHighestResponsibleProvider(routeResult: routeResult,
-                                                                                        routingOption: routingOption)
+        let highestResponsiblePriority = container.priorityOfHighestResponsibleProvider(routeResult: routeResult)
         XCTAssertNil(highestResponsiblePriority)
         
     }

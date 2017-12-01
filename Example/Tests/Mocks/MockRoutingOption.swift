@@ -11,4 +11,9 @@ import Foundation
 
 class MockRoutingOption : NSObject, RoutingOption {
     
+    func isEqual(otherOption: RoutingOption?) -> Bool {
+        return otherOption is MockRoutingOption
+    }
+    
+    
 }

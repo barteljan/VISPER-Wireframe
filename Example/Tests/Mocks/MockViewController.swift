@@ -10,7 +10,7 @@ import Foundation
 import VISPER_Wireframe_UIViewController
 
 class MockViewController : UIViewController {
-    
+    /*
     var validateDidCallWillRoute = false
     override func willRoute(_ wireframe: WireframeObjc!,
                                   routePattern: String!,
@@ -27,6 +27,6 @@ class MockViewController : UIViewController {
                             parameters: [AnyHashable : Any]!) {
         validateDidCallDidRoute = true
     }
-    
+    */
     
 }

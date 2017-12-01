@@ -38,7 +38,6 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
     ///   - wireframe: The wireframe presenting the view controller
     public func willPresent(controller: UIViewController,
                             routeResult: RouteResult,
-                            routingOption: RoutingOption,
                             routingPresenter: RoutingPresenter?,
                             wireframe: Wireframe) throws {
         
@@ -49,7 +48,6 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
                observerWrapper.routePattern == routeResult.routePattern {
                 try observerWrapper.routingObserver.willPresent(controller: controller,
                                                                routeResult: routeResult,
-                                                             routingOption: routingOption,
                                                           routingPresenter: routingPresenter,
                                                                  wireframe: wireframe)
             }
@@ -69,7 +67,6 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
     ///   - wireframe: The wireframe presenting the view controller
     open func didPresent( controller: UIViewController,
                          routeResult: RouteResult,
-                       routingOption: RoutingOption,
                     routingPresenter: RoutingPresenter?,
                            wireframe: Wireframe)  {
         
@@ -79,7 +76,6 @@ open class DefaultComposedRoutingObserver : ComposedRoutingObserver {
                 observerWrapper.routePattern == routeResult.routePattern {
                 observerWrapper.routingObserver.didPresent(   controller: controller,
                                                              routeResult: routeResult,
-                                                           routingOption: routingOption,
                                                         routingPresenter: routingPresenter,
                                                                wireframe: wireframe)
             }
