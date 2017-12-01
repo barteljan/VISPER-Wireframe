@@ -268,7 +268,7 @@ class DefaultComposedControllerProviderTests: XCTestCase {
         let lowPriority = 5
         
         let highPriorityControllerProvider = MockControllerProvider()
-        lowPriorityControllerProvider.stubbedIsResponsibleResult = true
+        highPriorityControllerProvider.stubbedIsResponsibleResult = true
         let highPriority = 10
         
         let composedControllerProvider = DefaultComposedControllerProvider()
@@ -291,7 +291,7 @@ class DefaultComposedControllerProviderTests: XCTestCase {
         let lowPriority = 5
         
         let highPriorityControllerProvider = MockControllerProvider()
-        lowPriorityControllerProvider.stubbedIsResponsibleResult = false
+        highPriorityControllerProvider.stubbedIsResponsibleResult = false
         let highPriority = 10
         
         let composedControllerProvider = DefaultComposedControllerProvider()
