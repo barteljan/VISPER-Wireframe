@@ -8,9 +8,7 @@
 import Foundation
 import VISPER_Wireframe_Core
 
-public protocol GetControllerRoutingOption : RoutingOption{
-    
-}
+public protocol GetControllerRoutingOption : RoutingOption{}
 
 public struct DefaultGetControllerRoutingOption : GetControllerRoutingOption {
     public init(){}

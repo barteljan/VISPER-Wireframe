@@ -16,12 +16,14 @@ class MockControllerProvider: NSObject, ControllerProvider {
     var invokedIsResponsibleParameters: (routeResult: RouteResult, routingOption: RoutingOption?)?
     var invokedIsResponsibleParametersList = [(routeResult: RouteResult, routingOption: RoutingOption?)]()
     var stubbedIsResponsibleResult: Bool! = false
+    var invokedIsResponsibleTime: Date?
 
     func isResponsible(routeResult: RouteResult, routingOption: RoutingOption?) -> Bool {
         invokedIsResponsible = true
         invokedIsResponsibleCount += 1
         invokedIsResponsibleParameters = (routeResult, routingOption)
         invokedIsResponsibleParametersList.append((routeResult, routingOption))
+        invokedIsResponsibleTime = Date()
         return stubbedIsResponsibleResult
     }
 

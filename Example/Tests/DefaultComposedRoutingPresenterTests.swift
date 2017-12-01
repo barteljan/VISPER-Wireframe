@@ -169,7 +169,6 @@ class DefaultComposedRoutingPresenterTests: XCTestCase {
         XCTAssertFalse(isResponsible)
     }
     
-    
     func testCallsPresentOnChildIfItIsResponsible() throws {
         
         let mockPresenter = MockRoutingPresenter()

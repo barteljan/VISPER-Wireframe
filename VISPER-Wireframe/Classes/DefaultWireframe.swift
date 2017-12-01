@@ -85,11 +85,11 @@ open class DefaultWireframe : Wireframe {
         let routingOption : RoutingOption? = self.composedOptionProvider.option(routeResult: routeResult,
                                                                               currentOption: option)
         
-        //check if there is a routing handler responsible for this RouteResult/RoutingOption combination (and its priority)
+        //check if there is a routing handler responsible for this RouteResult/RoutingOption combination
         let handlerPriority = self.routingHandlerContainer.priorityOfHighestResponsibleProvider(routeResult: routeResult,
                                                                                               routingOption: routingOption)
         
-        //check if there is a controller provider responsible for this RouteResult/RoutingOption combination (and its priority)
+        //check if there is a controller provider responsible for this RouteResult/RoutingOption combination 
         let controllerPriority = self.composedControllerProvider.priorityOfHighestResponsibleProvider(routeResult: routeResult,
                                                                                                       routingOption: routingOption)
         
