@@ -44,6 +44,7 @@ class DefaultWireframeTests: XCTestCase {
         
         //Assert
         AssertThat(composedRoutingOptionProvider.invokedAddParameters?.optionProvider, isOfType: MockRoutingOptionProvider.self, andEquals: mockProvider)
+        XCTAssertEqual(composedRoutingOptionProvider.invokedAddParameters?.priority, priority)
         
     }
     
@@ -92,6 +93,46 @@ class DefaultWireframeTests: XCTestCase {
         XCTAssertFalse(didCallHandler)
         handlerParam(routeResult)
         XCTAssertTrue(didCallHandler)
+        
+    }
+    
+    func testAddControllerProviderCallsComposedControllerProvider() {
+        
+        //Arrange
+        let mockProvider = MockControllerProvider()
+        
+        let composedControllerProvider = MockComposedControllerProvider()
+        let wireframe = DefaultWireframe(composedControllerProvider: composedControllerProvider)
+        
+        let priority = 10
+        
+        //Act
+        wireframe.add(controllerProvider: mockProvider, priority: priority)
+        
+        //Assert
+        AssertThat(composedControllerProvider.invokedAddParameters?.controllerProvider, isOfType: MockControllerProvider.self, andEquals: mockProvider)
+        XCTAssertEqual(composedControllerProvider.invokedAddParameters?.priority, priority)
+        
+    }
+    
+    func testAddRoutingObserverCallsRoutingDelegate() {
+        
+        //Arrange
+        let mockObserver = MockRoutingObserver()
+        
+        let routingDelegate = MockRoutingDelegate()
+        let wireframe = DefaultWireframe(routingDelegate: routingDelegate)
+        
+        let priority = 10
+        let routePattern = "/test/pattern"
+        
+        //Act
+        wireframe.add(routingObserver: mockObserver, priority: priority, routePattern: routePattern)
+        
+        //Assert
+        AssertThat(routingDelegate.invokedAddParameters?.routingObserver, isOfType: MockRoutingObserver.self, andEquals: mockObserver)
+        XCTAssertEqual(routingDelegate.invokedAddParameters?.routePattern, routePattern)
+        XCTAssertEqual(routingDelegate.invokedAddParameters?.priority, priority)
         
     }
     
