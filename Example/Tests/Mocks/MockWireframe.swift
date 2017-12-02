@@ -13,7 +13,6 @@ import VISPER_Wireframe
 
 class MockWireframe: NSObject, Wireframe {
 
-
     var invokedCanRoute = false
     var invokedCanRouteCount = 0
     var invokedCanRouteParameters: (url: URL, parameters: [String: Any], option: RoutingOption?)?
@@ -55,16 +54,16 @@ class MockWireframe: NSObject, Wireframe {
         return stubbedControllerResult
     }
 
-    var invokedAddRoutePattern = false
-    var invokedAddRoutePatternCount = 0
-    var invokedAddRoutePatternParameters: (pattern: String, Void)?
-    var invokedAddRoutePatternParametersList = [(pattern: String, Void)]()
+    var invokedAdd = false
+    var invokedAddCount = 0
+    var invokedAddParameters: (routePattern: String, Void)?
+    var invokedAddParametersList = [(routePattern: String, Void)]()
 
-    func addRoutePattern(_ pattern: String) {
-        invokedAddRoutePattern = true
-        invokedAddRoutePatternCount += 1
-        invokedAddRoutePatternParameters = (pattern, ())
-        invokedAddRoutePatternParametersList.append((pattern, ()))
+    func add(routePattern: String) {
+        invokedAdd = true
+        invokedAddCount += 1
+        invokedAddParameters = (routePattern, ())
+        invokedAddParametersList.append((routePattern, ()))
     }
 
     var invokedAddPriority = false

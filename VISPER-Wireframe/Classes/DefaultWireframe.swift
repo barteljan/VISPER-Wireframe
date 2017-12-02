@@ -111,13 +111,6 @@ open class DefaultWireframe : Wireframe {
         
         let controller = try self.composedControllerProvider.makeController(routeResult: routeResult)
         
-        /*
-        //take care that a routing option is available for presenting
-        guard let option = routeResult.routingOption else {
-            throw DefaultWireframeError.noRoutingOptionFoundFor(routeResult: routeResult)
-        }
-        */
-        
         //check if we have a presenter responsible for this option
         guard self.composedRoutingPresenter.isResponsible(routeResult: routeResult) else {
             throw DefaultWireframeError.noRoutingPresenterFoundFor(result: routeResult)
@@ -138,6 +131,8 @@ open class DefaultWireframe : Wireframe {
     func callHandler(routeResult: RouteResult, completion: @escaping () -> Void) throws{
         if let handler = self.routingHandlerContainer.handler(routeResult: routeResult) {
             handler(routeResult)
+            completion()
+            return
         }
         throw DefaultWireframeError.canNotHandleRoute(routeResult: routeResult)
     }
@@ -185,8 +180,8 @@ open class DefaultWireframe : Wireframe {
     ///
     /// - Parameters:
     ///   - pattern: the route pattern to register
-    open func addRoutePattern(_ pattern: String) throws{
-        try self.router.add(routePattern: pattern)
+    open func add(routePattern: String) throws{
+        try self.router.add(routePattern: routePattern)
     }
     
     /// Register a handler for a route pattern

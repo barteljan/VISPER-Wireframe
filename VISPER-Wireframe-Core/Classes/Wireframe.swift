@@ -49,7 +49,7 @@ public protocol Wireframe {
     ///
     /// - Parameters:
     ///   - pattern: the route pattern to register
-    func addRoutePattern(_ pattern: String) throws
+    func add(routePattern: String) throws
     
     /// Register a handler for a route pattern
     /// The handler will be called if a route matches your route pattern.
