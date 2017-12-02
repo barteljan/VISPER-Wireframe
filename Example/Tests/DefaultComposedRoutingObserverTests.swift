@@ -93,7 +93,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:])
         let viewController = UIViewController()
-        let routingOption = MockRoutingOption()
         let routingPresenter = MockRoutingPresenter()
         let wireframe = MockWireframe()
         
@@ -149,7 +148,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: [:])
         let viewController = UIViewController()
-        let routingOption = MockRoutingOption()
         let routingPresenter = MockRoutingPresenter()
         let wireframe = MockWireframe()
         
@@ -173,7 +171,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: [:])
         let viewController = UIViewController()
-        let routingOption = MockRoutingOption()
         let routingPresenter = MockRoutingPresenter()
         let wireframe = MockWireframe()
         
@@ -199,7 +196,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         let routeResult = DefaultRouteResult(routePattern:"WRONG/ROUTE", parameters: [:])
         let viewController = UIViewController()
-        let routingOption = MockRoutingOption()
         let routingPresenter = MockRoutingPresenter()
         let wireframe = MockWireframe()
         
@@ -223,7 +219,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         let routeResult = DefaultRouteResult(routePattern: "/some/pattern", parameters: [:])
         let viewController = UIViewController()
-        let routingOption = MockRoutingOption()
         let routingPresenter = MockRoutingPresenter()
         let wireframe = MockWireframe()
         
@@ -279,7 +274,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: [:])
         let viewController = UIViewController()
-        let routingOption = MockRoutingOption()
         let routingPresenter = MockRoutingPresenter()
         let wireframe = MockWireframe()
         
@@ -303,7 +297,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: [:])
         let viewController = UIViewController()
-        let routingOption = MockRoutingOption()
         let routingPresenter = MockRoutingPresenter()
         let wireframe = MockWireframe()
         
@@ -329,7 +322,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         let routeResult = DefaultRouteResult(routePattern:"WRONG/ROUTE", parameters: [:])
         let viewController = UIViewController()
-        let routingOption = MockRoutingOption()
         let routingPresenter = MockRoutingPresenter()
         let wireframe = MockWireframe()
         
@@ -369,7 +361,6 @@ class DefaultComposedRoutingObserverTests: XCTestCase {
         
         let routeResult = DefaultRouteResult(routePattern:"a/cool/route", parameters: [:])
         let viewController = UIViewController()
-        let routingOption = MockRoutingOption()
         let routingPresenter = MockRoutingPresenter()
         let wireframe = MockWireframe()
         

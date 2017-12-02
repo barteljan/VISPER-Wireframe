@@ -27,6 +27,8 @@
 		9A98BBA21FD27C6400CD9579 /* DefaultRoutingDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98BBA11FD27C6400CD9579 /* DefaultRoutingDelegateTests.swift */; };
 		9A98BBA51FD281CD00CD9579 /* MockRoutingAwareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98BBA31FD2815F00CD9579 /* MockRoutingAwareViewController.swift */; };
 		9A98BBA81FD2995000CD9579 /* MockRoutingHandlerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98BBA61FD2994900CD9579 /* MockRoutingHandlerContainer.swift */; };
+		9A98BBAA1FD2B04F00CD9579 /* MockComposedControllerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98BBA91FD2B04F00CD9579 /* MockComposedControllerProvider.swift */; };
+		9A98BBAC1FD2B46000CD9579 /* MockComposedRoutingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A98BBAB1FD2B46000CD9579 /* MockComposedRoutingPresenter.swift */; };
 		9AF3ACDC1FC4BA0500EBB3AC /* DefaultWireframeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF3ACDB1FC4BA0500EBB3AC /* DefaultWireframeTests.swift */; };
 		9AF3ACE41FC4BA4F00EBB3AC /* MockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF3ACDE1FC4BA4F00EBB3AC /* MockViewController.swift */; };
 		9AF3ACE51FC4BA4F00EBB3AC /* MockRoutingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF3ACDF1FC4BA4F00EBB3AC /* MockRoutingPresenter.swift */; };
@@ -76,6 +78,8 @@
 		9A98BBA11FD27C6400CD9579 /* DefaultRoutingDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRoutingDelegateTests.swift; sourceTree = "<group>"; };
 		9A98BBA31FD2815F00CD9579 /* MockRoutingAwareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoutingAwareViewController.swift; sourceTree = "<group>"; };
 		9A98BBA61FD2994900CD9579 /* MockRoutingHandlerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoutingHandlerContainer.swift; sourceTree = "<group>"; };
+		9A98BBA91FD2B04F00CD9579 /* MockComposedControllerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockComposedControllerProvider.swift; sourceTree = "<group>"; };
+		9A98BBAB1FD2B46000CD9579 /* MockComposedRoutingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockComposedRoutingPresenter.swift; sourceTree = "<group>"; };
 		9AC50CCC1FC2DA3000BC3AF5 /* VISPER-Wireframe-UIViewController.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = "VISPER-Wireframe-UIViewController.podspec"; path = "../VISPER-Wireframe-UIViewController.podspec"; sourceTree = "<group>"; };
 		9AE4A34F1FC2D70600BF264C /* VISPER-Wireframe-Core.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "VISPER-Wireframe-Core.podspec"; path = "../VISPER-Wireframe-Core.podspec"; sourceTree = "<group>"; };
 		9AF3ACDB1FC4BA0500EBB3AC /* DefaultWireframeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWireframeTests.swift; sourceTree = "<group>"; };
@@ -213,6 +217,8 @@
 				9A1052531FC733D500047B21 /* MockRoutingDelegate.swift */,
 				9A98BBA31FD2815F00CD9579 /* MockRoutingAwareViewController.swift */,
 				9A98BBA61FD2994900CD9579 /* MockRoutingHandlerContainer.swift */,
+				9A98BBA91FD2B04F00CD9579 /* MockComposedControllerProvider.swift */,
+				9A98BBAB1FD2B46000CD9579 /* MockComposedRoutingPresenter.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -470,12 +476,14 @@
 			files = (
 				9A2957691FCFE019006F9189 /* DefaultRoutingHandlerContainerTests.swift in Sources */,
 				9AF3ACE61FC4BA4F00EBB3AC /* MockControllerProvider.swift in Sources */,
+				9A98BBAA1FD2B04F00CD9579 /* MockComposedControllerProvider.swift in Sources */,
 				9AF3ACE41FC4BA4F00EBB3AC /* MockViewController.swift in Sources */,
 				9AF3ACF71FC4C6E000EBB3AC /* MockComposedOptionProvider.swift in Sources */,
 				9A1052521FC7324A00047B21 /* AssertHelper.swift in Sources */,
 				9A03B25B1FC5CC1B00DAC5F0 /* DefaultRouteResultHandlerTests.swift in Sources */,
 				9AF3ACDC1FC4BA0500EBB3AC /* DefaultWireframeTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* DefaultRouterTests.swift in Sources */,
+				9A98BBAC1FD2B46000CD9579 /* MockComposedRoutingPresenter.swift in Sources */,
 				9A03B2571FC5C0C000DAC5F0 /* MockComposedRoutingObserver.swift in Sources */,
 				9AF3ACEB1FC4BBDF00EBB3AC /* MockRoutingOption.swift in Sources */,
 				9A1052431FC6A86400047B21 /* MockWireframe.swift in Sources */,

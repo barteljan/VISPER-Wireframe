@@ -32,14 +32,14 @@ open class DefaultWireframe : Wireframe {
     public init(       router : Router = DefaultRouter(),
         composedOptionProvider: ComposedRoutingOptionProvider = DefaultComposedRoutingOptionProvider(),
       composedRoutingPresenter: ComposedRoutingPresenter = DefaultComposedRoutingPresenter(),
-      routingPresenterDelegate: RoutingDelegate = DefaultRoutingDelegate(),
+               routingDelegate: RoutingDelegate = DefaultRoutingDelegate(),
        routingHandlerContainer: RoutingHandlerContainer = DefaultRoutingHandlerContainer(),
     composedControllerProvider: ComposedControllerProvider = DefaultComposedControllerProvider()){
         
         self.routingHandlerContainer = routingHandlerContainer
         self.composedOptionProvider = composedOptionProvider
         self.composedRoutingPresenter = composedRoutingPresenter
-        self.routingPresenterDelegate = routingPresenterDelegate
+        self.routingPresenterDelegate = routingDelegate
         self.composedControllerProvider = composedControllerProvider
         self.router = router
     }
@@ -105,6 +105,8 @@ open class DefaultWireframe : Wireframe {
         }
         
         //proceed with controller presentation if no handler with higher priority was found
+        
+        //check if a controller could be provided by the composedControllerProvider
         guard self.composedControllerProvider.isResponsible(routeResult: routeResult) else {
             throw DefaultWireframeError.canNotHandleRoute(routeResult: routeResult)
         }

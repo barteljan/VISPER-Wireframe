@@ -230,7 +230,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeCallsHandler() {
+    func testWireframeCallsHandlerFromRoutingHandlerContainer() {
         
         //Arrange
         
@@ -257,20 +257,16 @@ class DefaultWireframeTests: XCTestCase {
         //create wireframe with mock dependencies
         let wireframe = DefaultWireframe(router: router,routingHandlerContainer: handlerContainer)
         
-        var didCallCompletion = false
-        let completion = {
-            didCallCompletion = true
-        }
-        
         //Act
         XCTAssertNoThrow(try wireframe.route(url: URL(string: stubbedRouteResult.routePattern)!,
                                       parameters: stubbedRouteResult.parameters,
                                           option: stubbedRouteResult.routingOption!,
-                                          completion: completion))
+                                          completion: {}))
         
         //Assert
         XCTAssertTrue(didCallHandler)
-        XCTAssertTrue(didCallCompletion)
+        XCTAssertTrue(handlerContainer.invokedPriorityOfHighestResponsibleProvider)
+        XCTAssertTrue(handlerContainer.invokedHandler)
         
         guard let routeResult = handlerResult else {
             XCTFail("since the handler should be called there should be a result")
@@ -280,6 +276,426 @@ class DefaultWireframeTests: XCTestCase {
         XCTAssertTrue(routeResult.isEqual(routeResult: stubbedRouteResult))
         
     }
+    
+    func testWireframeCallsCompletionWhenRoutingToHandler(){
+        
+        //Arrange
+        
+        //configure router to return a result
+        let router = MockRouter()
+        
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: [:],
+                                                    routingOption: MockRoutingOption())
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure handler container to return a handler and a priority
+        let handlerContainer = MockRoutingHandlerContainer()
+        
+        handlerContainer.stubbedHandlerResult =  { (routeResult: RouteResult) -> Void in }
+        handlerContainer.stubbedPriorityOfHighestResponsibleProviderResult = 42
+        
+        //create wireframe with mock dependencies
+        let wireframe = DefaultWireframe(router: router,routingHandlerContainer: handlerContainer)
+        
+        var didCallCompletion = false
+        let completion = {
+            didCallCompletion = true
+        }
+        
+        //Act
+        XCTAssertNoThrow(try wireframe.route(url: URL(string: stubbedRouteResult.routePattern)!,
+                                             parameters: stubbedRouteResult.parameters,
+                                             option: stubbedRouteResult.routingOption!,
+                                             completion: completion))
+        
+        //Assert
+        XCTAssertTrue(didCallCompletion)
+        
+    }
+    
+    func testWireframeChecksIfComposedControllerProviderIsResponsible(){
+        
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure composed controller provider
+        let composedControllerProvider = MockComposedControllerProvider()
+        
+        let wireframe = DefaultWireframe(router: router,composedControllerProvider:composedControllerProvider)
+        
+        
+        // Act
+        // throws error since no controller or handler can be provided
+        XCTAssertThrowsError(try wireframe.route(url: url,
+                                                 parameters: parameters,
+                                                 option: option,
+                                                 completion: {}))
+        
+        //Assert
+        XCTAssertTrue(composedControllerProvider.invokedIsResponsible)
+        
+    }
+    
+    func testWireframeDoesNotCallComposedControllerProviderIfItIsNotResponsible(){
+        
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedIsResponsibleResult = false
+        
+        let wireframe = DefaultWireframe(router: router,composedControllerProvider:composedControllerProvider)
+        
+        
+        // Act
+        // throws error since no controller or handler can be provided
+        XCTAssertThrowsError(try wireframe.route(url: url,
+                                                 parameters: parameters,
+                                                 option: option,
+                                                 completion: {}))
+        
+        //Assert
+        XCTAssertTrue(composedControllerProvider.invokedIsResponsible)
+        XCTAssertFalse(composedControllerProvider.invokedMakeController)
+        
+    }
+    
+    func testWireframeDoesThrowErrorIfComposedControllerProviderIsNotResponsible(){
+        
+        //Arrange
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure mock controller provider
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedIsResponsibleResult = false
+        
+        let wireframe = DefaultWireframe(router: router,composedControllerProvider:composedControllerProvider)
+        
+        
+        // Act
+        // throws error since no controller or handler can be provided
+        XCTAssertThrowsError(try wireframe.route(url: url,
+                                                 parameters: parameters,
+                                                 option: option,
+                                                 completion: {}),
+                             "should throw an error") { error in
+                                
+                                //Assert
+                                switch error {
+                                case DefaultWireframeError.canNotHandleRoute(let routeResult):
+                                    XCTAssertTrue(routeResult.isEqual(routeResult: stubbedRouteResult))
+                                default:
+                                    XCTFail("should throw a DefaultWireframeError.canNotHandleRoute error")
+                                }
+        }
+        
+    }
+    
+    func testWireframeDoesCallComposedControllerProviderIfItIsResponsible(){
+        
+        //Arrange
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure mock controller provider
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedIsResponsibleResult = true
+        composedControllerProvider.stubbedMakeControllerResult = UIViewController()
+        
+        let wireframe = DefaultWireframe(router: router,composedControllerProvider:composedControllerProvider)
+        
+        
+        // Act
+        // throws error since no routing presenter is responsible
+        XCTAssertThrowsError(try wireframe.route(url: url,
+                                                 parameters: parameters,
+                                                 option: option,
+                                                 completion: {}))
+        
+        //Assert
+        XCTAssertTrue(composedControllerProvider.invokedIsResponsible)
+        XCTAssertTrue(composedControllerProvider.invokedMakeController)
+        
+    }
+    
+    func testWireframeChecksIfComposedRoutingPresenterIsResponsible(){
+        
+        //Arrange
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure mock controller provider
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedIsResponsibleResult = true
+        composedControllerProvider.stubbedMakeControllerResult = UIViewController()
+        
+        //configure mock routing presenter
+        let composedRoutingPresenter = MockComposedRoutingPresenter()
+        
+        let wireframe = DefaultWireframe(router: router,
+                                         composedRoutingPresenter: composedRoutingPresenter, composedControllerProvider:composedControllerProvider)
+        
+        
+        // Act
+        // throws error since no routing presenter is responsible
+        XCTAssertThrowsError(try wireframe.route(url: url,
+                                                 parameters: parameters,
+                                                 option: option,
+                                                 completion: {}))
+        
+        //Assert
+        XCTAssertTrue(composedRoutingPresenter.invokedIsResponsible)
+        
+    }
+    
+    func testWireframeThrowsErrorIfComposedRoutingPresenterIsNotResponsible(){
+        
+        //Arrange
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure mock controller provider
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedIsResponsibleResult = true
+        composedControllerProvider.stubbedMakeControllerResult = UIViewController()
+        
+        //configure mock routing presenter
+        let composedRoutingPresenter = MockComposedRoutingPresenter()
+        composedRoutingPresenter.stubbedIsResponsibleResult = false
+        
+        let wireframe = DefaultWireframe(router: router,
+                                         composedRoutingPresenter: composedRoutingPresenter, composedControllerProvider:composedControllerProvider)
+        
+        
+        // Act
+        // throws error since no routing presenter is responsible
+        XCTAssertThrowsError(try wireframe.route(url: url,
+                                                 parameters: parameters,
+                                                 option: option,
+                                                 completion: {}),
+                                                "Should throw an DefaultWireframeError.noRoutingPresenterFoundFor error") { error in
+                                
+                                                    switch error {
+                                                    case DefaultWireframeError.noRoutingPresenterFoundFor(let routeResult):
+                                                        XCTAssertTrue(routeResult.isEqual(routeResult: stubbedRouteResult))
+                                                    default:
+                                                        XCTFail("Should throw an DefaultWireframeError.noRoutingPresenterFoundFor error")
+                                                    }
+        }
+        
+        //Assert
+        XCTAssertTrue(composedRoutingPresenter.invokedIsResponsible)
+        
+    }
+    
+    func testWireframeCallsComposedRoutingPresenterIfItIsResponsible(){
+        
+        //Arrange
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure mock controller provider
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedIsResponsibleResult = true
+        composedControllerProvider.stubbedMakeControllerResult = UIViewController()
+        
+        //configure mock routing presenter
+        let composedRoutingPresenter = MockComposedRoutingPresenter()
+        composedRoutingPresenter.stubbedIsResponsibleResult = true
+        
+        //configure mock routing delegate
+        let routingDelegate = MockRoutingDelegate()
+        
+        let wireframe = DefaultWireframe(router: router,
+                       composedRoutingPresenter: composedRoutingPresenter,
+                                routingDelegate: routingDelegate,
+                     composedControllerProvider: composedControllerProvider)
+        
+        var didCallCompletion = false
+        let completion = {
+            didCallCompletion = true
+        }
+        
+        // Act
+        XCTAssertNoThrow(try wireframe.route(url: url,
+                                      parameters: parameters,
+                                          option: option,
+                                      completion: completion))
+        
+        //Assert
+        XCTAssertTrue(composedRoutingPresenter.invokedIsResponsible)
+        XCTAssertTrue(composedRoutingPresenter.invokedPresent)
+        
+        //assert params
+        XCTAssertEqual(composedRoutingPresenter.invokedPresentParameters?.controller, composedControllerProvider.stubbedMakeControllerResult)
+        
+        AssertThat(composedRoutingPresenter.invokedPresentParameters?.routeResult,
+                   isOfType: DefaultRouteResult.self,
+                   andEquals: stubbedRouteResult)
+        
+        
+        guard let wireframeParam = composedRoutingPresenter.invokedPresentParameters?.wireframe as? DefaultWireframe else {
+            XCTFail("diden't foward wireframe to presenter")
+            return
+        }
+        
+        XCTAssertTrue(wireframe === wireframeParam)
+        
+        AssertThat(composedRoutingPresenter.invokedPresentParameters?.delegate, isOfType: MockRoutingDelegate.self, andEquals: routingDelegate)
+        
+        guard let complete = composedRoutingPresenter.invokedPresentParametersCompletion else {
+            XCTFail("didn't forward completion to presenter")
+            return
+        }
+        
+        XCTAssertFalse(didCallCompletion)
+        complete()
+        XCTAssertTrue(didCallCompletion)
+    }
+    
+    func testWireframeChoosesHandlerIfItHasAHigherPriorityThanTheController(){
+        
+        //Arrange
+        
+        //configure router to return a result
+        let router = MockRouter()
+        
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: [:],
+                                                    routingOption: MockRoutingOption())
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure handler container to return a handler and a priority
+        let handlerContainer = MockRoutingHandlerContainer()
+        
+        var didCallHandler = false
+        let handler = {  (routeResult: RouteResult) -> Void in
+            didCallHandler = true
+        }
+        handlerContainer.stubbedHandlerResult = handler
+        handlerContainer.stubbedPriorityOfHighestResponsibleProviderResult = 42
+        
+        //configure composed controller provider to return a lower priority for the controller
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedPriorityOfHighestResponsibleProviderResult = 21
+        
+        //create wireframe with mock dependencies
+        let wireframe = DefaultWireframe(router: router,routingHandlerContainer: handlerContainer, composedControllerProvider: composedControllerProvider)
+        
+        //Act
+        XCTAssertNoThrow(try wireframe.route(url: URL(string: stubbedRouteResult.routePattern)!,
+                                             parameters: stubbedRouteResult.parameters,
+                                             option: stubbedRouteResult.routingOption!,
+                                             completion: {}))
+        
+        //Assert
+        XCTAssertTrue(didCallHandler)
+        XCTAssertFalse(composedControllerProvider.invokedIsResponsible)
+        
+    }
+    
+    func testWireframeChoosesControllerIfItHasAHigherPriorityThanAHandler(){
+        
+        //Arrange
+        
+        //configure router to return a result
+        let router = MockRouter()
+        
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: [:],
+                                                    routingOption: MockRoutingOption())
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure handler container to return a handler and a priority
+        let handlerContainer = MockRoutingHandlerContainer()
+        
+        var didCallHandler = false
+        let handler = {  (routeResult: RouteResult) -> Void in
+            didCallHandler = true
+        }
+        handlerContainer.stubbedHandlerResult = handler
+        handlerContainer.stubbedPriorityOfHighestResponsibleProviderResult = 21
+        
+        //configure composed controller provider to return a lower priority for the controller
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedPriorityOfHighestResponsibleProviderResult = 42
+        composedControllerProvider.stubbedIsResponsibleResult = true
+        composedControllerProvider.stubbedMakeControllerResult = UIViewController()
+        
+        //create wireframe with mock dependencies
+        let wireframe = DefaultWireframe(router: router,routingHandlerContainer: handlerContainer, composedControllerProvider: composedControllerProvider)
+        
+        //Act
+        // throws error since no presenter is available
+        XCTAssertThrowsError(try wireframe.route(url: URL(string: stubbedRouteResult.routePattern)!,
+                                             parameters: stubbedRouteResult.parameters,
+                                             option: stubbedRouteResult.routingOption!,
+                                             completion: {}))
+        
+        //Assert
+        XCTAssertFalse(didCallHandler)
+        XCTAssertTrue(composedControllerProvider.invokedIsResponsible)
+        
+    }
+    
     
     func testGetController() {
         //XCTFail("implement me")
