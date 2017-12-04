@@ -136,6 +136,25 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
+    func testAddRoutingPresenterCallsComposedRoutingPresenter() {
+        
+        //Arrange
+        let mockPresenter = MockRoutingPresenter()
+        
+        let composedRoutingPresenter = MockComposedRoutingPresenter()
+        let wireframe = DefaultWireframe(composedRoutingPresenter: composedRoutingPresenter)
+        
+        let priority = 10
+        
+        //Act
+        wireframe.add(routingPresenter: mockPresenter, priority: priority)
+        
+        //Assert
+        AssertThat(composedRoutingPresenter.invokedAddParameters?.routingPresenter, isOfType: MockRoutingPresenter.self, andEquals: mockPresenter)
+        XCTAssertEqual(composedRoutingPresenter.invokedAddParameters?.priority, priority)
+        
+    }
+    
     func testCallsRouterOnRoute() {
         
         //Arrange
@@ -163,6 +182,83 @@ class DefaultWireframeTests: XCTestCase {
         AssertThat(router.invokedRouteUrlRoutingOptionParametersParameters?.routingOption,
                         isOfType: MockRoutingOption.self,
                        andEquals: option)
+        
+    }
+    
+    func testCanRouteCallsRouterForRouteResult(){
+        
+        //Arrange
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        //let routeResult = DefaultRouteResult(routePattern: url.absoluteURL, parameters: parameters, routingOption: option)
+        
+        let router = MockRouter()
+        let wireframe = DefaultWireframe(router: router)
+        
+        //Act
+        XCTAssertNoThrow(try wireframe.canRoute(url: url, parameters: parameters, option: option))
+        
+        //Assert
+        XCTAssertTrue(router.invokedRouteUrlRoutingOptionParameters)
+        XCTAssertEqual(router.invokedRouteUrlRoutingOptionParametersParameters?.url, url)
+        
+        guard let invokedParams = router.invokedRouteUrlRoutingOptionParametersParameters?.parameters else {
+            XCTFail("parameter psrameters should be invoked in routers route function")
+            return
+        }
+        
+        let invokedParamsDict = NSDictionary(dictionary: invokedParams)
+        let paramsDict = NSDictionary(dictionary: parameters)
+        
+        XCTAssertEqual(invokedParamsDict, paramsDict)
+        AssertThat(router.invokedRouteUrlRoutingOptionParametersParameters?.routingOption, isOfType: MockRoutingOption.self, andEquals: option)
+        
+    }
+    
+    func testCanRouteReturnsFalseIfRouterResolvesNoRouteResult(){
+        
+        //Arrange
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        let router = MockRouter()
+        router.stubbedRouteResult = nil
+        
+        let wireframe = DefaultWireframe(router: router)
+        
+        //Act
+        var canRoute = false
+        XCTAssertNoThrow(canRoute = try wireframe.canRoute(url: url, parameters: parameters, option: option))
+        
+        //Assert
+        XCTAssertFalse(canRoute)
+        
+    }
+    
+    func testCanRouteReturnsTrueIfRouterResolvesARouteResult(){
+        
+        //Arrange
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        let routeResult = DefaultRouteResult(routePattern: url.absoluteString, parameters: parameters, routingOption: option)
+        
+        let router = MockRouter()
+        router.stubbedRouteUrlRoutingOptionParametersResult = routeResult
+        
+        let wireframe = DefaultWireframe(router: router)
+        
+        //Act
+        var canRoute = false
+        XCTAssertNoThrow(
+            canRoute = try wireframe.canRoute(url: url, parameters: parameters, option: option)
+        )
+        
+        //Assert
+        XCTAssertTrue(canRoute)
         
     }
     

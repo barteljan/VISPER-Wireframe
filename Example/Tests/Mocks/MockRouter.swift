@@ -28,7 +28,7 @@ class MockRouter: NSObject, Router {
     var invokedRouteUrlRoutingOptionParametersCount = 0
     var invokedRouteUrlRoutingOptionParametersParameters: (url: URL, parameters: [String: Any]?, routingOption: RoutingOption?)?
     var invokedRouteUrlRoutingOptionParametersParametersList = [(url: URL, parameters: [String: Any]?, routingOption: RoutingOption?)]()
-    var stubbedRouteUrlRoutingOptionParametersResult: RouteResult!
+    var stubbedRouteUrlRoutingOptionParametersResult: RouteResult?
 
     func route(url: URL, parameters: [String: Any]?, routingOption: RoutingOption?) -> RouteResult? {
         invokedRouteUrlRoutingOptionParameters = true
