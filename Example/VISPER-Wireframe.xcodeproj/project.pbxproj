@@ -18,7 +18,6 @@
 		9A03B2551FC5B6A400DAC5F0 /* DefaultComposedRoutingObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A03B2541FC5B6A400DAC5F0 /* DefaultComposedRoutingObserverTests.swift */; };
 		9A03B2571FC5C0C000DAC5F0 /* MockComposedRoutingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A03B2561FC5C0C000DAC5F0 /* MockComposedRoutingObserver.swift */; };
 		9A03B2591FC5CAF200DAC5F0 /* DefaultComposedRoutingPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A03B2581FC5CAF200DAC5F0 /* DefaultComposedRoutingPresenterTests.swift */; };
-		9A03B25B1FC5CC1B00DAC5F0 /* DefaultRouteResultHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A03B25A1FC5CC1B00DAC5F0 /* DefaultRouteResultHandlerTests.swift */; };
 		9A1052431FC6A86400047B21 /* MockWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1052411FC6A69200047B21 /* MockWireframe.swift */; };
 		9A1052521FC7324A00047B21 /* AssertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1052511FC7324A00047B21 /* AssertHelper.swift */; };
 		9A1052541FC733D500047B21 /* MockRoutingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1052531FC733D500047B21 /* MockRoutingDelegate.swift */; };
@@ -69,7 +68,6 @@
 		9A03B2541FC5B6A400DAC5F0 /* DefaultComposedRoutingObserverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultComposedRoutingObserverTests.swift; sourceTree = "<group>"; };
 		9A03B2561FC5C0C000DAC5F0 /* MockComposedRoutingObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockComposedRoutingObserver.swift; sourceTree = "<group>"; };
 		9A03B2581FC5CAF200DAC5F0 /* DefaultComposedRoutingPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultComposedRoutingPresenterTests.swift; sourceTree = "<group>"; };
-		9A03B25A1FC5CC1B00DAC5F0 /* DefaultRouteResultHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRouteResultHandlerTests.swift; sourceTree = "<group>"; };
 		9A1052411FC6A69200047B21 /* MockWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWireframe.swift; sourceTree = "<group>"; };
 		9A1052511FC7324A00047B21 /* AssertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssertHelper.swift; sourceTree = "<group>"; };
 		9A1052531FC733D500047B21 /* MockRoutingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoutingDelegate.swift; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 				9AF3ACF41FC4C4BD00EBB3AC /* DefaultComposedRoutingOptionProviderTests.swift */,
 				9A03B2581FC5CAF200DAC5F0 /* DefaultComposedRoutingPresenterTests.swift */,
 				9A2957681FCFE019006F9189 /* DefaultRoutingHandlerContainerTests.swift */,
-				9A03B25A1FC5CC1B00DAC5F0 /* DefaultRouteResultHandlerTests.swift */,
 				607FACEB1AFB9204008FA782 /* DefaultRouterTests.swift */,
 				9AF3ACDB1FC4BA0500EBB3AC /* DefaultWireframeTests.swift */,
 				9A98BBA11FD27C6400CD9579 /* DefaultRoutingDelegateTests.swift */,
@@ -480,7 +477,6 @@
 				9AF3ACE41FC4BA4F00EBB3AC /* MockViewController.swift in Sources */,
 				9AF3ACF71FC4C6E000EBB3AC /* MockComposedOptionProvider.swift in Sources */,
 				9A1052521FC7324A00047B21 /* AssertHelper.swift in Sources */,
-				9A03B25B1FC5CC1B00DAC5F0 /* DefaultRouteResultHandlerTests.swift in Sources */,
 				9AF3ACDC1FC4BA0500EBB3AC /* DefaultWireframeTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* DefaultRouterTests.swift in Sources */,
 				9A98BBAC1FD2B46000CD9579 /* MockComposedRoutingPresenter.swift in Sources */,

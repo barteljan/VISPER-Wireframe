@@ -185,6 +185,32 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
+    func testCallsRouterOnController() {
+        
+        //Arrange
+        let router = MockRouter()
+        let wireframe = DefaultWireframe(router: router)
+        
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        
+        //Act
+        //throws error since mock router does not give a result
+        XCTAssertThrowsError(
+            try wireframe.controller(url: url, parameters: parameters)
+        )
+        
+        //Assert
+        XCTAssertTrue(router.invokedRouteUrlRoutingOptionParameters)
+        XCTAssertEqual(router.invokedRouteUrlRoutingOptionParametersParameters?.url, url)
+        
+        let invokedParams = NSDictionary(dictionary:(router.invokedRouteUrlRoutingOptionParametersParameters?.parameters)!)
+        XCTAssertEqual(invokedParams, NSDictionary(dictionary:parameters))
+        
+        AssertThat(router.invokedRouteUrlRoutingOptionParametersParameters?.routingOption, isOfType: GetControllerRoutingOption.self)
+        
+    }
+    
     func testCanRouteCallsRouterForRouteResult(){
         
         //Arrange
@@ -294,7 +320,7 @@ class DefaultWireframeTests: XCTestCase {
     }
     
     
-    func testCallsComposedRoutingOptionProviderWithRoutersRoutingResult() {
+    func testRouteCallsComposedRoutingOptionProviderWithRoutersRoutingResult() {
         
         //Arrange
         let router = MockRouter()
@@ -325,7 +351,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testModifiesOptionByComposedRoutingObserver() {
+    func testRouteModifiesOptionByComposedRoutingObserver() {
         
         //Arrange
         let router = MockRouter()
@@ -367,7 +393,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeCallsHandlerFromRoutingHandlerContainer() {
+    func testRouteCallsHandlerFromRoutingHandlerContainer() {
         
         //Arrange
         
@@ -414,7 +440,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeCallsCompletionWhenRoutingToHandler(){
+    func testRouteCallsCompletionWhenRoutingToHandler(){
         
         //Arrange
         
@@ -451,7 +477,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeChecksIfComposedControllerProviderIsResponsible(){
+    func testRouteChecksIfComposedControllerProviderIsResponsible(){
         
         let url = URL(string: "/a/nice/path")!
         let parameters = ["id" : "42"]
@@ -482,7 +508,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeDoesNotCallComposedControllerProviderIfItIsNotResponsible(){
+    func testRouteDoesNotCallComposedControllerProviderIfItIsNotResponsible(){
         
         let url = URL(string: "/a/nice/path")!
         let parameters = ["id" : "42"]
@@ -514,7 +540,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeDoesThrowErrorIfComposedControllerProviderIsNotResponsible(){
+    func testRouteDoesThrowErrorIfComposedControllerProviderIsNotResponsible(){
         
         //Arrange
         let url = URL(string: "/a/nice/path")!
@@ -554,7 +580,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeDoesCallComposedControllerProviderIfItIsResponsible(){
+    func testRouteDoesCallComposedControllerProviderIfItIsResponsible(){
         
         //Arrange
         let url = URL(string: "/a/nice/path")!
@@ -589,7 +615,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeChecksIfComposedRoutingPresenterIsResponsible(){
+    func testRouteChecksIfComposedRoutingPresenterIsResponsible(){
         
         //Arrange
         let url = URL(string: "/a/nice/path")!
@@ -627,7 +653,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeThrowsErrorIfComposedRoutingPresenterIsNotResponsible(){
+    func testRouteThrowsErrorIfComposedRoutingPresenterIsNotResponsible(){
         
         //Arrange
         let url = URL(string: "/a/nice/path")!
@@ -675,7 +701,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeCallsComposedRoutingPresenterIfItIsResponsible(){
+    func testRouteCallsComposedRoutingPresenterIfItIsResponsible(){
         
         //Arrange
         let url = URL(string: "/a/nice/path")!
@@ -748,7 +774,7 @@ class DefaultWireframeTests: XCTestCase {
         XCTAssertTrue(didCallCompletion)
     }
     
-    func testWireframeChoosesHandlerIfItHasAHigherPriorityThanTheController(){
+    func testRouteChoosesHandlerIfItHasAHigherPriorityThanTheController(){
         
         //Arrange
         
@@ -789,7 +815,7 @@ class DefaultWireframeTests: XCTestCase {
         
     }
     
-    func testWireframeChoosesControllerIfItHasAHigherPriorityThanAHandler(){
+    func testRouteChoosesControllerIfItHasAHigherPriorityThanAHandler(){
         
         //Arrange
         
@@ -834,8 +860,126 @@ class DefaultWireframeTests: XCTestCase {
     }
     
     
-    func testGetController() {
-        //XCTFail("implement me")
+    func testControllerChecksIfComposedControllerProviderIsResponsible() {
+        
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure composed controller provider
+        let composedControllerProvider = MockComposedControllerProvider()
+        
+        let wireframe = DefaultWireframe(router: router,composedControllerProvider:composedControllerProvider)
+        
+        XCTAssertNoThrow(try wireframe.controller(url: url,
+                                           parameters: parameters))
+        
+        //Assert
+        XCTAssertTrue(composedControllerProvider.invokedIsResponsible)
+        
+    }
+    
+    func testControllerDoesNotCallComposedControllerProviderIfItIsNotResponsible(){
+        
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedIsResponsibleResult = false
+        
+        let wireframe = DefaultWireframe(router: router,composedControllerProvider:composedControllerProvider)
+        
+        
+        XCTAssertNoThrow(
+            try wireframe.controller(url: url,parameters: parameters)
+        )
+        
+        //Assert
+        XCTAssertTrue(composedControllerProvider.invokedIsResponsible)
+        XCTAssertFalse(composedControllerProvider.invokedMakeController)
+        
+    }
+    
+    func testControllerReturnsNilIfComposedControllerProviderIsNotResponsible(){
+        
+        //Arrange
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure mock controller provider
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedIsResponsibleResult = false
+        
+        let wireframe = DefaultWireframe(router: router,composedControllerProvider:composedControllerProvider)
+        
+        
+        // Act
+        // throws error since no controller or handler can be provided
+        var controller : UIViewController?
+        XCTAssertNoThrow(
+            controller = try wireframe.controller(url: url,
+                                           parameters: parameters)
+        )
+        
+        XCTAssertNil(controller)
+        
+    }
+    
+    func testControllerDoesCallComposedControllerProviderIfItIsResponsible(){
+        
+        //Arrange
+        let url = URL(string: "/a/nice/path")!
+        let parameters = ["id" : "42"]
+        let option = MockRoutingOption()
+        
+        //configure router to return a result
+        let router = MockRouter()
+        let stubbedRouteResult = DefaultRouteResult(routePattern: "/a/nice/path",
+                                                    parameters: parameters,
+                                                    routingOption: option)
+        router.stubbedRouteUrlRoutingOptionParametersResult = stubbedRouteResult
+        
+        //configure mock controller provider
+        let composedControllerProvider = MockComposedControllerProvider()
+        composedControllerProvider.stubbedIsResponsibleResult = true
+        composedControllerProvider.stubbedMakeControllerResult = UIViewController()
+        
+        let wireframe = DefaultWireframe(router: router,composedControllerProvider:composedControllerProvider)
+        
+    
+        var controller : UIViewController?
+        XCTAssertNoThrow(
+            controller = try wireframe.controller(url: url,
+                                           parameters: parameters)
+        )
+        
+        //Assert
+        XCTAssertTrue(composedControllerProvider.invokedIsResponsible)
+        XCTAssertTrue(composedControllerProvider.invokedMakeController)
+        XCTAssertEqual(controller,composedControllerProvider.stubbedMakeControllerResult)
     }
     
     

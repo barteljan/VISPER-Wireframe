@@ -149,8 +149,8 @@ open class DefaultWireframe : Wireframe {
         
         let routingOption = DefaultGetControllerRoutingOption()
         
-        guard let routeResult = try self.router.route(url: url, parameters: parameters, routingOption: routingOption) else {
-            return nil
+        guard var routeResult = try self.router.route(url: url, parameters: parameters, routingOption: routingOption) else {
+            throw DefaultWireframeError.noRoutePatternFoundFor(url: url, parameters: parameters)
         }
         
         if self.composedControllerProvider.isResponsible(routeResult: routeResult) {
