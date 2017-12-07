@@ -43,14 +43,14 @@ open class PushRoutingPresenter : DefaultNavigationControllerBasedRoutingPresent
                                                                                 delegate: delegate)
         }
         
+        try delegate.willPresent(controller: controller,
+                                 routeResult: routeResult,
+                                 routingPresenter: self,
+                                 wireframe: wireframe)
+        
         if routingOption.animated {
             CATransaction.begin()
         }
-        
-        try delegate.willPresent(controller: controller,
-                                routeResult: routeResult,
-                           routingPresenter: self,
-                                  wireframe: wireframe)
         
         self.navigationController?.show(controller, sender: self)
         
