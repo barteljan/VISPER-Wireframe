@@ -73,6 +73,7 @@
 		9A1052531FC733D500047B21 /* MockRoutingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoutingDelegate.swift; sourceTree = "<group>"; };
 		9A2957661FCFDF1E006F9189 /* DefaultComposedControllerProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultComposedControllerProviderTests.swift; sourceTree = "<group>"; };
 		9A2957681FCFE019006F9189 /* DefaultRoutingHandlerContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRoutingHandlerContainerTests.swift; sourceTree = "<group>"; };
+		9A9448E91FDA61BC007E246F /* VISPER-Wireframe-Objc.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = "VISPER-Wireframe-Objc.podspec"; path = "../VISPER-Wireframe-Objc.podspec"; sourceTree = "<group>"; };
 		9A98BBA11FD27C6400CD9579 /* DefaultRoutingDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRoutingDelegateTests.swift; sourceTree = "<group>"; };
 		9A98BBA31FD2815F00CD9579 /* MockRoutingAwareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoutingAwareViewController.swift; sourceTree = "<group>"; };
 		9A98BBA61FD2994900CD9579 /* MockRoutingHandlerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRoutingHandlerContainer.swift; sourceTree = "<group>"; };
@@ -189,6 +190,7 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
+				9A9448E91FDA61BC007E246F /* VISPER-Wireframe-Objc.podspec */,
 				9AC50CCC1FC2DA3000BC3AF5 /* VISPER-Wireframe-UIViewController.podspec */,
 				9AE4A34F1FC2D70600BF264C /* VISPER-Wireframe-Core.podspec */,
 				60190F1FF5D2E0B4D2176B53 /* VISPER-Wireframe.podspec */,
@@ -405,12 +407,14 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Example/Pods-VISPER-Wireframe_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe/VISPER_Wireframe.framework",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-Core/VISPER_Wireframe_Core.framework",
+				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-Objc/VISPER_Wireframe_Objc.framework",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-UIViewController/VISPER_Wireframe_UIViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_Core.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_Objc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_UIViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,12 +446,14 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-VISPER-Wireframe_Tests/Pods-VISPER-Wireframe_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe/VISPER_Wireframe.framework",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-Core/VISPER_Wireframe_Core.framework",
+				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-Objc/VISPER_Wireframe_Objc.framework",
 				"${BUILT_PRODUCTS_DIR}/VISPER-Wireframe-UIViewController/VISPER_Wireframe_UIViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_Core.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_Objc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VISPER_Wireframe_UIViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
