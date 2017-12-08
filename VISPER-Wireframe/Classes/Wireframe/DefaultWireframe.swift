@@ -149,7 +149,7 @@ open class DefaultWireframe : Wireframe {
         
         let routingOption = DefaultGetControllerRoutingOption()
         
-        guard var routeResult = try self.router.route(url: url, parameters: parameters, routingOption: routingOption) else {
+        guard let routeResult = try self.router.route(url: url, parameters: parameters, routingOption: routingOption) else {
             throw DefaultWireframeError.noRoutePatternFoundFor(url: url, parameters: parameters)
         }
         

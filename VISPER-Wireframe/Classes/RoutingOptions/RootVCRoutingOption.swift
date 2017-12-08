@@ -1,18 +1,19 @@
 //
-//  File.swift
-//  VISPER-Wireframe-Core
+//  RootVCRoutingOption.swift
+//  VISPER-Wireframe
 //
-//  Created by bartel on 07.12.17.
+//  Created by bartel on 08.12.17.
 //
 
 import Foundation
+
 import VISPER_Wireframe_Core
 
-public protocol PushRoutingOption : AnimatedRoutingOption{
+public protocol RootVCRoutingOption : AnimatedRoutingOption{
     
 }
 
-public struct DefaultPushRoutingOption: PushRoutingOption{
+public struct DefaultRootVCRoutingOption: RootVCRoutingOption{
     
     public let animated: Bool
     
@@ -22,7 +23,7 @@ public struct DefaultPushRoutingOption: PushRoutingOption{
     
     public func isEqual(otherOption: RoutingOption?) -> Bool {
         
-        guard let otherOption = otherOption as? PushRoutingOption else {
+        guard let otherOption = otherOption as? RootVCRoutingOption else {
             return false
         }
         

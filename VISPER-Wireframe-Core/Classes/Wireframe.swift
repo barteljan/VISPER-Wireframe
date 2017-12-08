@@ -92,3 +92,57 @@ public protocol Wireframe {
     ///    - priority: The priority for calling your provider, higher priorities are called first. (Defaults to 0)
      func add(routingPresenter: RoutingPresenter,priority: Int)
 }
+
+public extension Wireframe {
+    
+    public func canRoute(   url: URL,
+                     parameters: [String : Any] = [:]) throws -> Bool {
+        return try self.canRoute(url: url, parameters: parameters, option: nil)
+    }
+    
+    public func canRoute(   url: URL,
+                            option: RoutingOption? = nil) throws -> Bool {
+        return try self.canRoute(url: url, parameters: [:], option: option)
+    }
+    
+    public func route(url: URL,
+                      option: RoutingOption? = nil,
+                      completion: @escaping () -> Void = {}) throws {
+        try self.route(url: url, parameters: [:], option: option, completion: completion)
+    }
+    
+    public func route(url: URL,
+                      parameters: [String : Any] = [:],
+                      completion: @escaping () -> Void = {}) throws {
+        try self.route(url: url, parameters: parameters, option: nil, completion: completion)
+    }
+    
+    public func controller(url: URL) throws -> UIViewController? {
+        return try self.controller(url: url, parameters: [:])
+    }
+    
+    public func add(responsibleFor: @escaping (_ routeResult: RouteResult) -> Bool,
+                           handler: @escaping RoutingHandler) throws {
+        try self.add(priority: 0, responsibleFor: responsibleFor, handler: handler)
+    }
+    
+    public func add(controllerProvider: ControllerProvider) {
+        self.add(controllerProvider: controllerProvider, priority: 0)
+    }
+    
+    public func add(optionProvider: RoutingOptionProvider) {
+        self.add(optionProvider: optionProvider, priority: 0)
+    }
+    
+    public func add(routingObserver: RoutingObserver, routePattern: String?) {
+        self.add(routingObserver: routingObserver, priority: 0, routePattern:routePattern)
+    }
+    
+    public func add(routingObserver: RoutingObserver, priority: Int = 0) {
+        self.add(routingObserver: routingObserver, priority: priority, routePattern:nil)
+    }
+    
+    public func add(routingPresenter: RoutingPresenter) {
+        self.add(routingPresenter: routingPresenter, priority: 0)
+    }
+}
