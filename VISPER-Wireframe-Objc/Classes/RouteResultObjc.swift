@@ -26,7 +26,6 @@ import VISPER_Wireframe_Core
         
     }
     
-    
     @objc public var routePattern: String {
         if let pattern = self.routeResult?.routePattern {
             return pattern

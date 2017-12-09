@@ -9,6 +9,7 @@
 import XCTest
 @testable import VISPER_Wireframe
 import VISPER_Wireframe_Core
+import VISPER_Wireframe_Objc
 
 class DefaultRoutingDelegateTests: XCTestCase {
     
@@ -158,4 +159,65 @@ class DefaultRoutingDelegateTests: XCTestCase {
         AssertThat(controller.invokedDidRouteParameters?.routeResult, isOfType: DefaultRouteResult.self, andEquals: routeResult)
         AssertThat(controller.invokedDidRouteParameters?.wireframe, isOfType: MockWireframe.self, andEquals: wireframe)
     }
+    
+    func testCallsObjcWillRouteOnController() throws{
+        
+        //Arrange
+        let composedObserver = MockComposedRoutingObserver()
+        
+        let delegate = DefaultRoutingDelegate(composedRoutingObserver: composedObserver)
+        
+        let routingObserver = MockRoutingObserver()
+        let priority = 42
+        let routePattern = "/this/is/a/route/pattern"
+        
+        delegate.add(routingObserver: routingObserver, priority: priority, routePattern: routePattern)
+        
+        let controller = MockViewController()
+        let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: [:], routingOption: MockRoutingOption())
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        //Act
+        try delegate.willPresent(controller: controller,
+                                 routeResult: routeResult,
+                                 routingPresenter: routingPresenter,
+                                 wireframe: wireframe)
+        
+        //Assert
+        XCTAssertTrue(controller.invokedWillRoute)
+        AssertThat(controller.invokedWillRouteParameters?.routeResult.routeResult, isOfType: DefaultRouteResult.self, andEquals: routeResult)
+        AssertThat(controller.invokedWillRouteParameters?.wireframe.wireframe, isOfType: MockWireframe.self, andEquals: wireframe)
+    }
+    
+    func testCallsObjcDidRouteController() {
+        
+        //Arrange
+        let composedObserver = MockComposedRoutingObserver()
+        
+        let delegate = DefaultRoutingDelegate(composedRoutingObserver: composedObserver)
+        
+        let routingObserver = MockRoutingObserver()
+        let priority = 42
+        let routePattern = "/this/is/a/route/pattern"
+        
+        delegate.add(routingObserver: routingObserver, priority: priority, routePattern: routePattern)
+        
+        let controller = MockViewController()
+        let routeResult = DefaultRouteResult(routePattern: routePattern, parameters: [:], routingOption: MockRoutingOption())
+        let routingPresenter = MockRoutingPresenter()
+        let wireframe = MockWireframe()
+        
+        //Act
+        delegate.didPresent(controller: controller,
+                            routeResult: routeResult,
+                            routingPresenter: routingPresenter,
+                            wireframe: wireframe)
+        
+        //Assert
+        XCTAssertTrue(controller.invokedDidRoute)
+        AssertThat(controller.invokedDidRouteParameters?.routeResult.routeResult, isOfType: DefaultRouteResult.self, andEquals: routeResult)
+        AssertThat(controller.invokedDidRouteParameters?.wireframe.wireframe, isOfType: MockWireframe.self, andEquals: wireframe)
+    }
+    
 }

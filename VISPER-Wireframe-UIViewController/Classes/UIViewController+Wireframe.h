@@ -5,23 +5,23 @@
 //  Created by Jan Bartel on 20.11.17.
 //
 
-/*
+
 #import <UIKit/UIKit.h>
-@import VISPER_Wireframe_Core;
+@import VISPER_Wireframe_Objc;
 
 @interface UIViewController (Wireframe)
 
--(void)willRoute: (WireframeObjc*) wireframe
-    routePattern: (NSString*) routePattern
-          option: (RoutingOptionObjc*)option
-      parameters: (NSDictionary*)parameters;
+
+@property (nonatomic,strong,nullable) RouteResultObjc *routeResultObjc;
+@property (nonatomic,strong,nullable) NSString *routePattern;
+@property (nonatomic,strong,nullable) NSDictionary *routeParameters;
+
+-(void)willRoute: (WireframeObjc* _Nonnull) wireframe
+     routeResult: (RouteResultObjc* _Nonnull) routeResult;
     
--(void) didRoute: (WireframeObjc*) wireframe
-    routePattern: (NSString*) routePattern
-          option: (RoutingOptionObjc*)option
-      parameters: (NSDictionary*)parameters;
+-(void) didRoute: (WireframeObjc* _Nonnull) wireframe
+     routeResult: (RouteResultObjc* _Nonnull) routeResult;
 
 @end
 
-*/
 

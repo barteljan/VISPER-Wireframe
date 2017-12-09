@@ -41,9 +41,9 @@ import VISPER_Wireframe_Core
         
         if let controllerProvider = self.controllerProvider {
             return controllerProvider.isResponsible(routeResult: routeResult)
-        } else if let controllerProviderObjC = self.controllerProviderObjc {
+        } else if let controllerProviderObjc = self.controllerProviderObjc {
             let routeResultObjC = ObjcWrapper.wrapperProvider.routeResult(routeResult: routeResult)
-            return controllerProviderObjC.isResponsible(routeResult: routeResultObjC)
+            return controllerProviderObjc.isResponsible(routeResult: routeResultObjC)
         }
         
         return false
@@ -58,8 +58,8 @@ import VISPER_Wireframe_Core
         
         if let controllerProvider = self.controllerProvider {
             return controllerProvider.isResponsible(routeResult: routeResult)
-        } else if let controllerProviderObjC = self.controllerProviderObjc {
-            return controllerProviderObjC.isResponsible(routeResult: routeResult)
+        } else if let controllerProviderObjc = self.controllerProviderObjc {
+            return controllerProviderObjc.isResponsible(routeResult: routeResult)
         }
         
         return false
@@ -74,9 +74,9 @@ import VISPER_Wireframe_Core
         
         if let controllerProvider = self.controllerProvider {
             return try controllerProvider.makeController(routeResult:routeResult)
-        } else if let controllerProviderObjC = self.controllerProviderObjc {
+        } else if let controllerProviderObjc = self.controllerProviderObjc {
             let routeResultObjC = ObjcWrapper.wrapperProvider.routeResult(routeResult: routeResult)
-            return try controllerProviderObjC.makeController(routeResult: routeResultObjC)
+            return try controllerProviderObjc.makeController(routeResult: routeResultObjC)
         }
         
         fatalError("there should be a controllerProvider or a controllerProviderObjc")
@@ -90,8 +90,8 @@ import VISPER_Wireframe_Core
         
         if let controllerProvider = self.controllerProvider {
             return try controllerProvider.makeController(routeResult:routeResult)
-        } else if let controllerProviderObjC = self.controllerProviderObjc {
-            return try controllerProviderObjC.makeController(routeResult: routeResult)
+        } else if let controllerProviderObjc = self.controllerProviderObjc {
+            return try controllerProviderObjc.makeController(routeResult: routeResult)
         }
         
         fatalError("there should be a controllerProvider or a controllerProviderObjc")

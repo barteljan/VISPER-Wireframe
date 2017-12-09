@@ -1,12 +1,13 @@
 PODS:
   - VISPER-Wireframe (0.1.0):
     - VISPER-Wireframe-Core
+    - VISPER-Wireframe-Objc
     - VISPER-Wireframe-UIViewController
   - VISPER-Wireframe-Core (0.1.0)
   - VISPER-Wireframe-Objc (0.1.0):
     - VISPER-Wireframe-Core
   - VISPER-Wireframe-UIViewController (0.1.0):
-    - VISPER-Wireframe-Core
+    - VISPER-Wireframe-Objc
 
 DEPENDENCIES:
   - VISPER-Wireframe (from `../`)
@@ -25,10 +26,10 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  VISPER-Wireframe: 33c84bf51ba099894da6473a41c27a752bfe6901
+  VISPER-Wireframe: c6d0143dcec0ebe972830fad622965665c05d9ee
   VISPER-Wireframe-Core: 693a4493ff5229a51e565369e37a2199ca8250a6
   VISPER-Wireframe-Objc: 2ae77dc6f64fb3ef60e0ac538191e2d0b37036e9
-  VISPER-Wireframe-UIViewController: 1777459b0c9b145f9ee5ae2d5378c73d04a722bb
+  VISPER-Wireframe-UIViewController: 9a9ed0186090be4c3cf985211c642967c838b47a
 
 PODFILE CHECKSUM: 1498840c33b3686134eda611140cd0f465d17eb1
 

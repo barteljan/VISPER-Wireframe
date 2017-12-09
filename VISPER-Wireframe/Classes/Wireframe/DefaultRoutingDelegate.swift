@@ -7,6 +7,7 @@
 
 import Foundation
 import VISPER_Wireframe_Core
+import VISPER_Wireframe_Objc
 
 open class DefaultRoutingDelegate : RoutingDelegate {
     
@@ -49,22 +50,8 @@ open class DefaultRoutingDelegate : RoutingDelegate {
                                                      routingPresenter: routingPresenter,
                                                      wireframe: wireframe)
         
-        
-        /*
-        //notify per objective c category
-        let wireframeObjc = WireframeObjc(wireframe: wireframe)
-
-        var routingOptionObjc : RoutingOptionObjc?
-        
-        if let option = routeResult.routingOption {
-            routingOptionObjc = RoutingOptionObjc(routingOption: option)
-        }
-        
-        controller.willRoute(wireframeObjc,
-                             routePattern: routeResult.routePattern,
-                             option: routingOptionObjc,
-                             parameters: routeResult.parameters)
-        */
+        controller.willRoute(ObjcWrapper.wrapperProvider.wireframe(wireframe: wireframe),
+                             routeResult: ObjcWrapper.wrapperProvider.routeResult(routeResult: routeResult))
         
         //notify vc if it should be aware of it
         if let viewController = controller as? RoutingAwareViewController {
@@ -88,33 +75,19 @@ open class DefaultRoutingDelegate : RoutingDelegate {
                    routingPresenter: RoutingPresenter?,
                           wireframe: Wireframe) {
         
+        self.composedRoutingObserver.didPresent(controller: controller,
+                                                routeResult: routeResult,
+                                                routingPresenter: routingPresenter,
+                                                wireframe: wireframe)
         
-        /*
-        let wireframeObjc = WireframeObjc(wireframe: wireframe)
-        
-        var routingOptionObjc : RoutingOptionObjc?
-        
-        if let option = routeResult.routingOption {
-            routingOptionObjc = RoutingOptionObjc(routingOption: option)
-        }
-        
-        //notify per objective c category
-        controller.didRoute(wireframeObjc, routePattern: routeResult.routePattern,
-                                                 option: routingOptionObjc,
-                                             parameters: routeResult.parameters)
-        */
+        controller.didRoute(ObjcWrapper.wrapperProvider.wireframe(wireframe: wireframe),
+                            routeResult: ObjcWrapper.wrapperProvider.routeResult(routeResult: routeResult))
         
         //notify vc if it should be aware of it
         if let viewController = controller as? RoutingAwareViewController {
             viewController.didRoute(wireframe: wireframe,
                                  routeResult: routeResult)
         }
-        
-        
-        self.composedRoutingObserver.didPresent(controller: controller,
-                                               routeResult: routeResult,
-                                          routingPresenter: routingPresenter,
-                                                 wireframe: wireframe)
         
     }
     
